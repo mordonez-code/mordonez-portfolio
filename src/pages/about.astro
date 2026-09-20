@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { capabilities, site, socialLinks, contactHref } from "../data/site";
+import { beyondUx, capabilities, site, socialLinks, contactHref } from "../data/site";
 
 const profileSchema = {
 	"@context": "https://schema.org",
@@ -93,13 +93,44 @@ const profileSchema = {
 					<p class="kicker">Profiles</p>
 					<h2>One clear identity across platforms.</h2>
 					<p>
-						Agentic Product & AI UX Designer stays consistent across LinkedIn, Dribbble,
-						Behance, Instagram, email and resume touchpoints.
+						Agentic Product & AI UX Designer stays consistent across LinkedIn, Behance, email
+						and resume touchpoints.
 					</p>
 					<div class="tags">
 						{socialLinks.map((link) => <span class="tag">{link.label}</span>)}
 					</div>
 				</article>
+			</div>
+		</section>
+
+		<section class="container section tight">
+			<div class="section-head">
+				<div>
+					<p class="kicker">Beyond UX</p>
+					<h2 class="section-title">Brand and visual design work.</h2>
+					<p class="section-copy">
+						Alongside product and commerce, I design brand and marketing work for other clients -
+						from a mezcal identity to restaurant and lifestyle campaigns. The same craft, applied to
+						how a brand looks and speaks.
+					</p>
+				</div>
+			</div>
+			<div class="bx-gallery">
+				{
+					beyondUx.map((item) => (
+						<button class="bx-item" type="button" aria-label={`Open ${item.alt}`}>
+							<span class="bx-frame">
+								<img
+									src={`/images/marketing/other/thumbs/${item.slug}.webp`}
+									alt={item.alt}
+									loading="lazy"
+									decoding="async"
+								/>
+							</span>
+							<span class="bx-cap">{item.brand}</span>
+						</button>
+					))
+				}
 			</div>
 		</section>
 
@@ -111,5 +142,59 @@ const profileSchema = {
 				<a class="text-link" href={site.resumeUrl}>Download resume</a>
 			</div>
 		</section>
+
+		<div class="lightbox" id="lightbox" hidden>
+			<button class="lb-close" type="button" aria-label="Close">&times;</button>
+			<button class="lb-nav lb-prev" type="button" aria-label="Previous">&#8249;</button>
+			<figure class="lb-stage">
+				<img id="lb-img" src="" alt="" />
+			</figure>
+			<button class="lb-nav lb-next" type="button" aria-label="Next">&#8250;</button>
+		</div>
 	</main>
 </Layout>
+
+<script define:vars={{ items: beyondUx }}>
+	const lb = document.getElementById("lightbox");
+	const img = document.getElementById("lb-img");
+	const triggers = [...document.querySelectorAll(".bx-item")];
+	let index = 0;
+	let lastFocused = null;
+
+	const show = (i) => {
+		index = (i + items.length) % items.length;
+		const item = items[index];
+		img.classList.remove("is-tall");
+		img.onload = () => {
+			if (img.naturalHeight / img.naturalWidth > 1.8) img.classList.add("is-tall");
+		};
+		img.src = `/images/marketing/other/${item.slug}.webp`;
+		img.alt = item.alt;
+	};
+	const open = (i) => {
+		lastFocused = document.activeElement;
+		show(i);
+		lb.hidden = false;
+		document.body.style.overflow = "hidden";
+		lb.querySelector(".lb-close").focus();
+	};
+	const close = () => {
+		lb.hidden = true;
+		img.src = "";
+		document.body.style.overflow = "";
+		lastFocused?.focus();
+	};
+	triggers.forEach((el, i) => el.addEventListener("click", () => open(i)));
+	lb.querySelector(".lb-close").addEventListener("click", close);
+	lb.querySelector(".lb-prev").addEventListener("click", () => show(index - 1));
+	lb.querySelector(".lb-next").addEventListener("click", () => show(index + 1));
+	lb.addEventListener("click", (event) => {
+		if (event.target === lb || event.target.classList.contains("lb-stage")) close();
+	});
+	document.addEventListener("keydown", (event) => {
+		if (lb.hidden) return;
+		if (event.key === "Escape") close();
+		if (event.key === "ArrowLeft") show(index - 1);
+		if (event.key === "ArrowRight") show(index + 1);
+	});
+</script>
