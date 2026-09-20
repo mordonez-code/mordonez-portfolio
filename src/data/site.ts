@@ -142,6 +142,44 @@ export const caseStudies = [
 		solution:
 			"A modular design system across web, email and SMS that kept launches and seasonal campaigns consistent and quick to produce, with clearer product discovery and shopping flows.",
 		impact: "Faster, on-brand launch and lifecycle production with clearer navigation and product discovery.",
+		marketing: {
+			dir: "potv",
+			intro:
+				"At Planet of the Vapes I designed the marketing and content layer around the store - social, email, campaigns and product-education graphics for a large vaporizer catalogue. The work had to move product while teaching a considered audience, staying consistent from Instagram to inbox.",
+			images: [
+				{ slug: "flavor-guide", alt: "Best vapes for flavor - flat-lay social post", w: 640, h: 640 },
+				{ slug: "volcano-hybrid", alt: "Volcano Hybrid vaporizer promotional post", w: 640, h: 853 },
+				{ slug: "potv-one-features", alt: "POTV ONE vaporizer annotated feature graphic", w: 640, h: 640 },
+				{ slug: "mighty-plus", alt: "Mighty+ vaporizer product styling flat-lay", w: 640, h: 640 },
+				{ slug: "instagram-feed", alt: "Planet of the Vapes Instagram feed system", w: 640, h: 2120 },
+				{ slug: "venty-email", alt: "Venty in stock - email banner", w: 640, h: 1120 },
+				{ slug: "glass-guide", alt: "Planet of the Vapes glass guide social post", w: 640, h: 640 },
+				{ slug: "veazy-review", alt: "Storz & Bickel Veazy review thumbnail", w: 640, h: 360 },
+				{ slug: "lobo-launch", alt: "POTV Lobo pre-order launch post", w: 640, h: 1065 },
+				{ slug: "year-deals", alt: "Best deals of the year - product grid story", w: 640, h: 796 },
+				{ slug: "arizer-giveaway", alt: "Arizer Air Max giveaway story", w: 640, h: 640 },
+				{ slug: "potv-one-render", alt: "POTV ONE vaporizer product render", w: 640, h: 640 },
+				{ slug: "mushroom-story", alt: "Red & white mushroom playful product story", w: 640, h: 640 },
+				{ slug: "glass-feature", alt: "Glass mouthpiece annotated feature", w: 640, h: 640 },
+				{ slug: "smoke-free", alt: "Smoke-free resolution product post", w: 640, h: 213 },
+				{ slug: "venty-review", alt: "Venty vaporizer review editorial post", w: 640, h: 640 },
+				{ slug: "420-sale", alt: "420 sale campaign post", w: 640, h: 1138 },
+			],
+			callouts: [
+				{
+					title: "Product education that sells",
+					body: "Annotated feature graphics for the POTV ONE and glass mouthpiece translate spec sheets into A+-style visuals that answer a considered buyer's questions at a glance. [PLACEHOLDER: conversion or engagement lift, if known]",
+				},
+				{
+					title: "One brand from feed to inbox",
+					body: "A shared system spanned Instagram, email banners and campaign art - the feed mockup and Venty email carry the same voice across channels.",
+				},
+				{
+					title: "Styling that makes hardware desirable",
+					body: "Flat-lay and botanical styling - the flavour guide, Mighty+ and Volcano Hybrid - gave technical devices a premium, lifestyle feel.",
+				},
+			],
+		},
 		role: "Product & Brand Designer",
 		timeline: "Ongoing DTC design",
 		period: "Jul 2023 - Present",
@@ -212,6 +250,40 @@ export const caseStudies = [
 		solution:
 			"A calmer, continuously refined cycling apparel experience with stronger product storytelling, cleaner CTAs and a clearer checkout - kept consistent and on-brand across years of launches.",
 		impact: "A calmer, more premium storefront that stayed consistent and on-brand across four years of product launches and campaigns.",
+		marketing: {
+			dir: "casabianca",
+			intro:
+				"Beyond the storefront, I ran Casabianca's visual and social presence - turning a technical apparel catalog into content people wanted to share. Every drop, sale and collaboration had to feel as premium as the product and stay unmistakably on-brand across dozens of touchpoints.",
+			images: [
+				{ slug: "givelo-collection", alt: "Casabianca x givelo limited collection - product photography", w: 640, h: 1138 },
+				{ slug: "oxford-blue", alt: "Casabianca Oxford Blue jersey on model", w: 640, h: 800 },
+				{ slug: "olive-green", alt: "Casabianca Olive Green jersey with Pantone reference", w: 640, h: 800 },
+				{ slug: "origins-toucans", alt: "Casabianca Origins Toucans campaign ad", w: 640, h: 640 },
+				{ slug: "storefront-mockup", alt: "Casabianca online storefront on mobile", w: 640, h: 710 },
+				{ slug: "social-grid", alt: "Casabianca social post system - grid mockup", w: 640, h: 427 },
+				{ slug: "givelo-3stripes", alt: "Casabianca x givelo 3Stripes concept post", w: 640, h: 640 },
+				{ slug: "fall-sale", alt: "Casabianca Fall sale promo - Red Tuscan jersey", w: 640, h: 1138 },
+				{ slug: "sale-olive", alt: "Casabianca sale post - olive jersey", w: 640, h: 640 },
+				{ slug: "sale-palm", alt: "Casabianca sale post - palm print jersey", w: 640, h: 640 },
+				{ slug: "bubble-gum-pink", alt: "Casabianca Bubble Gum Pink jersey detail", w: 640, h: 800 },
+				{ slug: "morocco-orange", alt: "Casabianca Morocco Orange jersey on model", w: 640, h: 800 },
+				{ slug: "pink-longsleeve", alt: "Casabianca pink long-sleeve jersey ad", w: 640, h: 640 },
+			],
+			callouts: [
+				{
+					title: "A colour story per jersey",
+					body: "Each colourway got its own identity - shot on-model with its named colour and Pantone reference (Oxford Blue, Morocco Orange, Olive Green) so the catalogue read as a considered collection, not a list. [PLACEHOLDER: engagement or sell-through, if you have it]",
+				},
+				{
+					title: "One system, every touchpoint",
+					body: "Reusable social templates and a shared storefront-to-Instagram visual language kept launches, sales and Black Friday on-brand at speed - the storefront and post-grid mockups show the system in use.",
+				},
+				{
+					title: "Collabs that still felt like Casabianca",
+					body: "The givelo collaboration led with restrained product photography and the wordmark, so a co-branded drop never lost the brand's own voice.",
+				},
+			],
+		},
 		role: "eCommerce & Product Designer",
 		timeline: "Ongoing eCommerce design",
 		period: "Sep 2018 - Jun 2022",
@@ -412,6 +484,7 @@ export const playGallery = [
 	{ slug: "oyster-mushroom", alt: "Oyster mushroom - illustrated label", width: 700, height: 700 },
 	{ slug: "shiitake-pizza", alt: "Shiitake mushroom pizza - holographic poster", width: 700, height: 875 },
 	{ slug: "oyster-tacos", alt: "Oyster mushroom tacos - animated type", width: 800, height: 1000 },
+	{ slug: "melena-de-leon", alt: "Lion's mane mushroom - educational illustration", width: 700, height: 700 },
 	{ slug: "bbq-sauce", alt: "Homemade BBQ sauce - illustrated recipe", width: 700, height: 875 },
 	{ slug: "fried-chicken", alt: "Fried chicken - illustrated recipe", width: 700, height: 875 },
 	{ slug: "chili", alt: "Chili pepper - textured illustration", width: 700, height: 700 },
@@ -442,5 +515,20 @@ export const watercolors = [
 	{ slug: "blackberry", title: "Blackberry", alt: "Blackberry - watercolour study on paper", width: 700, height: 700 },
 	{ slug: "artichoke", title: "Artichoke", alt: "Artichoke - watercolour study on paper", width: 700, height: 700 },
 	{ slug: "strawberry", title: "Strawberry", alt: "Strawberry - watercolour study on paper", width: 700, height: 700 },
+];
+
+// Client brand & marketing work shown as a secondary "Beyond UX" section on /about.
+export const beyondUx = [
+	{ slug: "creyente-brand", brand: "Creyente", alt: "Creyente mezcal - brand graphic with illustrated animals" },
+	{ slug: "creyente-quimeras", brand: "Creyente", alt: "Creyente mezcal - Las Quimeras product post" },
+	{ slug: "creyente-ritual", brand: "Creyente", alt: "Creyente mezcal - Ritual Espadin recipe" },
+	{ slug: "creyente-espadin", brand: "Creyente", alt: "Creyente mezcal - Espadin bottle detail" },
+	{ slug: "cecilia-burger", brand: "Cecilia", alt: "Cecilia - international burger day post" },
+	{ slug: "cecilia-chefs", brand: "Cecilia", alt: "Cecilia - Chefs event poster" },
+	{ slug: "cecilia-domicilios", brand: "Cecilia", alt: "Cecilia - delivery announcement" },
+	{ slug: "cecilia-email", brand: "Cecilia", alt: "Cecilia - newsletter layout" },
+	{ slug: "perfecto-exfoliantes", brand: "Perfecto Bronceado", alt: "Perfecto Bronceado - natural exfoliants carousel" },
+	{ slug: "perfecto-bronceado", brand: "Perfecto Bronceado", alt: "Perfecto Bronceado - social post" },
+	{ slug: "marrana-eats", brand: "Marrana Eats", alt: "Marrana Eats - social layout" },
 ];
 

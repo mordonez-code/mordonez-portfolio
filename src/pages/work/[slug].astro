@@ -17,11 +17,18 @@ const media = study as {
 	coverPosition?: string;
 	gallery?: { src: string; title?: string; caption: string; maxWidth?: number }[];
 	liveLinks?: { title: string; body: string; linkLabel?: string; url?: string }[];
+	marketing?: {
+		dir: string;
+		intro: string;
+		images: { slug: string; alt: string; w: number; h: number }[];
+		callouts?: { title: string; body: string }[];
+	};
 };
 const cover = media.cover;
 const coverPos = media.coverPosition ?? "center top";
 const gallery = media.gallery;
 const liveLinks = media.liveLinks;
+const marketing = media.marketing;
 ---
 
 <Layout
@@ -115,10 +122,128 @@ const liveLinks = media.liveLinks;
 				<p><strong>{study.impact}</strong></p>
 			</div>
 
+			{
+				marketing && (
+					<div class="cs-marketing">
+						<p class="kicker">Marketing &amp; visual design</p>
+						<h2>Beyond the store.</h2>
+						<p class="cs-marketing-intro">{marketing.intro}</p>
+
+						<div class="play-gallery mkt-gallery">
+							{marketing.images.map((img) => (
+								<button class="play-item" type="button" aria-label={`Open ${img.alt}`}>
+									<span class="play-inner">
+										<span class="play-frame">
+											<img
+												src={`/images/marketing/${marketing.dir}/thumbs/${img.slug}.webp`}
+												alt={img.alt}
+												width={img.w}
+												height={img.h}
+												loading="lazy"
+												decoding="async"
+											/>
+										</span>
+									</span>
+								</button>
+							))}
+						</div>
+
+						{marketing.callouts && (
+							<div class="mkt-callouts">
+								{marketing.callouts.map((c) => (
+									<div class="mkt-callout">
+										<strong>{c.title}</strong>
+										<p>{c.body}</p>
+									</div>
+								))}
+							</div>
+						)}
+					</div>
+				)
+			}
+
 			<div class="actions cs-end">
 				<a class="button" href={`/work/${nextStudy.slug}/`}>Next project <span aria-hidden="true">-></span></a>
 				<a class="text-link" href="/work/">All work</a>
 			</div>
 		</section>
+
+		{
+			marketing && (
+				<div class="lightbox" id="lightbox" hidden>
+					<button class="lb-close" type="button" aria-label="Close">&times;</button>
+					<button class="lb-nav lb-prev" type="button" aria-label="Previous">&#8249;</button>
+					<figure class="lb-stage">
+						<img id="lb-img" src="" alt="" />
+					</figure>
+					<button class="lb-nav lb-next" type="button" aria-label="Next">&#8250;</button>
+				</div>
+			)
+		}
 	</main>
 </Layout>
+
+{
+	marketing && (
+		<script define:vars={{ items: marketing.images, dir: marketing.dir }}>
+			const lb = document.getElementById("lightbox");
+			const img = document.getElementById("lb-img");
+			const triggers = [...document.querySelectorAll(".mkt-gallery .play-item")];
+			let index = 0;
+			let lastFocused = null;
+
+			const ROW = 6;
+			const GAP = 18;
+			const layout = () => {
+				for (const el of triggers) {
+					const height = el.querySelector(".play-inner").getBoundingClientRect().height;
+					if (!height) continue;
+					el.style.gridRowEnd = `span ${Math.max(1, Math.ceil((height + GAP) / ROW))}`;
+				}
+			};
+			layout();
+			window.addEventListener("resize", layout);
+			for (const el of triggers) {
+				const image = el.querySelector("img");
+				if (!image.complete) image.addEventListener("load", layout, { once: true });
+			}
+
+			const show = (i) => {
+				index = (i + items.length) % items.length;
+				const item = items[index];
+				img.classList.remove("is-tall");
+				img.onload = () => {
+					if (img.naturalHeight / img.naturalWidth > 1.8) img.classList.add("is-tall");
+				};
+				img.src = `/images/marketing/${dir}/${item.slug}.webp`;
+				img.alt = item.alt;
+			};
+			const open = (i) => {
+				lastFocused = document.activeElement;
+				show(i);
+				lb.hidden = false;
+				document.body.style.overflow = "hidden";
+				lb.querySelector(".lb-close").focus();
+			};
+			const close = () => {
+				lb.hidden = true;
+				img.src = "";
+				document.body.style.overflow = "";
+				lastFocused?.focus();
+			};
+			triggers.forEach((el, i) => el.addEventListener("click", () => open(i)));
+			lb.querySelector(".lb-close").addEventListener("click", close);
+			lb.querySelector(".lb-prev").addEventListener("click", () => show(index - 1));
+			lb.querySelector(".lb-next").addEventListener("click", () => show(index + 1));
+			lb.addEventListener("click", (event) => {
+				if (event.target === lb || event.target.classList.contains("lb-stage")) close();
+			});
+			document.addEventListener("keydown", (event) => {
+				if (lb.hidden) return;
+				if (event.key === "Escape") close();
+				if (event.key === "ArrowLeft") show(index - 1);
+				if (event.key === "ArrowRight") show(index + 1);
+			});
+		</script>
+	)
+}
