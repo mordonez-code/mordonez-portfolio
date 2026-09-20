@@ -168,7 +168,7 @@ export const caseStudies = [
 			callouts: [
 				{
 					title: "Product education that sells",
-					body: "Annotated feature graphics for the POTV ONE and glass mouthpiece translate spec sheets into A+-style visuals that answer a considered buyer's questions at a glance. [PLACEHOLDER: conversion or engagement lift, if known]",
+					body: "Annotated feature graphics for the POTV ONE and glass mouthpiece translate spec sheets into A+-style visuals that answer a considered buyer's questions at a glance.",
 				},
 				{
 					title: "One brand from feed to inbox",
@@ -272,7 +272,7 @@ export const caseStudies = [
 			callouts: [
 				{
 					title: "A colour story per jersey",
-					body: "Each colourway got its own identity - shot on-model with its named colour and Pantone reference (Oxford Blue, Morocco Orange, Olive Green) so the catalogue read as a considered collection, not a list. [PLACEHOLDER: engagement or sell-through, if you have it]",
+					body: "Each colourway got its own identity - shot on-model with its named colour and Pantone reference (Oxford Blue, Morocco Orange, Olive Green) so the catalogue read as a considered collection, not a list.",
 				},
 				{
 					title: "One system, every touchpoint",
