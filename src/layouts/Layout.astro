@@ -20,7 +20,8 @@ const {
 
 const canonicalPath = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
 const canonical = new URL(canonicalPath, site.url).toString();
-const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const deaccent = (value: string) => value.normalize("NFD").replace(/[̀-ͯ]/g, "");
+const fullTitle = deaccent(title).includes(deaccent(site.name)) ? title : `${title} | ${site.name}`;
 const sameAs = socialLinks
 	.map((link) => link.url)
 	.filter((url) => url.startsWith("http"));

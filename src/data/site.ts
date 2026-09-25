@@ -1,7 +1,7 @@
 export const site = {
 	name: "Mariana Ordonez",
 	shortName: "M. Ordonez",
-	role: "Agentic Product & AI UX Designer",
+	role: "Ecommerce Graphic Designer",
 	url: "https://mordonez.com",
 	email: "marianaordonez04@gmail.com",
 	location: "Colombia, UTC-5",
@@ -50,22 +50,22 @@ export const proofBrands = [
 
 export const capabilities = [
 	{
-		title: "Agentic & AI-native UX",
+		title: "eCommerce & marketplace creative",
 		description:
-			"Fluent in agentic and AI-native product patterns and human-AI interaction: trust, explainability, graceful failure and a human on the important calls. I design and build the AI-native way, in Figma and Claude Code.",
-		tags: ["Agentic UX patterns", "Human-AI interaction", "AI-native workflow"],
+			"Digital-shelf design for Amazon, Walmart and Target: hero images, A+/enhanced content, Brand Stores and product pages built to win the thumbnail and convert at marketplace scale.",
+		tags: ["Digital shelf", "A+ content", "PDP design"],
 	},
 	{
-		title: "eCommerce & CRO",
+		title: "Conversion & CRO",
 		description:
-			"Landing pages, PDPs, variant selectors, A/B tests and funnels built to lift conversion, AOV and retention without flattening the brand.",
-		tags: ["PDP optimization", "A/B testing", "Shopify-aware UX"],
+			"Landing pages, PDPs, variant selectors and A/B-tested creative built to lift conversion, AOV and retention without flattening the brand.",
+		tags: ["CRO", "A/B testing", "Shopify-aware"],
 	},
 	{
-		title: "Design Systems & Brand",
+		title: "Brand, social & design systems",
 		description:
-			"Reusable Figma design systems - components, auto layout, variables and clean developer handoff - built to scale end-to-end across a product and survive constant iteration.",
-		tags: ["Design systems", "Figma variables", "Dev handoff"],
+			"Brand systems, social and lifecycle creative, and reusable Figma libraries with clean developer handoff - AI-assisted to move fast without losing craft.",
+		tags: ["Brand & social", "Figma systems", "Dev handoff"],
 	},
 ];
 
@@ -422,7 +422,7 @@ export const toolStack = [
 			"End-to-end product design in Figma - systems, prototyping, documentation and clean developer handoff for product and commerce teams.",
 	},
 	{
-		category: "AI-native tooling",
+		category: "AI-assisted tooling",
 		items: ["Claude Code", "ChatGPT", "Gemini", "Nano Banana", "Paper", "Lovable", "AI-assisted prototyping", "research synthesis", "prompt libraries", "asset variants"],
 		description:
 			"AI-assisted environments like Claude Code to accelerate design, prototyping and iteration, with human judgment kept at the center.",
