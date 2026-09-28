@@ -73,29 +73,82 @@ export const caseStudies = [
 	{
 		slug: "estore-labs-marketplace-cro",
 		client: "Estore Labs",
-		title: "Marketplace CRO for Amazon, Walmart and Target",
-		outcome: "Conversion-focused PDP and A+ content design for global retail brands.",
+		title: "The Ferrero digital shelf on Amazon, Walmart and Kroger",
+		outcome: "Designing the Ferrero digital shelf - the images that sell across US marketplaces.",
 		summary:
-			"Designed conversion experiences for retail marketplaces, including Ferrero brands such as Kinder, Nutella and Rocher.",
+			"Main images, carousels, A+ content and seasonal campaigns for Ferrero USA brands - Ferrero Rocher, Nutella, Kinder, Tic Tac, Butterfinger and Mother's - built to convert on Amazon, Walmart and Kroger.",
 		problem:
-			"Marketplace teams needed stronger conversion and AOV across PDPs, bundles and retail content while preserving strict brand consistency.",
+			"On a marketplace the images are the product page - there's no salesperson, only the carousel. Ferrero's brands needed a listing system that wins the thumbnail, tells the whole story on scroll, and stays on-brand and spec-compliant across every retailer and season, at portfolio scale.",
 		process: [
-			"Designed high-converting landing pages and product detail pages for Amazon, Walmart and Target, applying CRO principles to maximize conversion rate and AOV.",
-			"Created and iterated on A/B test variants for A+ content, homepage banners and promotional funnels, feeding what won back into the next round of design.",
-			"Optimized product quantity and variant selectors (bundles, size options) and purchase flows for clarity and reduced drop-off.",
-			"Collaborated with cross-functional growth teams - strategists, e-retail analysts and developers - to translate test hypotheses into design concepts.",
-			"Supported Ferrero-portfolio brands (Kinder, Nutella, Rocher, Butterfinger) with consistent, conversion-optimized visuals for launches and seasonal campaigns.",
+			"Design the full listing as a sequence: a main image that wins the thumbnail, then carousel images that answer questions in order - hero, benefits, claims, size and nutrition.",
+			"Build A+ / Enhanced Content modules - brand story, lifestyle, comparison - as a reusable system any brand can be dropped into.",
+			"Translate strict global Ferrero brand guidelines into platform-native layouts that meet Amazon, Walmart and Kroger image specs.",
+			"Ship seasonal and campaign creative - Easter, Halloween and a cross-brand World Cup push - across the whole portfolio, on deadline.",
 		],
 		solution:
-			"A repeatable commerce-design workflow for faster marketplace testing, clearer shopper decisions and consistent brand expression across channels.",
+			"A repeatable digital-shelf system: every Ferrero brand gets a complete, on-brand, spec-compliant listing - from main image to A+ content - that a shopper reads at a glance and that scales across retailers and seasons.",
 		impact: "Scaled output across a multi-brand portfolio, on deadline and without losing brand consistency.",
 		role: "Digital Shelf Designer",
 		timeline: "Ongoing retail optimization",
 		period: "Sep 2024 - Present",
-		tools: "Figma, Photoshop, AI-assisted variants",
-		tags: ["CRO", "AI workflow", "Web"],
-		cover: "/case-studies/estore-labs/cover.webp",
+		tools: "Figma, Adobe CC, Amazon A+, Salsify",
+		tags: ["Digital shelf", "A+ content", "Marketplace"],
+		cover: "/case-studies/estore-labs/cover-shelf.webp",
 		coverPosition: "center",
+		showcase: {
+			dir: "estore-labs/shelf",
+			sections: [
+				{
+					heading: "The digital shelf, layer by layer",
+					note: "One Ferrero Rocher listing, end to end - the sequence a shopper actually scrolls.",
+					layout: "rail",
+					items: [
+						{ slug: "fr-main", title: "Main image - win the thumbnail", caption: "The one image that has to earn the click at thumbnail size: product, flavour and the premium hazelnut-and-milk-chocolate cue, legible even when it's tiny." },
+						{ slug: "fr-wrapped", title: "Carousel - the product, up close", caption: "Individually wrapped and premium: the detail shot that answers 'what exactly am I getting?'" },
+						{ slug: "fr-gift", title: "Carousel - the occasion", caption: "Positioned as the perfect gift, so the listing sells a moment, not just a box." },
+						{ slug: "fr-heritage", title: "Carousel - the brand story", caption: "Heritage of quality and craftsmanship - building trust and justifying the premium price." },
+						{ slug: "fr-aplus", title: "A+ content - the experience", caption: "An Enhanced Content module that puts the product in a real moment of sharing, beyond the basic gallery." },
+						{ slug: "fr-nutrition", title: "Carousel - the details that close", caption: "Nutrition and ingredients, designed to be scannable - the last doubt, resolved right on the page." },
+					],
+				},
+				{
+					heading: "One system, the whole portfolio",
+					note: "The same module system, tuned to each brand's world.",
+					layout: "grid",
+					items: [
+						{ slug: "pf-nutella", caption: "Nutella" },
+						{ slug: "pf-kinder", caption: "Kinder Chocolate" },
+						{ slug: "pf-tictac", caption: "Tic Tac" },
+						{ slug: "pf-butterfinger", caption: "Butterfinger" },
+						{ slug: "pf-mothers", caption: "Mother's" },
+					],
+				},
+				{
+					heading: "Built to each retailer's spec",
+					note: "Amazon, Walmart and Kroger each have their own image rules - same brand, different build.",
+					layout: "grid",
+					items: [
+						{ slug: "rt-nutella-walmart", caption: "Nutella - Walmart" },
+						{ slug: "rt-tictac-wmkroger", caption: "Tic Tac - Walmart & Kroger" },
+					],
+				},
+				{
+					heading: "Seasonal, at portfolio scale",
+					note: "Easter, Halloween and a cross-brand World Cup push - designed once, shipped across the shelf.",
+					layout: "grid",
+					items: [
+						{ slug: "sn-worldcup", caption: "World Cup 2026 - cross-brand" },
+						{ slug: "sn-butterfinger-easter", caption: "Butterfinger - Easter" },
+						{ slug: "sn-mothers-halloween", caption: "Mother's - Halloween" },
+					],
+				},
+			],
+			callouts: [
+				{ title: "The images are the product page", body: "On a marketplace there's no salesperson - the carousel does the selling. I design the sequence so a shopper gets the whole story before they scroll away." },
+				{ title: "One system, many brands", body: "A shared module system means a new brand or size is a fast, consistent build, not a redesign - which is how you keep a whole portfolio on-brand at marketplace speed." },
+				{ title: "On-brand and on-spec", body: "Every retailer has different image rules. I translate strict global Ferrero guidelines into layouts that pass Amazon, Walmart and Kroger specs without watering the brand down." },
+			],
+		},
 		liveLinks: [
 			{
 				title: "The image carousel that sells",
