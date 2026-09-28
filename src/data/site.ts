@@ -59,7 +59,7 @@ export const capabilities = [
 		title: "Conversion & CRO",
 		description:
 			"Landing pages, PDPs, variant selectors and A/B-tested creative built to lift conversion, AOV and retention without flattening the brand.",
-		tags: ["CRO", "A/B testing", "Shopify-aware"],
+		tags: ["CRO", "A/B testing", "Shopify"],
 	},
 	{
 		title: "Brand, social & design systems",
@@ -180,7 +180,7 @@ export const caseStudies = [
 				},
 			],
 		},
-		role: "Product & Brand Designer",
+		role: "Ecommerce & Campaign Designer",
 		timeline: "Ongoing DTC design",
 		period: "Jul 2023 - Present",
 		tools: "Figma, email/SMS modules, AI-assisted production",
@@ -284,7 +284,7 @@ export const caseStudies = [
 				},
 			],
 		},
-		role: "eCommerce & Product Designer",
+		role: "Ecommerce Designer, Shopify & CRO",
 		timeline: "Ongoing eCommerce design",
 		period: "Sep 2018 - Jun 2022",
 		tools: "Figma, Shopify, brand system",
@@ -435,9 +435,9 @@ export const toolStack = [
 	},
 	{
 		category: "eCommerce & lifecycle",
-		items: ["Shopify-aware UX", "Klaviyo", "PDP design", "A/B testing"],
+		items: ["Shopify", "Amazon A+", "Salsify", "Klaviyo", "PDP design", "A/B testing"],
 		description:
-			"Commerce flows, email/SMS modules and conversion decisions tied to metrics.",
+			"Shopify stores, marketplace listings, email/SMS modules and conversion decisions tied to metrics.",
 	},
 	{
 		category: "Process",
