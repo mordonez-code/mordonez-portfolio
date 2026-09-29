@@ -99,6 +99,17 @@ export const caseStudies = [
 			dir: "estore-labs/shelf",
 			sections: [
 				{
+					heading: "The hero image - winning the thumbnail",
+					note: "In search, the whole listing is a small thumbnail in a grid of competitors, so the main image is the single most important asset I design. A winner is instantly recognisable, shows the right size and count, and stays legible at that size - on the white background each retailer requires.",
+					layout: "rail",
+					items: [
+						{ slug: "hero-nutella", title: "Show the size", caption: "The '13 oz' badge and the jar filling the frame mean the pack size reads before anyone zooms in." },
+						{ slug: "hero-tictac", title: "Lead with the benefit", caption: "'Fruit Adventure', '100 mints', '65% more' - the reasons to buy, legible at thumbnail scale." },
+						{ slug: "hero-kinder", title: "Prove the product", caption: "A cross-section beside the pack shows the creamy filling - the promise, made visible on white." },
+						{ slug: "hero-butterfinger", title: "Own the season", caption: "A NestEggs pack that wins the Easter thumbnail without losing the brand." },
+					],
+				},
+				{
 					heading: "The image carousel - the shopper's storefront",
 					note: "On the live Ferrero Rocher listing, the main image is followed by around seven secondary images and videos before 'see more'. This is the sequence I design - each image with one job.",
 					layout: "rail",
