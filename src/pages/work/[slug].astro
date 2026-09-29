@@ -28,7 +28,7 @@ const media = study as {
 		sections: {
 			heading: string;
 			note?: string;
-			layout: "rail" | "grid";
+			layout: "rail" | "stack" | "grid";
 			items: { slug: string; title?: string; caption?: string }[];
 		}[];
 		callouts?: { title: string; body: string }[];
@@ -99,8 +99,8 @@ const showcase = media.showcase;
 									<h2>{section.heading}</h2>
 									{section.note && <p class="shelf-note">{section.note}</p>}
 								</div>
-								{section.layout === "rail" ? (
-									<div class="cs-features shelf-rail">
+								{section.layout !== "grid" ? (
+									<div class={`cs-features${section.layout === "rail" ? " shelf-rail" : ""}`}>
 										{section.items.map((item) => (
 											<figure class="cs-feature">
 												<figcaption>

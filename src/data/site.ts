@@ -99,16 +99,37 @@ export const caseStudies = [
 			dir: "estore-labs/shelf",
 			sections: [
 				{
-					heading: "The digital shelf, layer by layer",
-					note: "One Ferrero Rocher listing, end to end - the sequence a shopper actually scrolls.",
+					heading: "The hero image - winning the thumbnail",
+					note: "In search, the whole listing is a small thumbnail in a grid of competitors, so the main image is the single most important asset I design. A winner is instantly recognisable, shows the right size and count, and stays legible at that size - on the white background each retailer requires.",
 					layout: "rail",
 					items: [
-						{ slug: "fr-main", title: "Main image - win the thumbnail", caption: "The one image that has to earn the click at thumbnail size: product, flavour and the premium hazelnut-and-milk-chocolate cue, legible even when it's tiny." },
-						{ slug: "fr-wrapped", title: "Carousel - the product, up close", caption: "Individually wrapped and premium: the detail shot that answers 'what exactly am I getting?'" },
-						{ slug: "fr-gift", title: "Carousel - the occasion", caption: "Positioned as the perfect gift, so the listing sells a moment, not just a box." },
-						{ slug: "fr-heritage", title: "Carousel - the brand story", caption: "Heritage of quality and craftsmanship - building trust and justifying the premium price." },
-						{ slug: "fr-aplus", title: "A+ content - the experience", caption: "An Enhanced Content module that puts the product in a real moment of sharing, beyond the basic gallery." },
-						{ slug: "fr-nutrition", title: "Carousel - the details that close", caption: "Nutrition and ingredients, designed to be scannable - the last doubt, resolved right on the page." },
+						{ slug: "hero-nutella", title: "Show the size", caption: "The '13 oz' badge and the jar filling the frame mean the pack size reads before anyone zooms in." },
+						{ slug: "hero-tictac", title: "Lead with the benefit", caption: "'Fruit Adventure', '100 mints', '65% more' - the reasons to buy, legible at thumbnail scale." },
+						{ slug: "hero-kinder", title: "Prove the product", caption: "A cross-section beside the pack shows the creamy filling - the promise, made visible on white." },
+						{ slug: "hero-butterfinger", title: "Own the season", caption: "A NestEggs pack that wins the Easter thumbnail without losing the brand." },
+					],
+				},
+				{
+					heading: "The image carousel - the shopper's storefront",
+					note: "On the live Ferrero Rocher listing, the main image is followed by around seven secondary images and videos before 'see more'. This is the sequence I design - each image with one job.",
+					layout: "rail",
+					items: [
+						{ slug: "fr-main", title: "The flavour promise", caption: "'Premium hazelnut milk chocolate' - an ingredient infographic (milk chocolate, roasted hazelnut, creamy filling, crispy wafer) that sells the product before a shopper reads a word." },
+						{ slug: "fr-nutrition", title: "The facts", caption: "Nutrition and ingredients on a branded background - scannable inside the carousel, so the details never send anyone off the page." },
+						{ slug: "fr-wrapped", title: "The product, up close", caption: "'Individually wrapped premium chocolates' - the detail shot that answers 'what exactly am I getting?'" },
+						{ slug: "fr-gift", title: "The occasion", caption: "Positioned for gifting, so the listing sells a moment, not just a box." },
+						{ slug: "fr-heritage", title: "The brand story", caption: "'A heritage of quality & craftsmanship' - the production story that builds trust and justifies the premium." },
+					],
+				},
+				{
+					heading: "A+ content - 'From the brand'",
+					note: "Below the carousel, the 'From the manufacturer / From the brand' modules run full-width. I build them as a reusable system - these are live on the Ferrero Rocher listing right now.",
+					layout: "stack",
+					items: [
+						{ slug: "fr-ec1", title: "Raise a Rocher", caption: "The brand-story banner that opens the A+ section." },
+						{ slug: "fr-ec2", title: "Indulgence in every bite", caption: "A craft close-up module - the shot that builds desire and justifies the price." },
+						{ slug: "fr-aplus", title: "Celebrate special moments", caption: "A lifestyle module: the product in a real moment of sharing." },
+						{ slug: "fr-ec3", title: "The perfect gift for every occasion", caption: "The gifting module that carries the listing into every season." },
 					],
 				},
 				{
@@ -144,9 +165,9 @@ export const caseStudies = [
 				},
 			],
 			callouts: [
-				{ title: "The images are the product page", body: "On a marketplace there's no salesperson - the carousel does the selling. I design the sequence so a shopper gets the whole story before they scroll away." },
-				{ title: "One system, many brands", body: "A shared module system means a new brand or size is a fast, consistent build, not a redesign - which is how you keep a whole portfolio on-brand at marketplace speed." },
-				{ title: "On-brand and on-spec", body: "Every retailer has different image rules. I translate strict global Ferrero guidelines into layouts that pass Amazon, Walmart and Kroger specs without watering the brand down." },
+				{ title: "The main image wins the click", body: "In search, the whole listing is one thumbnail. I design the main image to read - product, flavour, count - at that size, because if it doesn't win the click, nothing else gets seen." },
+				{ title: "The carousel answers questions in order", body: "On the page there's no salesperson. The secondary images take a shopper from 'what is it?' to ingredients, size, gifting and trust - the whole story before they scroll away." },
+				{ title: "A+ content, built as a system", body: "Below the fold the 'From the brand' modules build the brand and justify the premium. I design them as a reusable system, so every Ferrero brand ships a complete, on-spec listing at marketplace speed." },
 			],
 		},
 		liveLinks: [
