@@ -56,10 +56,10 @@ export const capabilities = [
 		tags: ["Digital shelf", "A+ content", "PDP design"],
 	},
 	{
-		title: "Conversion & CRO",
+		title: "Shopify & CRO",
 		description:
-			"Landing pages, PDPs, variant selectors and A/B-tested creative built to lift conversion, AOV and retention without flattening the brand.",
-		tags: ["CRO", "A/B testing", "Shopify"],
+			"Shopify stores end to end - theme customisation, sections, PDPs, collections and a smoother path to checkout - plus landing pages and A/B-tested creative built to lift conversion, AOV and retention.",
+		tags: ["Shopify", "PDP & CRO", "A/B testing"],
 	},
 	{
 		title: "Brand, social & design systems",
@@ -201,25 +201,25 @@ export const caseStudies = [
 	{
 		slug: "planet-of-the-vapes-ecommerce",
 		client: "Planet of the Vapes",
-		title: "DTC landing pages and lifecycle design for Planet of the Vapes",
-		outcome: "Conversion-focused landing pages, campaigns and lifecycle design for a DTC eCommerce brand.",
+		title: "Shopify PDPs, campaigns and lifecycle design for Planet of the Vapes",
+		outcome: "Conversion-focused Shopify product pages, landing pages and lifecycle design for a large DTC brand.",
 		summary:
-			"Landing pages, promotional campaigns and email/SMS assets supporting product launches and seasonal pushes, kept consistent across every brand touchpoint.",
+			"Shopify product and landing pages, promotional campaigns and email/SMS assets for a large DTC vaporizer catalogue - built to convert and quick to ship across frequent launches.",
 		problem:
-			"A DTC brand shipping frequent launches and seasonal campaigns needed conversion-focused pages and lifecycle assets that stayed on-brand without slowing production.",
+			"A high-volume DTC brand on Shopify, shipping frequent launches and seasonal campaigns, needed conversion-focused store pages and lifecycle assets that stayed on-brand without slowing production.",
 		process: [
-			"Designed landing pages, promotional campaigns and marketing assets supporting new product launches and seasonal pushes.",
-			"Applied UX/UI principles to improve navigation, product discovery and the overall shopping experience, increasing engagement and sales.",
-			"Integrated AI tools to improve design efficiency, enhance content quality and scale production workflows.",
-			"Ensured brand and design consistency across eCommerce, email and SMS touchpoints through modular components and clear visual hierarchy.",
+			"Designed Shopify product and landing pages, promotional campaigns and marketing assets supporting new-product launches and seasonal pushes.",
+			"Improved on-site navigation, product discovery and the PDP-to-checkout flow inside Shopify, applying UX and conversion principles to lift engagement and sales.",
+			"Worked with reusable Shopify sections and a modular design system so each launch was a fast, on-brand build - not a redesign.",
+			"Integrated AI-assisted production and kept brand consistency across the Shopify store, email/SMS and social.",
 		],
 		solution:
-			"A modular design system across web, email and SMS that kept launches and seasonal campaigns consistent and quick to produce, with clearer product discovery and shopping flows.",
+			"A modular design system anchored in reusable Shopify sections and lifecycle templates, so launches and seasonal campaigns stayed consistent and quick to produce, with clearer product discovery and a smoother path to checkout.",
 		impact: "Faster, on-brand launch and lifecycle production with clearer navigation and product discovery.",
 		marketing: {
 			dir: "potv",
 			intro:
-				"At Planet of the Vapes I designed the marketing and content layer around the store - social, email, campaigns and product-education graphics for a large vaporizer catalogue. The work had to move product while teaching a considered audience, staying consistent from Instagram to inbox.",
+				"At Planet of the Vapes I designed the marketing and content layer around the Shopify store - social, email, campaigns and product-education graphics for a large vaporizer catalogue. The work had to move product while teaching a considered audience, staying consistent from Instagram to inbox.",
 			images: [
 				{ slug: "flavor-guide", alt: "Best vapes for flavor - flat-lay social post", w: 640, h: 640 },
 				{ slug: "volcano-hybrid", alt: "Volcano Hybrid vaporizer promotional post", w: 640, h: 853 },
@@ -257,12 +257,12 @@ export const caseStudies = [
 		role: "Ecommerce & Campaign Designer",
 		timeline: "Ongoing DTC design",
 		period: "Jul 2023 - Present",
-		tools: "Figma, email/SMS modules, AI-assisted production",
+		tools: "Figma, Shopify, email/SMS modules, AI-assisted production",
 		tags: ["eCommerce", "UI/UX", "Lifecycle", "Brand"],
 		cover: "/case-studies/planet-of-the-vapes/cover.webp",
 		coverPosition: "85% center",
 		gallery: [
-			{ src: "/case-studies/planet-of-the-vapes/pdp.webp", title: "The page that has to convert", caption: "A product detail page built around the decision: variant and add-on selectors, trust states and a frictionless Add to Cart, tuned for conversion and AOV." },
+			{ src: "/case-studies/planet-of-the-vapes/pdp.webp", title: "The page that has to convert", caption: "A Shopify product detail page built around the decision: variant and add-on selectors, trust states and a frictionless Add to Cart, tuned for conversion and AOV." },
 			{ src: "/case-studies/planet-of-the-vapes/content.webp", title: "Content that earns the scroll", caption: "Benefit-led hierarchy that makes the value obvious and scannable, not a wall of specs." },
 			{ src: "/case-studies/planet-of-the-vapes/reviews.webp", title: "Trust where hesitation happens", caption: "Reviews and Q&A placed at the moment of doubt - social proof that de-risks the buy." },
 			{ src: "/case-studies/planet-of-the-vapes/related.webp", title: "More value per order", caption: "Cross-sell and bundles that lift average order value without cluttering the decision." },
@@ -314,15 +314,15 @@ export const caseStudies = [
 		summary:
 			"As Casabianca's ongoing eCommerce designer, I designed and continuously optimized their Shopify storefront, product pages, campaigns and brand system from 2018 to 2022.",
 		problem:
-			"The shopping flow had visual clutter, weak purchase hierarchy and checkout friction that made the brand feel less trustworthy than the product.",
+			"The Shopify store's shopping flow had visual clutter, weak purchase hierarchy and checkout friction that made the brand feel less trustworthy than the product.",
 		process: [
-			"Acted as the brand's ongoing eCommerce designer, owning the Shopify storefront end to end - product pages, collections, campaigns and seasonal launches - over four years.",
-			"Improved layout clarity, product-page hierarchy and the checkout flow, applying conversion-focused principles to reduce friction and make the buying decision easier.",
-			"Built and maintained a cohesive visual system across digital and physical touchpoints, keeping the store on-brand as the catalog and campaigns evolved.",
-			"Beyond the store, contributed to the brand's social media content, packaging and apparel product design - carrying one visual language across every touchpoint.",
+			"Owned the Shopify store end to end: customised the theme in the theme editor, built reusable sections, and designed the product-page, collection, home and landing templates - continuously optimised over four years.",
+			"Improved product-page hierarchy, variant and size selectors, and the path to Shopify checkout, applying conversion-focused principles to cut friction and make the buying decision easier.",
+			"Delivered Liquid-aware, section-based specs the theme could drop straight in, and used Shopify apps only where they earned their place - keeping the store fast and easy to update.",
+			"Kept one visual system across the Shopify store, campaigns and physical touchpoints, and extended it into social content, packaging and apparel product design.",
 		],
 		solution:
-			"A calmer, continuously refined cycling apparel experience with stronger product storytelling, cleaner CTAs and a clearer checkout - kept consistent and on-brand across years of launches.",
+			"A calmer, continuously refined Shopify store - stronger product storytelling, cleaner CTAs, a smoother path to checkout and a reusable, section-based theme - kept consistent and on-brand across years of launches.",
 		impact: "A calmer, more premium storefront that stayed consistent and on-brand across four years of product launches and campaigns.",
 		marketing: {
 			dir: "casabianca",
@@ -373,31 +373,6 @@ export const caseStudies = [
 			{ src: "/case-studies/casabianca-cycling/live.webp", title: "Live in the store", caption: "The shipped Casabianca storefront, from the product page to the ask-a-question flow." },
 		],
 		featured: true,
-	},
-	{
-		slug: "ai-assisted-design-workflow",
-		client: "Process case study",
-		title: "AI-assisted design workflow",
-		outcome: "How AI speeds research, ideation and A/B variants without replacing craft.",
-		summary:
-			"A process case study showing where generative AI belongs in a high-craft UX and commerce workflow.",
-		problem:
-			"A/B testing and product ideation can bottleneck at synthesis, copy exploration and asset variation, especially when teams need more options fast.",
-		process: [
-			"Use AI to summarize research notes and surface recurring friction patterns.",
-			"Generate variant directions for headlines, hierarchy and imagery, then filter through a human design hypothesis.",
-			"Prototype the strongest options in Figma and QA for brand, accessibility and conversion clarity.",
-			"Document what AI influenced and where human judgment made the final call.",
-		],
-		solution:
-			"A transparent AI-assisted workflow where AI expands the option space and the designer protects taste, context and user trust.",
-		impact: "Faster variant production with clearer rationale for every design decision.",
-		role: "AI Product, AI UX, CRO",
-		timeline: "Working method",
-		period: "Ongoing method",
-		tools: "Figma, generative AI, research synthesis",
-		tags: ["AI Product", "AI UX", "CRO"],
-		featured: false,
 	},
 ];
 
