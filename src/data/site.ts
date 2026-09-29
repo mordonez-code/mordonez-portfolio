@@ -374,31 +374,6 @@ export const caseStudies = [
 		],
 		featured: true,
 	},
-	{
-		slug: "ai-assisted-design-workflow",
-		client: "Process case study",
-		title: "AI-assisted design workflow",
-		outcome: "How AI speeds research, ideation and A/B variants without replacing craft.",
-		summary:
-			"A process case study showing where generative AI belongs in a high-craft UX and commerce workflow.",
-		problem:
-			"A/B testing and product ideation can bottleneck at synthesis, copy exploration and asset variation, especially when teams need more options fast.",
-		process: [
-			"Use AI to summarize research notes and surface recurring friction patterns.",
-			"Generate variant directions for headlines, hierarchy and imagery, then filter through a human design hypothesis.",
-			"Prototype the strongest options in Figma and QA for brand, accessibility and conversion clarity.",
-			"Document what AI influenced and where human judgment made the final call.",
-		],
-		solution:
-			"A transparent AI-assisted workflow where AI expands the option space and the designer protects taste, context and user trust.",
-		impact: "Faster variant production with clearer rationale for every design decision.",
-		role: "AI Product, AI UX, CRO",
-		timeline: "Working method",
-		period: "Ongoing method",
-		tools: "Figma, generative AI, research synthesis",
-		tags: ["AI Product", "AI UX", "CRO"],
-		featured: false,
-	},
 ];
 
 export const articles = [
