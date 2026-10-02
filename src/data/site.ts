@@ -52,7 +52,7 @@ export const capabilities = [
 	{
 		title: "eCommerce & marketplace creative",
 		description:
-			"Digital-shelf design for Amazon, Walmart and Target: hero images, A+/enhanced content, Brand Stores and product pages built to win the thumbnail and convert at marketplace scale.",
+			"Digital-shelf design for Amazon, Walmart and Instacart: hero images, A+/enhanced content, Brand Stores and product pages built to win the thumbnail and convert at marketplace scale.",
 		tags: ["Digital shelf", "A+ content", "PDP design"],
 	},
 	{
@@ -73,16 +73,16 @@ export const caseStudies = [
 	{
 		slug: "estore-labs-marketplace-cro",
 		client: "Estore Labs",
-		title: "The Ferrero digital shelf on Amazon, Walmart and Kroger",
+		title: "The Ferrero digital shelf on Amazon, Walmart and Instacart",
 		outcome: "Designing the Ferrero digital shelf - the images that sell across US marketplaces.",
 		summary:
-			"Main images, carousels, A+ content and seasonal campaigns for Ferrero USA brands - Ferrero Rocher, Nutella, Kinder, Tic Tac, Butterfinger and Mother's - built to convert on Amazon, Walmart and Kroger.",
+			"Main images, carousels, A+ content and seasonal campaigns for Ferrero USA brands - Ferrero Rocher, Nutella, Kinder, Tic Tac, Butterfinger and Mother's - built to convert on Amazon, Walmart and Instacart.",
 		problem:
 			"On a marketplace the images are the product page - there's no salesperson, only the carousel. Ferrero's brands needed a listing system that wins the thumbnail, tells the whole story on scroll, and stays on-brand and spec-compliant across every retailer and season, at portfolio scale.",
 		process: [
 			"Design the full listing as a sequence: a main image that wins the thumbnail, then carousel images that answer questions in order - hero, benefits, claims, size and nutrition.",
 			"Build A+ / Enhanced Content modules - brand story, lifestyle, comparison - as a reusable system any brand can be dropped into.",
-			"Translate strict global Ferrero brand guidelines into platform-native layouts that meet Amazon, Walmart and Kroger image specs.",
+			"Translate strict global Ferrero brand guidelines into platform-native layouts that meet Amazon, Walmart and Instacart image specs.",
 			"Ship seasonal and campaign creative - Easter, Halloween and a cross-brand World Cup push - across the whole portfolio, on deadline.",
 		],
 		solution:
@@ -146,7 +146,7 @@ export const caseStudies = [
 				},
 				{
 					heading: "Built to each retailer's spec",
-					note: "Amazon, Walmart and Kroger each have their own image rules - same brand, different build.",
+					note: "Amazon, Walmart and Instacart each have their own image rules - same brand, different build.",
 					layout: "grid",
 					items: [
 						{ slug: "rt-nutella-walmart", caption: "Nutella - Walmart" },
