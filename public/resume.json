@@ -1,0 +1,142 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Mariana Ordoñez Alarcón",
+    "label": "Ecommerce Graphic Designer",
+    "email": "marianaordonez04@gmail.com",
+    "phone": "",
+    "url": "https://mordonez.com",
+    "summary": "Ecommerce graphic designer with 8 years producing the creative that sells: Shopify storefronts, Amazon A+ content and product detail page (PDP) imagery, email and paid social campaign assets for DTC brands and retail marketplaces. Currently designing the digital shelf for Ferrero USA brands across Amazon, Walmart and Instacart. Reusable template systems and an AI assisted production workflow keep output high and on spec, while brand rules, visual craft and final QA stay with me. Fully remote with US teams since 2018.",
+    "location": {
+      "city": "Bogotá",
+      "countryCode": "CO",
+      "region": "Bogotá, D.C."
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "mariana-ordoñez-alarcón-ux-designer",
+        "url": "https://www.linkedin.com/in/mariana-ordo%C3%B1ez-alarc%C3%B3n-ux-designer/"
+      },
+      {
+        "network": "Portfolio",
+        "username": "mordonez",
+        "url": "https://mordonez.com"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "eStoreLabs",
+      "position": "Digital Shelf Designer",
+      "location": "Remote, US hours",
+      "url": "https://mordonez.com/work/estore-labs-marketplace-cro/",
+      "startDate": "2024-09",
+      "summary": "Digital shelf design for Ferrero USA brands across Amazon, Walmart and Instacart.",
+      "highlights": [
+        "Design and ship Amazon A+ content, listing and hero images, image carousels and brand store pages for Ferrero USA brands including Kinder, Nutella, Ferrero Rocher, Tic Tac and Butterfinger.",
+        "Build A+ and enhanced content as a reusable module system, so every brand ships a complete, on brand listing at marketplace speed.",
+        "Translate strict global brand guidelines into platform native, spec compliant layouts, applying visual hierarchy and conversion principles to high traffic product pages.",
+        "Deliver seasonal and cross brand campaign creative (Easter, Halloween, World Cup) across the portfolio, on weekly deadlines.",
+        "Shaped the UX of the team's internal AI copilot that scores marketplace imagery against best practice and prioritises fixes before publication."
+      ]
+    },
+    {
+      "name": "Planet of the Vapes",
+      "position": "Ecommerce and Campaign Designer",
+      "location": "Freelance, Remote",
+      "url": "https://mordonez.com/work/planet-of-the-vapes-ecommerce/",
+      "startDate": "2023-07",
+      "summary": "Shopify product and landing pages, campaigns and lifecycle creative for a large DTC catalogue.",
+      "highlights": [
+        "Design Shopify product and landing pages, promotional campaigns and email and SMS assets, built to convert and quick to ship across frequent launches.",
+        "Improve on site navigation, product discovery and the path from product page to checkout.",
+        "Work from reusable Shopify sections and a modular design system, and run an AI assisted production workflow that raises output across store, email and social."
+      ]
+    },
+    {
+      "name": "trades.org",
+      "position": "UX/UI Product Designer",
+      "location": "Remote",
+      "url": "https://mordonez.com/work/trades-design-system-cms/",
+      "startDate": "2022-07",
+      "endDate": "2023-12",
+      "summary": "End to end product design for web products and internal tools.",
+      "highlights": [
+        "Owned end to end UX and UI across multiple web products: research, wireframing, prototyping and usability testing to reduce friction in complex journeys.",
+        "Built a scalable design system (components, variants, documentation) plus custom CMS and ATS workflows."
+      ]
+    },
+    {
+      "name": "MoaPrints",
+      "position": "Founder and Designer, DTC ecommerce store",
+      "location": "Self-employed, Remote",
+      "startDate": "2020-06",
+      "endDate": "2023-12",
+      "summary": "Founded and ran a direct to consumer store selling original illustration work.",
+      "highlights": [
+        "Designed the full product range and brand system, and ran the storefront end to end: product pages, photography, listings, pricing, merchandising and fulfilment."
+      ]
+    },
+    {
+      "name": "Casabianca Cycling Apparel",
+      "position": "Ecommerce Designer, Shopify and CRO",
+      "location": "Remote",
+      "url": "https://mordonez.com/work/casabianca-apparel-cro/",
+      "startDate": "2018-09",
+      "endDate": "2022-06",
+      "summary": "Four years designing and optimising a cycling apparel brand's Shopify store.",
+      "highlights": [
+        "Designed and continuously optimised the Shopify store: product pages, collections, campaign landing pages and the brand system.",
+        "Rebuilt product page hierarchy and the checkout experience to reduce friction, and extended the brand into social content, packaging and apparel product design."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad de La Sabana",
+      "location": "Bogotá, Colombia",
+      "area": "Gastronomy",
+      "studyType": "B.A.",
+      "startDate": "2014",
+      "endDate": "2019"
+    }
+  ],
+  "certificates": [
+    { "name": "Generative AI for UI/UX Design", "issuer": "IBM", "date": "2026" },
+    { "name": "Syndication Proficiency", "issuer": "Salsify", "date": "2024" },
+    { "name": "Google UX Design Certificate", "issuer": "Coursera", "date": "2023" }
+  ],
+  "skills": [
+    {
+      "name": "Marketplace and digital shelf",
+      "keywords": ["Amazon A+ Content", "Premium A+", "listing images", "hero images", "infographics", "image carousels", "Amazon Brand Stores", "variant and bundle selectors", "Walmart", "Instacart", "Salsify syndication", "digital shelf"]
+    },
+    {
+      "name": "Shopify and conversion",
+      "keywords": ["Shopify", "theme design", "product detail pages", "PDP", "collections", "landing pages", "checkout", "conversion rate optimization", "CRO", "A/B testing", "AOV"]
+    },
+    {
+      "name": "Campaign and brand creative",
+      "keywords": ["paid social", "Meta ad creative", "Klaviyo", "email design", "lifecycle marketing", "seasonal campaigns", "brand identity", "social content systems", "product photography", "retouching", "packaging"]
+    },
+    {
+      "name": "Product and systems",
+      "keywords": ["Figma", "design systems", "components", "wireframing", "prototyping", "usability testing", "developer handoff"]
+    },
+    {
+      "name": "Tools",
+      "keywords": ["Figma", "Shopify", "Adobe Photoshop", "Adobe Illustrator", "Adobe After Effects", "Adobe InDesign", "Canva", "Salsify", "Klaviyo", "Procreate", "HTML", "CSS", "React", "Claude Code", "ChatGPT", "Gemini", "Adobe Firefly"]
+    }
+  ],
+  "languages": [
+    { "language": "Spanish", "fluency": "Native speaker" },
+    { "language": "English", "fluency": "Full professional proficiency" }
+  ],
+  "meta": {
+    "availability": "Open to full time remote ecommerce, marketing and creative design roles",
+    "workingHours": "US business hours (UTC-5)",
+    "remote": true,
+    "lastModified": "2026-10-02"
+  }
+}

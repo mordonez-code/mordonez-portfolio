@@ -34,12 +34,21 @@ const websiteSchema = {
 	description,
 };
 
+const resumeUrl = new URL("/resume.json", site.url).toString();
+
+// Read by recruiter tools and AI sourcing agents; keep in step with public/resume.json and public/llms.txt.
 const personSchema = {
 	"@context": "https://schema.org",
 	"@type": "Person",
-	name: site.name,
+	name: "Mariana Ordoñez Alarcón",
+	alternateName: ["Mariana Ordonez", "Mariana Ordoñez"],
+	givenName: "Mariana",
+	familyName: "Ordoñez Alarcón",
 	jobTitle: site.role,
+	description:
+		"Ecommerce graphic designer with 8 years designing Shopify storefronts, Amazon A+ content and product detail page imagery, and email and paid social campaign creative for DTC brands and retail marketplaces.",
 	url: site.url,
+	image: new URL("/brand/avatar-512-wine.png", site.url).toString(),
 	email: site.email,
 	worksFor: {
 		"@type": "Organization",
@@ -47,9 +56,73 @@ const personSchema = {
 	},
 	address: {
 		"@type": "PostalAddress",
-		addressCountry: "Colombia",
+		addressLocality: "Bogotá",
+		addressCountry: "CO",
+	},
+	homeLocation: { "@type": "Place", name: "Bogotá, Colombia" },
+	knowsLanguage: [
+		{ "@type": "Language", name: "Spanish", alternateName: "es" },
+		{ "@type": "Language", name: "English", alternateName: "en" },
+	],
+	knowsAbout: [
+		"Ecommerce design",
+		"Shopify",
+		"Shopify theme and storefront design",
+		"Amazon A+ Content",
+		"Amazon Premium A+ Content",
+		"Amazon Brand Stores",
+		"Digital shelf design",
+		"Product detail page (PDP) design",
+		"Listing and hero image design",
+		"Conversion rate optimization (CRO)",
+		"A/B testing",
+		"Landing page design",
+		"Klaviyo email design",
+		"Lifecycle and email marketing creative",
+		"Paid social and Meta ad creative",
+		"Salsify syndication",
+		"Figma design systems",
+		"Brand and visual identity",
+		"Product photography and retouching",
+		"AI-assisted design production",
+	],
+	hasOccupation: {
+		"@type": "Occupation",
+		name: site.role,
+		occupationLocation: { "@type": "Country", name: "Colombia" },
+		skills:
+			"Shopify, Amazon A+ Content, digital shelf and PDP design, Klaviyo email, paid social creative, CRO and A/B testing, Figma design systems, Adobe Creative Cloud, Salsify",
+		responsibilities:
+			"Designs Shopify storefronts, Amazon A+ content and marketplace listing imagery, and email and paid social campaign creative for DTC brands and retail marketplaces.",
+	},
+	hasCredential: [
+		["Generative AI for UI/UX Design", "IBM", "2026"],
+		["Syndication Proficiency", "Salsify", "2024"],
+		["Google UX Design Certificate", "Google", "2023"],
+	].map(([name, issuer, year]) => ({
+		"@type": "EducationalOccupationalCredential",
+		name,
+		credentialCategory: "certificate",
+		recognizedBy: { "@type": "Organization", name: issuer },
+		dateCreated: year,
+	})),
+	alumniOf: {
+		"@type": "CollegeOrUniversity",
+		name: "Universidad de La Sabana",
+		address: { "@type": "PostalAddress", addressLocality: "Bogotá", addressCountry: "CO" },
+	},
+	seeks: {
+		"@type": "Demand",
+		name: "Full-time remote ecommerce, marketing and creative design roles",
+		availableAtOrFrom: { "@type": "Place", name: "Remote, US business hours (UTC-5)" },
 	},
 	sameAs,
+	subjectOf: {
+		"@type": "DigitalDocument",
+		name: "Résumé (JSON Resume)",
+		url: resumeUrl,
+		encodingFormat: "application/json",
+	},
 };
 ---
 
@@ -62,6 +135,7 @@ const personSchema = {
 		<title>{fullTitle}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
+		<link rel="alternate" type="application/json" href={resumeUrl} title="Résumé (JSON Resume)" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link

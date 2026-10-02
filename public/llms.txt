@@ -1,0 +1,48 @@
+# Mariana Ordoñez Alarcón
+
+> Ecommerce graphic designer, 8 years. Shopify storefronts, Amazon A+ content and
+> product detail page imagery, email and paid social campaign creative for DTC brands
+> and retail marketplaces. Based in Bogotá, Colombia; works remotely on US hours (UTC-5).
+
+Currently designing the digital shelf for Ferrero USA brands (Kinder, Nutella, Ferrero
+Rocher, Tic Tac, Butterfinger) across Amazon, Walmart and Instacart at eStoreLabs.
+Available for full-time remote ecommerce, marketing and creative design roles.
+
+Contact: marianaordonez04@gmail.com
+
+## Structured data
+
+- [Résumé, JSON Resume schema](https://mordonez.com/resume.json): machine-readable employment history, skills and certifications
+- [Résumé, PDF](https://mordonez.com/downloads/Mariana-Ordonez-CV.pdf): one page, text-layer, single column
+
+## Case studies
+
+- [Ferrero digital shelf, eStoreLabs](https://mordonez.com/work/estore-labs-marketplace-cro/): Amazon A+ content, hero and listing images, image carousels, Brand Stores and seasonal campaigns across Amazon, Walmart and Instacart for six Ferrero USA brands
+- [Planet of the Vapes](https://mordonez.com/work/planet-of-the-vapes-ecommerce/): Shopify product and landing pages, promotional campaigns, email and SMS creative for a large DTC catalogue
+- [Casabianca Cycling Apparel](https://mordonez.com/work/casabianca-apparel-cro/): four years designing and optimising a Shopify storefront, product pages, collections, checkout and brand system
+- [trades.org](https://mordonez.com/work/trades-design-system-cms/): end-to-end UX/UI, design system and custom CMS/ATS workflows
+
+## Writing
+
+- [How I use AI to run A/B tests 3x faster](https://mordonez.com/journal/ai-ab-tests-faster-design-craft/)
+- [The anatomy of a high-converting product detail page](https://mordonez.com/journal/high-converting-product-detail-page/)
+- [Designing trustworthy AI interfaces](https://mordonez.com/journal/trustworthy-ai-interfaces/)
+
+## Skills
+
+Marketplace and digital shelf: Amazon A+ Content and Premium A+, listing and hero images,
+infographics, image carousels, Amazon Brand Stores, variant and bundle selectors, Walmart
+and Instacart specs, Salsify syndication.
+Shopify and conversion: Shopify storefront and theme design, product detail pages,
+collections, landing pages, checkout flow, conversion rate optimization, A/B test variants.
+Campaign and brand creative: paid social and Meta ad creative, Klaviyo email and lifecycle
+templates, seasonal campaigns, brand and visual identity, product photography and retouching.
+Product and systems: Figma design systems and components, wireframing, prototyping,
+usability testing, developer handoff.
+Tools: Figma, Shopify, Adobe Photoshop, Illustrator, After Effects, InDesign, Canva,
+Salsify, Klaviyo, HTML, CSS, React basics, generative AI tools.
+
+## Optional
+
+- [About](https://mordonez.com/about/): how she works, timezone overlap, certifications
+- [Contact](https://mordonez.com/contact/): replies within 24 hours, US business hours
