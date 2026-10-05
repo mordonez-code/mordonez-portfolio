@@ -8,6 +8,20 @@ export const site = {
 	resumeUrl: "/downloads/Mariana-Ordonez-CV.pdf",
 };
 
+// Stable JSON-LD node id for Mariana; page-level schema points at it instead of redefining her.
+export const personId = `${site.url}/#person`;
+
+// BreadcrumbList JSON-LD for a page, from [label, path] pairs below Home.
+export const breadcrumbSchema = (trail: [string, string][]) => ({
+	"@type": "BreadcrumbList",
+	itemListElement: [["Home", "/"] as [string, string], ...trail].map(([name, path], index) => ({
+		"@type": "ListItem",
+		position: index + 1,
+		name,
+		item: new URL(path, site.url).toString(),
+	})),
+});
+
 // Pre-filled "Get in touch" email link (direct-email fallback).
 export const contactHref = `mailto:${site.email}?subject=${encodeURIComponent(
 	"Design project or role inquiry",

@@ -1,0 +1,78 @@
+{
+  "expectations": [
+    {
+      "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+      "passed": true,
+      "evidence": "File exists: rich-context-spanish/with_skill/outputs/content-plan.md (223 lines, a complete 10-section content plan plus changelog)."
+    },
+    {
+      "text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language",
+      "passed": true,
+      "evidence": "Title and all headings are Spanish: \"# Plan de contenido — Portafolio de Mariana Ordoñez\", \"## 3. Mapa del sitio\", \"## 9. Hoja de ruta\", \"## 10. Supuestos y preguntas abiertas\". Body prose is Spanish throughout; English appears only in proposed site copy, an explicitly marked decision (\"El sitio se publica en inglés... El plan está en español para ti [SUPUESTO]\")."
+    },
+    {
+      "text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections",
+      "passed": true,
+      "evidence": "Section 3 \"Mapa del sitio\" is a table with rows for Home, About, \"Work / Casos de estudio\", Journal, Blog, Contacto and Arte, each with purpose and status."
+    },
+    {
+      "text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built",
+      "passed": true,
+      "evidence": "Section 3: \"el sitio tiene home, blog y journal funcionando (con contenido de relleno), y no tiene About, Work ni contacto\"; About and Work rows say \"No existe → construir\". Repo claims verified accurate: journal placeholder \"Field Note 001\" = src/content/journal/field-note-001.md and blog placeholder \"Starting With a Durable Web Home\" = src/content/blog/first-post.md (confirmed by grep); only blog+journal collections exist in src/content.config.ts."
+    },
+    {
+      "text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented",
+      "passed": true,
+      "evidence": "Section 5: Caso 1 \"Cutting product-photo costs ~60% with an AI pipeline\" (−60% kept, e.g. \"conocida: −60% costo por foto\"); Caso 2 \"tienda de belleza, bajo NDA → anonimizar como 'a beauty retailer'\" (never named, no invented name); Caso 3 \"A generative art practice\". All three projects are case studies."
+    },
+    {
+      "text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up",
+      "passed": true,
+      "evidence": "Every case has an explicit Métricas line. Caso 1: \"conocida: −60% costo por foto. Por conseguir: costo antes/después en cifras, fotos por mes o por campaña, tiempo de entrega antes/después, % de tomas que siguieron siendo fotografía física...\". Caso 2: \"ninguna confirmada aún. Por perseguir: tasa de resolución sin humano, satisfacción (CSAT), conversión asistida, ticket promedio, volumen de conversaciones\". Caso 3 addresses it head-on: \"no aplican; aquí la evidencia es el criterio. Si hay exposiciones, ventas o publicaciones, mencionarlas\"."
+    },
+    {
+      "text": "Journal and blog get distinct purposes plus concrete first topic ideas for each",
+      "passed": true,
+      "evidence": "Section 6: journal = \"registrar en 150–400 palabras lo que descubres trabajando con IA\" with 8 titled first entries (e.g. \"Flair.ai vs. Midjourney for product shots: where each one wins\"); blog = \"autoridad; el texto que un hiring manager lee antes de la entrevista\" with 4 titled posts (e.g. \"How we cut product-photo costs by 60% with an AI pipeline\")."
+    },
+    {
+      "text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields",
+      "passed": true,
+      "evidence": "Concrete title + description pairs for Home (\"Mariana Ordoñez — AI Experience Designer\" / \"AI Experience Designer with 7 years of e-commerce content for fashion and beauty...\"), About, Work, Journal and Blog. Section 4 states they map \"a los campos `title` y `description` que el sitio ya exige\", which matches the writingSchema in src/content.config.ts; section 7 adds length limits (título ≤ 60, descripción ≤ 155)."
+    },
+    {
+      "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+      "passed": true,
+      "evidence": "Section 9 \"Hoja de ruta\": \"Fase 1 — lista para aplicar (objetivo: ~4 semanas...)\", followed by \"Fase 2 — profundidad\" and \"Fase 3 — continuo\", plus an ordered build-task list."
+    },
+    {
+      "text": "Assumptions/open questions are collected in a dedicated section",
+      "passed": true,
+      "evidence": "Section 10 \"Supuestos y preguntas abiertas\" collects every inline marker (grep counts 15 [SUPUESTO] occurrences) as 11 checkbox questions: \"Cada [SUPUESTO] del plan, convertido en pregunta para que respondas cuando quieras\"."
+    },
+    {
+      "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+      "passed": true,
+      "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+    }
+  ],
+  "summary": {
+    "passed": 11,
+    "failed": 0,
+    "total": 11,
+    "pass_rate": 1.0
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up",
+        "reason": "Metrics genuinely don't apply to the personal art project; this run passed by explicitly writing 'Métricas: no aplican' plus substitute evidence (exposiciones, ventas, publicaciones). Consider amending the assertion to '...or explicitly states why metrics do not apply and what evidence substitutes' so graders rule consistently on the art case."
+      },
+      {
+        "assertion": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+        "reason": "Not verifiable from the run's own artifacts (no transcript, no per-run git snapshot); graded from the orchestrator's post-hoc `git status --porcelain`. Capturing that output into each run directory would make the assertion self-contained."
+      }
+    ],
+    "overall": "All 11 assertions pass on genuine substance; every spot-checked repo claim (placeholder titles, mordonez.dev domain, og-default.svg) was accurate."
+  }
+}

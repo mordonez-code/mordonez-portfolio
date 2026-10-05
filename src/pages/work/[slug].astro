@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { caseStudies, site } from "../../data/site";
+import { breadcrumbSchema, caseStudies, personId, site } from "../../data/site";
 
 export function getStaticPaths() {
 	return caseStudies.map((study) => ({
@@ -40,12 +40,37 @@ const gallery = media.gallery;
 const liveLinks = media.liveLinks;
 const marketing = media.marketing;
 const showcase = media.showcase;
+
+const pageUrl = `${site.url}/work/${study.slug}/`;
+const caseStudySchema = {
+	"@type": "CreativeWork",
+	"@id": `${pageUrl}#case-study`,
+	name: study.title,
+	headline: study.outcome,
+	description: study.summary,
+	abstract: study.solution,
+	url: pageUrl,
+	genre: "Design case study",
+	keywords: study.tags.join(", "),
+	inLanguage: "en",
+	...(cover ? { image: new URL(cover, site.url).toString() } : {}),
+	creator: { "@id": personId },
+	author: { "@id": personId },
+	sourceOrganization: { "@type": "Organization", name: study.client },
+};
 ---
 
 <Layout
 	title={`${study.title} - UX / CRO Case Study`}
 	description={`${study.outcome} ${study.summary}`}
 	path={`/work/${study.slug}/`}
+	schema={[
+		caseStudySchema,
+		breadcrumbSchema([
+			["Work", "/work/"],
+			[study.title, `/work/${study.slug}/`],
+		]),
+	]}
 >
 	<main>
 		<section class="container page-hero">

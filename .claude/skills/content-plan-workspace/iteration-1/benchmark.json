@@ -1,0 +1,353 @@
+{
+  "metadata": {
+    "skill_name": "content-plan",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-06-10T00:34:11Z",
+    "evals_run": [
+      0,
+      1
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 11,
+        "failed": 0,
+        "total": 11,
+        "time_seconds": 385.7,
+        "tokens": 61827,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+          "passed": true,
+          "evidence": "File exists: rich-context-spanish/with_skill/outputs/content-plan.md (223 lines, a complete 10-section content plan plus changelog)."
+        },
+        {
+          "text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language",
+          "passed": true,
+          "evidence": "Title and all headings are Spanish: \"# Plan de contenido — Portafolio de Mariana Ordoñez\", \"## 3. Mapa del sitio\", \"## 9. Hoja de ruta\", \"## 10. Supuestos y preguntas abiertas\". Body prose is Spanish throughout; English appears only in proposed site copy, an explicitly marked decision (\"El sitio se publica en inglés... El plan está en español para ti [SUPUESTO]\")."
+        },
+        {
+          "text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections",
+          "passed": true,
+          "evidence": "Section 3 \"Mapa del sitio\" is a table with rows for Home, About, \"Work / Casos de estudio\", Journal, Blog, Contacto and Arte, each with purpose and status."
+        },
+        {
+          "text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built",
+          "passed": true,
+          "evidence": "Section 3: \"el sitio tiene home, blog y journal funcionando (con contenido de relleno), y no tiene About, Work ni contacto\"; About and Work rows say \"No existe → construir\". Repo claims verified accurate: journal placeholder \"Field Note 001\" = src/content/journal/field-note-001.md and blog placeholder \"Starting With a Durable Web Home\" = src/content/blog/first-post.md (confirmed by grep); only blog+journal collections exist in src/content.config.ts."
+        },
+        {
+          "text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented",
+          "passed": true,
+          "evidence": "Section 5: Caso 1 \"Cutting product-photo costs ~60% with an AI pipeline\" (−60% kept, e.g. \"conocida: −60% costo por foto\"); Caso 2 \"tienda de belleza, bajo NDA → anonimizar como 'a beauty retailer'\" (never named, no invented name); Caso 3 \"A generative art practice\". All three projects are case studies."
+        },
+        {
+          "text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up",
+          "passed": true,
+          "evidence": "Every case has an explicit Métricas line. Caso 1: \"conocida: −60% costo por foto. Por conseguir: costo antes/después en cifras, fotos por mes o por campaña, tiempo de entrega antes/después, % de tomas que siguieron siendo fotografía física...\". Caso 2: \"ninguna confirmada aún. Por perseguir: tasa de resolución sin humano, satisfacción (CSAT), conversión asistida, ticket promedio, volumen de conversaciones\". Caso 3 addresses it head-on: \"no aplican; aquí la evidencia es el criterio. Si hay exposiciones, ventas o publicaciones, mencionarlas\"."
+        },
+        {
+          "text": "Journal and blog get distinct purposes plus concrete first topic ideas for each",
+          "passed": true,
+          "evidence": "Section 6: journal = \"registrar en 150–400 palabras lo que descubres trabajando con IA\" with 8 titled first entries (e.g. \"Flair.ai vs. Midjourney for product shots: where each one wins\"); blog = \"autoridad; el texto que un hiring manager lee antes de la entrevista\" with 4 titled posts (e.g. \"How we cut product-photo costs by 60% with an AI pipeline\")."
+        },
+        {
+          "text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields",
+          "passed": true,
+          "evidence": "Concrete title + description pairs for Home (\"Mariana Ordoñez — AI Experience Designer\" / \"AI Experience Designer with 7 years of e-commerce content for fashion and beauty...\"), About, Work, Journal and Blog. Section 4 states they map \"a los campos `title` y `description` que el sitio ya exige\", which matches the writingSchema in src/content.config.ts; section 7 adds length limits (título ≤ 60, descripción ≤ 155)."
+        },
+        {
+          "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+          "passed": true,
+          "evidence": "Section 9 \"Hoja de ruta\": \"Fase 1 — lista para aplicar (objetivo: ~4 semanas...)\", followed by \"Fase 2 — profundidad\" and \"Fase 3 — continuo\", plus an ordered build-task list."
+        },
+        {
+          "text": "Assumptions/open questions are collected in a dedicated section",
+          "passed": true,
+          "evidence": "Section 10 \"Supuestos y preguntas abiertas\" collects every inline marker (grep counts 15 [SUPUESTO] occurrences) as 11 checkbox questions: \"Cada [SUPUESTO] del plan, convertido en pregunta para que respondas cuando quieras\"."
+        },
+        {
+          "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+          "passed": true,
+          "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 415.4,
+        "tokens": 64447,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+          "passed": true,
+          "evidence": "File exists: sparse-context-english/with_skill/outputs/content-plan.md (244 lines, 10 sections plus changelog)."
+        },
+        {
+          "text": "Written in English, matching the user's language",
+          "passed": true,
+          "evidence": "Entire document is English: \"# Content plan — Mariana Ordoñez portfolio (mordonez.dev)\", \"## 1. Goal & positioning\", \"## 10. Assumptions & open questions\"."
+        },
+        {
+          "text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to",
+          "passed": true,
+          "evidence": "grep counts 25 [ASSUMPTION] markers inline (e.g. \"[ASSUMPTION — 'starting to job hunt' read as 'applying within a month'...]\"). Dedicated section 10 \"Assumptions & open questions\" restates each as a one-line checkbox question: \"Every [ASSUMPTION] above, restated as a question you can answer in one line\" (15 questions)."
+        },
+        {
+          "text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks",
+          "passed": true,
+          "evidence": "Section 3 table: Home \"Exists, but placeholder copy\"; Work / case studies \"Needs build (ask Claude Code): no `work` collection or pages exist yet\"; About \"Needs build (ask Claude Code): no about page exists\"; Journal \"Exists — 1 generic placeholder entry to replace\"; Blog \"Exists — 1 generic placeholder post to replace\"; Contact \"Needs build\". Header note \"Statuses come from auditing the repo as it exists today (Astro site with `blog` and `journal` collections only)\" — verified accurate against src/content.config.ts and src/pages/."
+        },
+        {
+          "text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided",
+          "passed": true,
+          "evidence": "Four slots with explicit structure, e.g. Slot 1: \"Her role: designing/running the content workflow and deciding where AI belonged in it\", story arc with \"where AI entered (tools, prompts, iterations)\", and \"Metrics: to dig up — products or assets per month, production time per asset before/after, cost per asset, rework rate, time-to-publish, any conversion effect\". A weighted selection scorecard handles the undecided projects (\"map your real projects onto the slots\"), and the case-study page template leads with \"Outcome-first title + 3-fact summary bar (role · timeframe · result)\"."
+        },
+        {
+          "text": "Journal and blog get distinct purposes plus concrete starter topics",
+          "passed": true,
+          "evidence": "Section 6: journal purpose \"visible proof of hands-on AI thinking between jobs\" with 8 titled starter entries (e.g. \"Five prompt iterations to one usable product image\", \"Three AI tools I dropped this month, and why\"); blog purpose \"authority pieces a design lead might share; each doubles as application material\" with 4 titled posts (e.g. \"From e-commerce content to AI experience design: what actually transfers\")."
+        },
+        {
+          "text": "SEO metadata proposed: a title and description for at least the main pages",
+          "passed": true,
+          "evidence": "Concrete title + description pairs for every main page, e.g. Home: title \"Mariana Ordoñez — AI Experience Designer\" / description \"AI experience designer with deep e-commerce content roots. I design AI-powered content systems and experiences that ship...\"; also Work, About, Journal, Blog, plus a case-study pattern. Section 7 notes \"`title` and `description` map directly to the frontmatter fields every entry already requires\"."
+        },
+        {
+          "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+          "passed": true,
+          "evidence": "Section 9: \"Phase 1 — apply-ready (target: ~3 weeks, by end of June 2026 [ASSUMPTION])\" with 8 steps ending \"Start applying — don't wait for Phase 2\", followed by \"Phase 2 — depth (weeks 4–8)\" and \"Phase 3 — ongoing\", plus a separate build-task list for Claude Code."
+        },
+        {
+          "text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap",
+          "passed": true,
+          "evidence": "Decision 1: \"Lead with the intersection, not the destination... Plenty of people claim AI skills; almost none pair them with shipped e-commerce content work at scale.\" Positioning statement leads with the e-commerce depth, and Slot 1 is framed as \"the intersection no one else can claim\"."
+        },
+        {
+          "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+          "passed": true,
+          "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.82,
+        "passed": 9,
+        "failed": 2,
+        "total": 11,
+        "time_seconds": 328.2,
+        "tokens": 51866,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+          "passed": true,
+          "evidence": "File exists: rich-context-spanish/without_skill/outputs/content-plan.md (331 lines, 13 sections plus two appendices)."
+        },
+        {
+          "text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language",
+          "passed": true,
+          "evidence": "Headings and body are Spanish throughout: \"# Plan de contenido — mordonez.dev\", \"## 1. Resumen ejecutivo\", \"## 3. Arquitectura del sitio: de lo que hay a lo que se necesita\", \"## 10. Calendario editorial\". English appears only in proposed site copy (statements, case-study titles), with the language strategy stated explicitly in section 2."
+        },
+        {
+          "text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections",
+          "passed": true,
+          "evidence": "Section 3 \"Estructura objetivo\" lists: \"/ Home (reescribir hero y secciones), /work/ Índice de casos de estudio ← NUEVO, /work/[slug]/ Caso de estudio ← NUEVO, /about/ Bio + qué busco + contacto ← NUEVO, /blog/ (existe), /journal/ (existe)\", plus nav order \"Work · About · Blog · Journal\"."
+        },
+        {
+          "text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built",
+          "passed": true,
+          "evidence": "Section 3 \"Estado actual (auditado en el repo)\": \"Colecciones: `blog` y `journal` (schema compartido: `title`, `description`, `pubDate`, `updatedDate`, `draft`, `tags`)...\", \"No existe sección de portafolio... no hay colección ni rutas `work`\", \"No hay página About ni contacto\"; /work/ and /about/ flagged \"← NUEVO\". All claims verified accurate against src/content.config.ts, src/pages/, and the placeholder files first-post.md / field-note-001.md."
+        },
+        {
+          "text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented",
+          "passed": true,
+          "evidence": "Section 5 defines three case studies: 5.1 /work/ai-product-photo-pipeline/ (\"Métricas: ~60% menos costo por foto\"), 5.2 /work/beauty-shopping-assistant/ with NDA banner \"Client name and proprietary data withheld under NDA. Flows and dialogues below are recreated and sanitized\" and \"No inventar números\", 5.3 /work/generative-studio/ (the art practice). Beauty client is anonymized, never named or invented."
+        },
+        {
+          "text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up",
+          "passed": true,
+          "evidence": "Shared template for all three cases: \"TL;DR con tarjetas de métricas → ... → Resultados → Limitaciones y ética → Aprendizajes\". 5.1: \"~60% menos costo por foto + cualquier otra que tengas (tiempo de entrega, variantes por SKU, volumen mensual)\". 5.2: names the verifiable results to use under NDA (\"se lanzó a piloto, lo adoptó el equipo X, decisiones que cambió\"). Apéndice B gates publishing any case on \"Métrica del TL;DR defendible en entrevista (con baseline claro)\"."
+        },
+        {
+          "text": "Journal and blog get distinct purposes plus concrete first topic ideas for each",
+          "passed": true,
+          "evidence": "Section 6 blog: \"demostrar pensamiento (no solo ejecución), generar SEO... material para LinkedIn\" with a bank of 12 titled ideas (e.g. \"What 7 years of e-commerce content taught me about AI image pipelines\"). Section 7 journal: \"ritmo y autenticidad... el espacio en español\" with 5 formats and 6 concrete first entries (\"un experimento de fondos con Flair.ai\", \"el prompt de descripciones que más usas\", etc.)."
+        },
+        {
+          "text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields",
+          "passed": false,
+          "evidence": "Section 9 offers only patterns and rules, not concrete metadata: \"Patrones de título... páginas → `{Page} | Mariana Ordonez`\" and \"Descriptions: escribirlas como copy de venta de ≤160 caracteres, no como resumen burocrático\". No actual title text and no description text is proposed for any main page (home, about, work, blog, journal) — only target queries per page. This is the vague mention the assertion excludes."
+        },
+        {
+          "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+          "passed": true,
+          "evidence": "Section 10 is a phased 12-week calendar (Fundación → Caso ancla → Blog → Caso NDA → Arte → Revisión) plus \"Cadencia de crucero\". Apply-readiness of the first arc is explicitly marked in section 13: \"Semana 4 | Home + About + caso ancla publicados; el enlace ya se puede usar en aplicaciones.\""
+        },
+        {
+          "text": "Assumptions/open questions are collected in a dedicated section",
+          "passed": false,
+          "evidence": "No dedicated assumptions/open-questions section exists anywhere in the 13 sections + 2 appendices. grep for SUPUESTO/ASSUMPTION/GUESS markers returns 0 matches. Decisions are presented as closed (\"Estrategia de idioma (decisión cerrada, sin i18n al inicio)\"); pending items appear only inline as tasks (\"Confirmar permisos con la marca\"), never collected for the user to confirm."
+        },
+        {
+          "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+          "passed": true,
+          "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 8,
+        "failed": 2,
+        "total": 10,
+        "time_seconds": 421.4,
+        "tokens": 61352,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+          "passed": true,
+          "evidence": "File exists: sparse-context-english/without_skill/outputs/content-plan.md (195 lines, sections 0–9)."
+        },
+        {
+          "text": "Written in English, matching the user's language",
+          "passed": true,
+          "evidence": "Entire document is English: \"# Content Plan — mordonez.dev\", \"## 1. Positioning — the one sentence the whole site serves\", \"## 8. Roadmap — phased for a job hunt\"."
+        },
+        {
+          "text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to",
+          "passed": true,
+          "evidence": "grep counts 20 [GUESS] markers inline (e.g. \"[GUESS — 'ten years' is invented; replace with your real number]\"). Section 0 lists \"Key assumptions I had to make\" (5 items) and dedicated section 9 \"Everything I guessed, in one list — react to these first\" tabulates 8 guesses each with an \"If wrong, what changes\" column."
+        },
+        {
+          "text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks",
+          "passed": true,
+          "evidence": "Section 2 table: Work \"Missing — build it\" (P0, \"New `work` content collection, mirroring how `blog`/`journal` are set up\"); About \"Missing — build it\"; Home \"Exists, generic copy\"; Contact \"Missing\"; Blog \"Exists, 1 placeholder\"; Journal \"Exists, 1 placeholder\". Section 0 repo facts (\"Two content collections exist: `blog` and `journal` (shared frontmatter: title, description, pubDate, updatedDate, draft, tags)\") verified accurate against src/content.config.ts."
+        },
+        {
+          "text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided",
+          "passed": true,
+          "evidence": "Section 3.3 template mandates per case: \"Header block: title, one-line outcome, role, team size, timeframe\" and \"Outcome: numbers if you have them; honest qualitative results if you don't ('adopted by 3 teams' counts)\". Section 4 defines three slots with the AI mechanic named per slot (\"'designing rules for content that varies' = prompt/template design for generative output\"; slot 3 \"The AI-native story — this slot is non-negotiable\") and a weighted rubric scoring \"Outcome strength (metrics, adoption) ×2\" for the undecided projects."
+        },
+        {
+          "text": "Journal and blog get distinct purposes plus concrete starter topics",
+          "passed": false,
+          "evidence": "Purposes are distinct (blog §5 \"the career-changer's credibility engine\"; journal §6 \"low-cost signal of momentum... field-notes stream\") and the blog gets 4 titled seed posts. But the journal gets no concrete starter topics — only format categories (\"a prompt experiment, an interaction pattern spotted, a paper or product note\") and \"Replace the field-note-001.md placeholder with a real observation on day one\". The roadmap likewise says only \"2–3 journal entries so the stream isn't empty\". Half the assertion is unmet; no partial credit."
+        },
+        {
+          "text": "SEO metadata proposed: a title and description for at least the main pages",
+          "passed": false,
+          "evidence": "Section 7 gives only guidance, not metadata: descriptions \"write each as the search-result pitch — 'How I rebuilt X's product content system and cut production time 40%'\" (a generic example, not a page's description) and a title rule (\"the layout already appends '| Mariana Ordonez' — keep titles under ~55 characters\"). No concrete title or description text is proposed for any main page (home, about, work, blog, journal); the §1 hero options are page copy, not metadata."
+        },
+        {
+          "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+          "passed": true,
+          "evidence": "Section 8 \"Roadmap — phased for a job hunt\": \"Phase 1 — Minimum credible launch (weeks 1–2). Don't apply anywhere until this exists:\" with a 5-item checklist, then \"Phase 2 — Full argument (weeks 3–4)\" and \"Phase 3 — Ongoing while interviewing\". Phase 1 is explicitly the apply-gating launch slice."
+        },
+        {
+          "text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap",
+          "passed": true,
+          "evidence": "Section 1: \"make the transition look like a trajectory, not a pivot. E-commerce content work is genuinely strong raw material for AI experience design — both are about shaping language systems at scale... measuring whether words actually move behavior\"; hero option B: \"where every word had a conversion rate — I bring that same accountability to conversational and generative interfaces\"; \"Anti-goal: do not position as 'aspiring AI designer'\"."
+        },
+        {
+          "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+          "passed": true,
+          "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 400.55,
+        "stddev": 21.0011,
+        "min": 385.7,
+        "max": 415.4
+      },
+      "tokens": {
+        "mean": 63137.0,
+        "stddev": 1852.6198,
+        "min": 61827,
+        "max": 64447
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.81,
+        "stddev": 0.0141,
+        "min": 0.8,
+        "max": 0.82
+      },
+      "time_seconds": {
+        "mean": 374.8,
+        "stddev": 65.9024,
+        "min": 328.2,
+        "max": 421.4
+      },
+      "tokens": {
+        "mean": 56609.0,
+        "stddev": 6707.6149,
+        "min": 51866,
+        "max": 61352
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.19",
+      "time_seconds": "+25.8",
+      "tokens": "+6528"
+    }
+  },
+  "notes": [
+    "Cleanest discriminator: concrete SEO metadata. Both without-skill runs proposed only naming patterns (no actual title/description text per page) and failed that assertion; both with-skill runs shipped concrete pairs for every main page.",
+    "Assumptions discipline: the Spanish-rich baseline presented guesses as closed decisions (0 assumption markers, no reaction section). With-skill runs marked 15-25 assumptions inline and collected them for Mariana to react to. The sparse-English baseline only marked guesses because the prompt explicitly demanded it - the skill makes this behavior unconditional.",
+    "Non-discriminating assertions (passed in all 4 runs): plan file saved, correct language, phased roadmap, mapping to the real repo collections. A strong base model already does these; they remain as regression guards.",
+    "Cost of the skill: +19pt pass rate for roughly +10k tokens on the rich eval (61.8k vs 51.9k) and +3k on the sparse eval (64.4k vs 61.4k); wall-clock comparable.",
+    "Privacy observation: one baseline run mined a personal Gmail address out of git history and put it in the plan; the skill instead asks for her preferred contact method in the interview. Consider an explicit assertion for this.",
+    "Grader eval-feedback: make the repo-untouched assertion self-contained (per-run git snapshot); metrics assertion is ambiguous for the art project where metrics genuinely do not apply; no assertion checks factual accuracy of repo claims (all spot-checked claims happened to be accurate this round)."
+  ]
+}

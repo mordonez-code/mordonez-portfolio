@@ -1,0 +1,74 @@
+{
+  "expectations": [
+    {
+      "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+      "passed": true,
+      "evidence": "File exists: rich-context-spanish/without_skill/outputs/content-plan.md (331 lines, 13 sections plus two appendices)."
+    },
+    {
+      "text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language",
+      "passed": true,
+      "evidence": "Headings and body are Spanish throughout: \"# Plan de contenido — mordonez.dev\", \"## 1. Resumen ejecutivo\", \"## 3. Arquitectura del sitio: de lo que hay a lo que se necesita\", \"## 10. Calendario editorial\". English appears only in proposed site copy (statements, case-study titles), with the language strategy stated explicitly in section 2."
+    },
+    {
+      "text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections",
+      "passed": true,
+      "evidence": "Section 3 \"Estructura objetivo\" lists: \"/ Home (reescribir hero y secciones), /work/ Índice de casos de estudio ← NUEVO, /work/[slug]/ Caso de estudio ← NUEVO, /about/ Bio + qué busco + contacto ← NUEVO, /blog/ (existe), /journal/ (existe)\", plus nav order \"Work · About · Blog · Journal\"."
+    },
+    {
+      "text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built",
+      "passed": true,
+      "evidence": "Section 3 \"Estado actual (auditado en el repo)\": \"Colecciones: `blog` y `journal` (schema compartido: `title`, `description`, `pubDate`, `updatedDate`, `draft`, `tags`)...\", \"No existe sección de portafolio... no hay colección ni rutas `work`\", \"No hay página About ni contacto\"; /work/ and /about/ flagged \"← NUEVO\". All claims verified accurate against src/content.config.ts, src/pages/, and the placeholder files first-post.md / field-note-001.md."
+    },
+    {
+      "text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented",
+      "passed": true,
+      "evidence": "Section 5 defines three case studies: 5.1 /work/ai-product-photo-pipeline/ (\"Métricas: ~60% menos costo por foto\"), 5.2 /work/beauty-shopping-assistant/ with NDA banner \"Client name and proprietary data withheld under NDA. Flows and dialogues below are recreated and sanitized\" and \"No inventar números\", 5.3 /work/generative-studio/ (the art practice). Beauty client is anonymized, never named or invented."
+    },
+    {
+      "text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up",
+      "passed": true,
+      "evidence": "Shared template for all three cases: \"TL;DR con tarjetas de métricas → ... → Resultados → Limitaciones y ética → Aprendizajes\". 5.1: \"~60% menos costo por foto + cualquier otra que tengas (tiempo de entrega, variantes por SKU, volumen mensual)\". 5.2: names the verifiable results to use under NDA (\"se lanzó a piloto, lo adoptó el equipo X, decisiones que cambió\"). Apéndice B gates publishing any case on \"Métrica del TL;DR defendible en entrevista (con baseline claro)\"."
+    },
+    {
+      "text": "Journal and blog get distinct purposes plus concrete first topic ideas for each",
+      "passed": true,
+      "evidence": "Section 6 blog: \"demostrar pensamiento (no solo ejecución), generar SEO... material para LinkedIn\" with a bank of 12 titled ideas (e.g. \"What 7 years of e-commerce content taught me about AI image pipelines\"). Section 7 journal: \"ritmo y autenticidad... el espacio en español\" with 5 formats and 6 concrete first entries (\"un experimento de fondos con Flair.ai\", \"el prompt de descripciones que más usas\", etc.)."
+    },
+    {
+      "text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields",
+      "passed": false,
+      "evidence": "Section 9 offers only patterns and rules, not concrete metadata: \"Patrones de título... páginas → `{Page} | Mariana Ordonez`\" and \"Descriptions: escribirlas como copy de venta de ≤160 caracteres, no como resumen burocrático\". No actual title text and no description text is proposed for any main page (home, about, work, blog, journal) — only target queries per page. This is the vague mention the assertion excludes."
+    },
+    {
+      "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+      "passed": true,
+      "evidence": "Section 10 is a phased 12-week calendar (Fundación → Caso ancla → Blog → Caso NDA → Arte → Revisión) plus \"Cadencia de crucero\". Apply-readiness of the first arc is explicitly marked in section 13: \"Semana 4 | Home + About + caso ancla publicados; el enlace ya se puede usar en aplicaciones.\""
+    },
+    {
+      "text": "Assumptions/open questions are collected in a dedicated section",
+      "passed": false,
+      "evidence": "No dedicated assumptions/open-questions section exists anywhere in the 13 sections + 2 appendices. grep for SUPUESTO/ASSUMPTION/GUESS markers returns 0 matches. Decisions are presented as closed (\"Estrategia de idioma (decisión cerrada, sin i18n al inicio)\"); pending items appear only inline as tasks (\"Confirmar permisos con la marca\"), never collected for the user to confirm."
+    },
+    {
+      "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+      "passed": true,
+      "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 2,
+    "total": 11,
+    "pass_rate": 0.82
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+        "reason": "This run passed via an apply-ready milestone in a separate success-metrics table (week 4) rather than a phase labeled apply-ready in the roadmap itself. If the eval intends the roadmap's first phase to be explicitly designated, tighten the wording; as written, a clear milestone elsewhere satisfies it."
+      }
+    ],
+    "overall": "Strong, factually accurate plan that fails exactly where the skill adds discipline: no concrete SEO title/description text and no dedicated assumptions/open-questions section (0 assumption markers)."
+  }
+}

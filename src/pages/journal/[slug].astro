@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { resources, site } from "../../data/site";
+import { breadcrumbSchema, personId, resources, site } from "../../data/site";
 import { getJournalArticles } from "../../lib/journal.server";
 
 export async function getStaticPaths() {
@@ -18,6 +18,22 @@ const bodyIntro = article.bodyMarkdown
 	?.replace(/^# .+\n+/, "")
 	.split("## Key points")[0]
 	.trim();
+
+const pageUrl = `${site.url}/journal/${article.slug}/`;
+const articleSchema = {
+	"@type": "BlogPosting",
+	"@id": `${pageUrl}#article`,
+	headline: article.title,
+	description: article.metaDescription ?? article.excerpt,
+	url: pageUrl,
+	mainEntityOfPage: pageUrl,
+	articleSection: article.category,
+	keywords: article.keyword,
+	inLanguage: "en",
+	...(article.publishedAt ? { datePublished: article.publishedAt } : {}),
+	author: { "@id": personId },
+	publisher: { "@id": personId },
+};
 ---
 
 <Layout
@@ -25,6 +41,13 @@ const bodyIntro = article.bodyMarkdown
 	description={article.metaDescription ?? article.excerpt}
 	path={`/journal/${article.slug}/`}
 	type="article"
+	schema={[
+		articleSchema,
+		breadcrumbSchema([
+			["Journal", "/journal/"],
+			[article.title, `/journal/${article.slug}/`],
+		]),
+	]}
 >
 	<main>
 		<section class="container page-hero">
@@ -39,26 +62,13 @@ const bodyIntro = article.bodyMarkdown
 
 		<section class="container section tight detail-grid">
 			<article class="prose">
-				<h2>Angle</h2>
-				<p>
-					{
-						bodyIntro ??
-							`This article targets ${article.keyword} and connects the search intent to practical product, UX and conversion decisions.`
-					}
-				</p>
+				{bodyIntro && <p>{bodyIntro}</p>}
 
-				<h2>Outline</h2>
+				<h2>What this note covers</h2>
 				<ul>
 					{article.outline.map((item) => <li>{item}</li>)}
 				</ul>
 
-				<h2>Recruiter signal</h2>
-				<p>
-					The goal is to make the thinking visible: how research becomes a design hypothesis,
-					how AI can speed production, and how conversion decisions stay grounded in craft.
-				</p>
-
-				<h2>Call to action</h2>
 				<p>
 					<a class="text-link" href="/work/">See this thinking in the work</a> or email me for
 					remote graphic, ecommerce and marketing design roles.
@@ -69,7 +79,7 @@ const bodyIntro = article.bodyMarkdown
 				<dl>
 					<dt>Category</dt>
 					<dd>{article.category}</dd>
-					<dt>Primary keyword</dt>
+					<dt>Topic</dt>
 					<dd>{article.keyword}</dd>
 					<dt>Related resource</dt>
 					<dd>{relatedResource.title}</dd>

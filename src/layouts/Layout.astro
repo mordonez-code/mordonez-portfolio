@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { navItems, site, socialLinks } from "../data/site";
+import { navItems, personId, site, socialLinks } from "../data/site";
 
 interface Props {
 	title: string;
@@ -8,6 +8,8 @@ interface Props {
 	path?: string;
 	image?: string;
 	type?: "website" | "article" | "profile";
+	// Extra JSON-LD for this page (case study, article, breadcrumbs), rendered in <head>.
+	schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -16,7 +18,9 @@ const {
 	path = Astro.url.pathname,
 	image = "/brand/avatar-512-wine.png",
 	type = "website",
+	schema = [],
 } = Astro.props;
+const pageSchemas = Array.isArray(schema) ? schema : [schema];
 
 const canonicalPath = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
 const canonical = new URL(canonicalPath, site.url).toString();
@@ -29,17 +33,22 @@ const sameAs = socialLinks
 const websiteSchema = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
+	"@id": `${site.url}/#website`,
 	name: site.name,
 	url: site.url,
 	description,
+	inLanguage: "en",
+	author: { "@id": personId },
 };
 
 const resumeUrl = new URL("/resume.json", site.url).toString();
+const resumePdfUrl = new URL(site.resumeUrl, site.url).toString();
 
 // Read by recruiter tools and AI sourcing agents; keep in step with public/resume.json and public/llms.txt.
 const personSchema = {
 	"@context": "https://schema.org",
 	"@type": "Person",
+	"@id": personId,
 	name: "Mariana Ordoñez Alarcón",
 	alternateName: ["Mariana Ordonez", "Mariana Ordoñez"],
 	givenName: "Mariana",
@@ -98,7 +107,7 @@ const personSchema = {
 	hasCredential: [
 		["Generative AI for UI/UX Design", "IBM", "2026"],
 		["Syndication Proficiency", "Salsify", "2024"],
-		["Google UX Design Certificate", "Google", "2023"],
+		["Google UX Design Certificate", "Coursera", "2023"],
 	].map(([name, issuer, year]) => ({
 		"@type": "EducationalOccupationalCredential",
 		name,
@@ -117,12 +126,20 @@ const personSchema = {
 		availableAtOrFrom: { "@type": "Place", name: "Remote, US business hours (UTC-5)" },
 	},
 	sameAs,
-	subjectOf: {
-		"@type": "DigitalDocument",
-		name: "Résumé (JSON Resume)",
-		url: resumeUrl,
-		encodingFormat: "application/json",
-	},
+	subjectOf: [
+		{
+			"@type": "DigitalDocument",
+			name: "Résumé (JSON Resume)",
+			url: resumeUrl,
+			encodingFormat: "application/json",
+		},
+		{
+			"@type": "DigitalDocument",
+			name: "Résumé (PDF)",
+			url: resumePdfUrl,
+			encodingFormat: "application/pdf",
+		},
+	],
 };
 ---
 
@@ -136,6 +153,10 @@ const personSchema = {
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
 		<link rel="alternate" type="application/json" href={resumeUrl} title="Résumé (JSON Resume)" />
+		<link rel="alternate" type="application/pdf" href={resumePdfUrl} title="Résumé (PDF)" />
+		<link rel="alternate" type="application/rss+xml" href={new URL("/rss.xml", site.url).toString()} title={`${site.name} Journal`} />
+		<link rel="alternate" type="text/plain" href={new URL("/llms.txt", site.url).toString()} title="llms.txt" />
+		<link rel="author" href={new URL("/about/", site.url).toString()} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -147,7 +168,10 @@ const personSchema = {
 		<link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-180.png" />
 		<meta property="og:title" content={fullTitle} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content={type === "article" ? "article" : "website"} />
+		<meta property="og:type" content={type} />
+		{type === "article" && <meta property="article:author" content={new URL("/about/", site.url).toString()} />}
+		{type === "profile" && <meta property="profile:first_name" content="Mariana" />}
+		{type === "profile" && <meta property="profile:last_name" content="Ordoñez Alarcón" />}
 		<meta property="og:url" content={canonical} />
 		<meta property="og:image" content={new URL(image, site.url).toString()} />
 		<meta name="twitter:card" content="summary_large_image" />
@@ -156,6 +180,14 @@ const personSchema = {
 		<meta name="twitter:image" content={new URL(image, site.url).toString()} />
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+		{
+			pageSchemas.map((item) => (
+				<script
+					type="application/ld+json"
+					set:html={JSON.stringify({ "@context": "https://schema.org", ...item })}
+				/>
+			))
+		}
 	</head>
 	<body>
 		<header class="site-header">
