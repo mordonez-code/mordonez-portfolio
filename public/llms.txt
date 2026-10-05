@@ -13,7 +13,8 @@ Contact: marianaordonez04@gmail.com
 ## Structured data
 
 - [Résumé, JSON Resume schema](https://mordonez.com/resume.json): machine-readable employment history, skills and certifications
-- [Résumé, PDF](https://mordonez.com/downloads/Mariana-Ordonez-CV.pdf): one page, text-layer, single column
+- [Résumé, HTML](https://mordonez.com/downloads/Mariana-Ordonez-CV.html): same content as the PDF, single column, semantic headings
+- [Résumé, PDF](https://mordonez.com/downloads/Mariana-Ordonez-CV.pdf): one page, single column, tagged PDF with a selectable text layer
 
 ## Case studies
 
@@ -41,6 +42,11 @@ Product and systems: Figma design systems and components, wireframing, prototypi
 usability testing, developer handoff.
 Tools: Figma, Shopify, Adobe Photoshop, Illustrator, After Effects, InDesign, Canva,
 Salsify, Klaviyo, HTML, CSS, React basics, generative AI tools.
+
+## Feeds
+
+- [Sitemap](https://mordonez.com/sitemap-index.xml)
+- [Journal RSS](https://mordonez.com/rss.xml)
 
 ## Optional
 

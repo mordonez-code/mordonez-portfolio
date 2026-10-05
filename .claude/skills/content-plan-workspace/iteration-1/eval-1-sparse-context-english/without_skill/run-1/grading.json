@@ -1,0 +1,68 @@
+{
+  "expectations": [
+    {
+      "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+      "passed": true,
+      "evidence": "File exists: sparse-context-english/without_skill/outputs/content-plan.md (195 lines, sections 0–9)."
+    },
+    {
+      "text": "Written in English, matching the user's language",
+      "passed": true,
+      "evidence": "Entire document is English: \"# Content Plan — mordonez.dev\", \"## 1. Positioning — the one sentence the whole site serves\", \"## 8. Roadmap — phased for a job hunt\"."
+    },
+    {
+      "text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to",
+      "passed": true,
+      "evidence": "grep counts 20 [GUESS] markers inline (e.g. \"[GUESS — 'ten years' is invented; replace with your real number]\"). Section 0 lists \"Key assumptions I had to make\" (5 items) and dedicated section 9 \"Everything I guessed, in one list — react to these first\" tabulates 8 guesses each with an \"If wrong, what changes\" column."
+    },
+    {
+      "text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks",
+      "passed": true,
+      "evidence": "Section 2 table: Work \"Missing — build it\" (P0, \"New `work` content collection, mirroring how `blog`/`journal` are set up\"); About \"Missing — build it\"; Home \"Exists, generic copy\"; Contact \"Missing\"; Blog \"Exists, 1 placeholder\"; Journal \"Exists, 1 placeholder\". Section 0 repo facts (\"Two content collections exist: `blog` and `journal` (shared frontmatter: title, description, pubDate, updatedDate, draft, tags)\") verified accurate against src/content.config.ts."
+    },
+    {
+      "text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided",
+      "passed": true,
+      "evidence": "Section 3.3 template mandates per case: \"Header block: title, one-line outcome, role, team size, timeframe\" and \"Outcome: numbers if you have them; honest qualitative results if you don't ('adopted by 3 teams' counts)\". Section 4 defines three slots with the AI mechanic named per slot (\"'designing rules for content that varies' = prompt/template design for generative output\"; slot 3 \"The AI-native story — this slot is non-negotiable\") and a weighted rubric scoring \"Outcome strength (metrics, adoption) ×2\" for the undecided projects."
+    },
+    {
+      "text": "Journal and blog get distinct purposes plus concrete starter topics",
+      "passed": false,
+      "evidence": "Purposes are distinct (blog §5 \"the career-changer's credibility engine\"; journal §6 \"low-cost signal of momentum... field-notes stream\") and the blog gets 4 titled seed posts. But the journal gets no concrete starter topics — only format categories (\"a prompt experiment, an interaction pattern spotted, a paper or product note\") and \"Replace the field-note-001.md placeholder with a real observation on day one\". The roadmap likewise says only \"2–3 journal entries so the stream isn't empty\". Half the assertion is unmet; no partial credit."
+    },
+    {
+      "text": "SEO metadata proposed: a title and description for at least the main pages",
+      "passed": false,
+      "evidence": "Section 7 gives only guidance, not metadata: descriptions \"write each as the search-result pitch — 'How I rebuilt X's product content system and cut production time 40%'\" (a generic example, not a page's description) and a title rule (\"the layout already appends '| Mariana Ordonez' — keep titles under ~55 characters\"). No concrete title or description text is proposed for any main page (home, about, work, blog, journal); the §1 hero options are page copy, not metadata."
+    },
+    {
+      "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+      "passed": true,
+      "evidence": "Section 8 \"Roadmap — phased for a job hunt\": \"Phase 1 — Minimum credible launch (weeks 1–2). Don't apply anywhere until this exists:\" with a 5-item checklist, then \"Phase 2 — Full argument (weeks 3–4)\" and \"Phase 3 — Ongoing while interviewing\". Phase 1 is explicitly the apply-gating launch slice."
+    },
+    {
+      "text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap",
+      "passed": true,
+      "evidence": "Section 1: \"make the transition look like a trajectory, not a pivot. E-commerce content work is genuinely strong raw material for AI experience design — both are about shaping language systems at scale... measuring whether words actually move behavior\"; hero option B: \"where every word had a conversion rate — I bring that same accountability to conversational and generative interfaces\"; \"Anti-goal: do not position as 'aspiring AI designer'\"."
+    },
+    {
+      "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+      "passed": true,
+      "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 2,
+    "total": 10,
+    "pass_rate": 0.8
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "No assertion checks the factual accuracy of the plan's repo claims. This run mined a personal email from git history (\"the git history shows marianaordonez04@gmail.com\" — verified accurate via git log), but a hallucinated repo 'fact' would currently pass ungraded; consider an assertion that repo claims in the plan are verifiably true."
+      }
+    ],
+    "overall": "Solid grounded plan that fails on concrete journal starter topics and concrete SEO titles/descriptions — both genuine, discriminating gaps versus the with-skill run."
+  }
+}

@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "content-plan", "runs": [{"id": "eval-0-rich-context-spanish-with_skill-run-1", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "content-plan.md", "type": "text", "content": "# Plan de contenido \u2014 Portafolio de Mariana Ordo\u00f1ez\n\n**Fecha:** 2026-06-09 \u00b7 **Estado:** borrador (pendiente de tu visto bueno) \u00b7 **Para:** Mariana Ordo\u00f1ez\n\n> **C\u00f3mo se hizo este plan.** Lo arm\u00e9 con el contexto que me diste (7 a\u00f1os de contenido e-commerce para moda y belleza, 2 a\u00f1os con IA en producci\u00f3n, meta: rol de AI Experience Designer remoto para EE. UU./Europa) y con una auditor\u00eda del sitio tal como existe hoy. Como pediste que no te preguntara nada, tom\u00e9 decisiones razonables y las marqu\u00e9 como `[SUPUESTO]`. Todas est\u00e1n recogidas como preguntas en la secci\u00f3n 10 para que las confirmes o las cambies \u2014 nada est\u00e1 tallado en piedra.\n\n---\n\n## Para empezar: lo que m\u00e1s necesito que revises\n\n**Las 3 decisiones que m\u00e1s definen el sitio** (si alguna no te convence, v\u00e9tala ya):\n\n1. **El sitio se publica en ingl\u00e9s.** Tu mercado objetivo es EE. UU./Europa y tu ingl\u00e9s es bueno; el sitio ya est\u00e1 montado en ingl\u00e9s. El plan est\u00e1 en espa\u00f1ol para ti, pero los textos propuestos para el sitio van en ingl\u00e9s. `[SUPUESTO]`\n2. **Tu posicionamiento es la intersecci\u00f3n, no la herramienta:** *AI Experience Designer con 7 a\u00f1os reales de operaci\u00f3n de contenido e-commerce*. Muchos dise\u00f1adores dicen \"s\u00e9 usar Midjourney\"; muy pocos llevan a\u00f1os produciendo fotos, copys y fichas de producto a escala para marcas reales. Eso lidera todo: home, About, casos de estudio.\n3. **La Fase 1 se construye alrededor de dos casos de estudio anonimizados:** el pipeline de fotos con IA (tu mejor evidencia: \u221260% de costo por foto) y el chatbot de belleza (el proyecto que m\u00e1s se parece al cargo que buscas). El arte entra en Fase 2 como tercer proyecto, no como galer\u00eda separada. `[SUPUESTO]`\n\n**Lo m\u00ednimo para empezar a aplicar (Fase 1, detalle en la secci\u00f3n 9):** home reescrito, p\u00e1gina About, secci\u00f3n Work con los 2 casos de estudio, 3 notas de journal publicadas, bloque de contacto, y borrar el contenido de relleno que hay hoy.\n\n**Lo que solo t\u00fa puedes conseguir** (es lo que m\u00e1s suele atrasar el lanzamiento \u2014 checklist completa en la secci\u00f3n 8): los n\u00fameros del pipeline de fotos, los permisos (marca de moda y NDA del chatbot), un retrato tuyo, tu CV en ingl\u00e9s alineado a este posicionamiento, tu URL de LinkedIn, el email de contacto y la decisi\u00f3n del dominio.\n\n---\n\n## 1. Objetivo y posicionamiento\n\n- **Objetivo:** conseguir un rol de **AI Experience Designer** (o equivalente) con mejor salario, **remoto para empresas de EE. UU. o Europa**, empezando a aplicar en unas **4 semanas** (mediados de julio 2026). `[SUPUESTO: no me diste fecha; si ya est\u00e1s aplicando, la Fase 1 se comprime]`\n- **Declaraci\u00f3n de posicionamiento (1 frase, para el sitio, en ingl\u00e9s):**\n  > \"I design AI-powered e-commerce experiences \u2014 image pipelines, copy systems, and shopping assistants \u2014 built on seven years of content operations for fashion and beauty brands.\"\n- **Elevator pitch (2\u20133 frases para el home y la apertura del About, en ingl\u00e9s):**\n  > \"I'm Mariana Ordo\u00f1ez, an AI Experience Designer who comes from the production floor of e-commerce: seven years creating product photography, copy, and product pages for fashion and beauty brands. For the past two years I've redesigned those workflows around generative AI \u2014 Midjourney and Flair.ai for imagery, Claude and ChatGPT for copy \u2014 cutting one fashion brand's cost per product photo by ~60% and helping a beauty retailer design its shopping chatbot. What I bring is the judgment layer: knowing what AI should do, what it shouldn't, and how to keep a brand's voice and visual truth intact at scale.\"\n- **Nota de tono:** el mejor salario es tu motivaci\u00f3n, no tu mensaje. Ning\u00fan texto del sitio debe sonar a \"contr\u00e1tame, por favor\"; todo se formula como evidencia de lo que ya haces bien. La disponibilidad se menciona una sola vez, en plan factual: *\"Open to remote AI experience design roles (US/EU time zones).\"*\n- **Roles objetivo:** AI Experience Designer (principal). Adyacentes que el mismo contenido cubre: AI Content Designer / Content Strategist, Conversation Designer, Product Designer (AI / e-commerce), GenAI Creative Strategist. `[SUPUESTO: lista de adyacentes \u2014 rec\u00f3rtala si alguno no te interesa]`\n\n## 2. Audiencia\n\n| Audiencia | Qu\u00e9 necesita ver | Prioridad |\n|---|---|---|\n| Hiring managers / design leads en empresas de producto (e-commerce, retail tech, herramientas de IA) en EE. UU./Europa | Proceso y criterio trabajando con IA: qu\u00e9 decidiste t\u00fa y qu\u00e9 hizo la herramienta, resultados medibles, ingl\u00e9s impecable | Primaria |\n| Recruiters / talent partners | Claridad en 30 segundos: t\u00edtulo buscable (\"AI Experience Designer\"), una prueba contundente (\u221260%), se\u00f1al de remoto/zona horaria, LinkedIn coherente con el sitio | Primaria (son el filtro previo) |\n| Comunidad de dise\u00f1o + IA y comunidad de arte | Journal honesto, pr\u00e1ctica de arte con intenci\u00f3n, piezas compartibles que generen referidos | Secundaria |\n\n## 3. Mapa del sitio\n\nEl estado refleja la auditor\u00eda del repo hecha hoy: el sitio tiene home, blog y journal funcionando (con contenido de relleno), y **no tiene** About, Work ni contacto.\n\n| Secci\u00f3n | Prop\u00f3sito | Estado |\n|---|---|---|\n| Home | Pasar el test de los 30 segundos: qui\u00e9n eres, qu\u00e9 dise\u00f1as, una prueba (\u221260%) \u2014 sin hacer scroll | Existe, pero el contenido actual es gen\u00e9rico de plantilla \u2192 **reescribir texto** (la p\u00e1gina ya est\u00e1 construida) |\n| About | Hacer que tu transici\u00f3n dise\u00f1o \u2192 arte \u2192 e-commerce \u2192 IA se sienta inevitable, no improvisada | **No existe \u2192 construir** (pedir a Claude Code) |\n| Work / Casos de estudio | El coraz\u00f3n del portafolio: 2\u20133 casos con resultados | **No existe \u2192 construir** (nueva colecci\u00f3n de contenido + p\u00e1ginas; pedir a Claude Code) |\n| Journal | Notas de campo cortas y frecuentes: prueba de que piensas con la IA todas las semanas | Existe; tiene 1 entrada de relleno (\"Field Note 001\") \u2192 reemplazar |\n| Blog | Piezas largas con autoridad: deep dives, opiniones ganadas en producci\u00f3n | Existe; tiene 1 post de relleno (\"Starting With a Durable Web Home\") \u2192 reemplazar |\n| Contacto | Que escribirte cueste un clic | **No existe \u2192 construir** como bloque en el pie de p\u00e1gina + cierre del About y de cada caso (no hace falta p\u00e1gina propia) `[SUPUESTO]` |\n| Arte | Diferenciaci\u00f3n y gusto; pr\u00e1ctica generativa con intenci\u00f3n | No existe; en Fase 2 entra como **tercer proyecto dentro de Work** (no galer\u00eda separada), y el proceso se cuenta en el journal `[SUPUESTO]` |\n\n## 4. Esquema p\u00e1gina por p\u00e1gina\n\nLos t\u00edtulos y descripciones SEO van en ingl\u00e9s porque el sitio se publica en ingl\u00e9s (decisi\u00f3n 1). Se mapean a los campos `title` y `description` que el sitio ya exige en cada contenido.\n\n### Home\n- **Trabajo de esta p\u00e1gina:** que en 30 segundos, sin scroll, un recruiter entienda: AI Experience Designer + e-commerce + una prueba dura.\n- **Bloques de contenido, en orden:**\n  1. Hero: nombre + t\u00edtulo (\"AI Experience Designer\") + la declaraci\u00f3n de posicionamiento + la prueba destacada (\"Cut a fashion brand's cost per product photo by ~60% with an AI-powered workflow\") + 2 botones: \"See my work\" / \"About me\".\n  2. Casos destacados: 2 tarjetas (pipeline de fotos y chatbot) con el resultado en el titular, no el nombre del cliente.\n  3. Franja \"How I work with AI\": 3 l\u00edneas \u2014 image pipelines (Midjourney, Flair.ai) \u00b7 copy systems (Claude, ChatGPT) \u00b7 conversational shopping. Aqu\u00ed se nota que el proceso es el producto.\n  4. Escritura reciente (este bloque ya existe en la p\u00e1gina; se mantiene).\n  5. Bloque de contacto en el pie.\n- **Assets necesarios:** retrato o avatar, 2 im\u00e1genes de portada para las tarjetas de casos, og-image en PNG.\n- **SEO:** title: \"Mariana Ordo\u00f1ez \u2014 AI Experience Designer\" \u00b7 description: \"AI Experience Designer with 7 years of e-commerce content for fashion and beauty, now shipping AI image pipelines, copy systems and shopping chatbots.\"\n\n### About\n- **Trabajo de esta p\u00e1gina:** convertir tu trayectoria en un argumento: cada etapa te trajo aqu\u00ed.\n- **Bloques de contenido, en orden:**\n  1. Apertura: el elevator pitch.\n  2. La historia en 3 p\u00e1rrafos cortos: (a) base de dise\u00f1o + pr\u00e1ctica de arte \u2192 ojo entrenado; (b) 7 a\u00f1os de contenido e-commerce para moda y belleza \u2192 operaci\u00f3n a escala, entender qu\u00e9 hace vender una ficha de producto; (c) 2 a\u00f1os metiendo IA en ese flujo \u2192 de \"producir contenido\" a \"dise\u00f1ar el sistema que lo produce\". El hilo conductor: siempre has hecho contenido comercial a escala con criterio de artista; la IA es donde esas dos cosas por fin se juntan.\n  3. \"What I bring\": 3 vi\u00f1etas \u2014 operaci\u00f3n real de e-commerce \u00b7 oficio con herramientas generativas en producci\u00f3n (no demos) \u00b7 gusto y criterio (sabes qu\u00e9 descartar).\n  4. Herramientas, honesto y sin inflar: Midjourney, Flair.ai, Claude, ChatGPT + tu stack de dise\u00f1o.\n  5. Nota personal: tu pr\u00e1ctica de arte (enlaza al proyecto de arte cuando exista).\n  6. Cierre: disponibilidad factual + email + LinkedIn + CV descargable.\n- **Assets necesarios:** retrato profesional, CV en ingl\u00e9s (PDF), URLs de redes.\n- **SEO:** title: \"About \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Designer and artist who turned seven years of e-commerce content operations into a practice designing AI-powered shopping experiences.\"\n\n### Work (\u00edndice de casos)\n- **Trabajo de esta p\u00e1gina:** mostrar evidencia ordenada por relevancia para el rol, no por cronolog\u00eda.\n- **Bloques de contenido, en orden:** intro de 1 l\u00ednea + tarjetas de casos (resultado primero en el titular; etiqueta de contexto: \"Fashion e-commerce\", \"Beauty retail\", \"Personal practice\").\n- **Assets necesarios:** imagen de portada por caso.\n- **SEO:** title: \"Work \u2014 AI & E-commerce Case Studies \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Selected case studies: an AI product-photo pipeline that cut costs ~60%, a shopping chatbot for a beauty retailer, and a generative art practice.\"\n\n### Journal (\u00edndice y entradas)\n- **Trabajo de esta p\u00e1gina:** demostrar mente activa entre empleos; notas de 150\u2013400 palabras, sin pretensi\u00f3n de ensayo.\n- **Bloques de contenido:** el \u00edndice ya existe; solo necesita entradas reales (ver secci\u00f3n 6).\n- **Assets necesarios:** capturas o im\u00e1genes de los experimentos cuando aplique (antes/despu\u00e9s, prompts).\n- **SEO:** title: \"Journal \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Short field notes on designing with AI: prompts, experiments, rejects, and what shipping e-commerce content with generative tools really looks like.\"\n\n### Blog (\u00edndice y posts)\n- **Trabajo de esta p\u00e1gina:** profundidad y autoridad; lo que un hiring manager lee cuando ya le interesaste.\n- **Bloques de contenido:** el \u00edndice ya existe; solo necesita posts reales (ver secci\u00f3n 6).\n- **Assets necesarios:** 1 imagen de cabecera por post (puede ser generada por ti \u2014 y decirlo).\n- **SEO:** title: \"Blog \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Essays on AI experience design and e-commerce content: case-study breakdowns, workflow deep dives, and opinions earned in production.\"\n\n### Bloque de contacto (en footer + About + final de cada caso)\n- **Trabajo de este bloque:** cerrar el ciclo: visto el trabajo \u2192 escribirte en un clic.\n- **Contenido:** \"Open to remote AI experience design roles (US/EU time zones).\" + email + LinkedIn. Sin formulario; un mailto basta. `[SUPUESTO: contacto por email + LinkedIn; confirma qu\u00e9 email quieres usar]`\n\n## 5. Casos de estudio\n\nOrdenados por prioridad de escritura. Ojo a un matiz que conviene dejar expl\u00edcito en el sitio: **el caso del que tienes mejor evidencia (pipeline de fotos) no es el que m\u00e1s se parece al cargo que buscas (chatbot)**. Por eso van los dos en Fase 1: uno prueba resultados, el otro prueba que dise\u00f1as experiencias conversacionales.\n\n### Caso 1 \u2014 \"Cutting product-photo costs ~60% with an AI pipeline\"\n- **Cliente/contexto:** marca de ropa. Anonimizada como *\"a fashion e-commerce brand\"* hasta confirmar permiso para nombrarla y mostrar fotos. `[SUPUESTO: no me dijiste si se puede nombrar]`\n- **Tu rol:** lideraste el redise\u00f1o del flujo de fotos de producto (t\u00fa lo dijiste: \"redise\u00f1\u00e9\"). Decir \"I redesigned\u2026\" con propiedad.\n- **Arco narrativo:** problema (costo y log\u00edstica de las sesiones de fotos tradicionales por cada drop: estudio, modelos, tiempos) \u2192 tu enfoque (mapear el flujo existente y decidir **qu\u00e9 tipos de toma pod\u00eda asumir la IA y cu\u00e1les segu\u00edan siendo f\u00edsicas** \u2014 esa decisi\u00f3n es el coraz\u00f3n del caso) \u2192 d\u00f3nde entr\u00f3 la IA y el criterio que aplicaste (Midjourney y Flair.ai para tomas de ambiente/estilo; biblioteca de prompts reutilizables; reglas de consistencia de marca; control de calidad: qu\u00e9 rechazabas \u2014 manos, distorsi\u00f3n de textiles, fidelidad de color, porque una foto que miente sube las devoluciones) \u2192 resultado (~\u221260% de costo por foto + lo que aparezca al buscar m\u00e9tricas).\n- **M\u00e9tricas:** conocida: \u221260% costo por foto. Por conseguir: costo antes/despu\u00e9s en cifras, fotos por mes o por campa\u00f1a, tiempo de entrega antes/despu\u00e9s, % de tomas que siguieron siendo fotograf\u00eda f\u00edsica, cualquier efecto en conversi\u00f3n o devoluciones.\n- **Assets:** disponibles: tu memoria del proceso y (presumiblemente) ejemplos. Faltan: pares antes/despu\u00e9s, progresi\u00f3n prompt\u2192resultado final, diagrama simple del flujo viejo vs. nuevo, tabla de costos. Requiere permiso de la marca para mostrar im\u00e1genes.\n- **Prioridad:** **1 \u2014 se escribe primero.**\n\n### Caso 2 \u2014 \"Designing a shopping chatbot for a beauty retailer\"\n- **Cliente/contexto:** tienda de belleza, **bajo NDA \u2192 anonimizar como *\"a beauty retailer\"***. La historia no se pierde por no poder nombrar: se cuenta la sustancia y se redibujan los materiales. Verificar qu\u00e9 permite exactamente el NDA incluso anonimizado.\n- **Tu rol:** co-dise\u00f1aste la experiencia (\"ayud\u00e9 a dise\u00f1ar\") \u2014 s\u00e9 honesta con el verbo y espec\u00edfica con tu aporte: el dise\u00f1o de conversaci\u00f3n y de contenido. Tu ventaja injusta: 7 a\u00f1os escribiendo fichas de producto = sab\u00edas qu\u00e9 preguntan los compradores y qu\u00e9 atributos del producto responden.\n- **Arco narrativo:** problema (elegir productos de belleza requiere asesor\u00eda; en e-commerce nadie te acompa\u00f1a) \u2192 tu enfoque (traducir el conocimiento de fichas y copys a flujos de recomendaci\u00f3n: tono de marca, preguntas de descubrimiento, c\u00f3mo describe productos un asistente sin inventar) \u2192 d\u00f3nde entr\u00f3 la IA y tu criterio (prompts de personalidad y tono, guardrails: qu\u00e9 no debe afirmar de un producto, manejo de fallos, cu\u00e1ndo escalar a un humano) \u2192 resultado (m\u00e9tricas por confirmar; mientras tanto, el caso cierra con decisiones de dise\u00f1o y aprendizajes).\n- **M\u00e9tricas:** ninguna confirmada a\u00fan. Por perseguir: tasa de resoluci\u00f3n sin humano, satisfacci\u00f3n (CSAT), conversi\u00f3n asistida, ticket promedio, volumen de conversaciones.\n- **Assets:** faltan todos en versi\u00f3n mostrable: flujos de conversaci\u00f3n redibujados (NDA-safe), di\u00e1logos de ejemplo recreados, diagrama de d\u00f3nde entra el LLM. Nada de capturas reales sin permiso.\n- **Prioridad:** **2 \u2014 se escribe en Fase 1, justo despu\u00e9s del caso 1.** Es el proyecto que m\u00e1s grita \"AI Experience Designer\".\n\n### Caso 3 \u2014 \"A generative art practice\" (el laboratorio personal)\n- **Cliente/contexto:** tu pr\u00e1ctica de arte con herramientas generativas. Sin restricciones: todo es tuyo.\n- **Tu rol:** artista; autor\u00eda completa.\n- **Arco narrativo:** no se presenta como galer\u00eda decorativa sino como **I+D personal**: aqu\u00ed es donde desarrollas la fluidez con prompts, el vocabulario visual y el gusto que luego aplicas al trabajo comercial. Estructura: intenci\u00f3n de la serie \u2192 proceso (iteraciones, descartes) \u2192 piezas seleccionadas. Curadur\u00eda estricta: 1\u20132 series, 10\u201315 piezas con nota de intenci\u00f3n; nunca un volcado de carpeta.\n- **M\u00e9tricas:** no aplican; aqu\u00ed la evidencia es el criterio. Si hay exposiciones, ventas o publicaciones, mencionarlas.\n- **Assets:** disponibles: las obras. Faltan: la selecci\u00f3n curada, 2\u20133 capturas de proceso, un p\u00e1rrafo de statement.\n- **Prioridad:** **3 \u2014 Fase 2.**\n\n**El sitio como prueba adicional (\"exhibit A\"):** este mismo portafolio \u2014 planeado y construido con asistencia de IA \u2014 es un mini-proyecto en s\u00ed. No merece caso de estudio propio, pero s\u00ed una nota de journal (\"Rebuilding this site with AI as a design partner\") y una l\u00ednea en el About. Demuestra que trabajas como predicas. `[SUPUESTO: nota de journal, no caso de estudio]`\n\n## 6. Plan editorial \u2014 journal y blog\n\nLas dos colecciones ya existen en el sitio y comparten los mismos campos (t\u00edtulo, descripci\u00f3n, fecha, etiquetas), as\u00ed que **todo lo de esta secci\u00f3n se puede publicar desde hoy** sin tocar la estructura. Prop\u00f3sitos deliberadamente distintos para que ninguna de las dos muera:\n\n- **Journal (notas de campo cortas):** prop\u00f3sito: registrar en 150\u2013400 palabras lo que descubres trabajando con IA \u2014 prompts, descartes, comparaciones, sorpresas. Es tu prueba de pensamiento activo mientras buscas trabajo. \u00b7 Cadencia: **1 por semana** `[SUPUESTO: ajusta si no es sostenible]`\n  - Primeras entradas (t\u00edtulos en ingl\u00e9s, listos para usar):\n    1. \"Flair.ai vs. Midjourney for product shots: where each one wins\"\n    2. \"How I brief Claude like a junior copywriter \u2014 and why it works\"\n    3. \"The last 10%: when an AI image is almost right\"\n    4. \"Keeping one visual identity across 500 AI-generated images\"\n    5. \"This week's rejects: AI outputs that didn't ship, and why\"\n    6. \"Color fidelity is a returns problem, not an aesthetics problem\"\n    7. \"Three things shoppers asked our chatbot that we never scripted\" (anonimizado, NDA-safe)\n    8. \"Rebuilding this site with AI as a design partner\"\n- **Blog (piezas largas):** prop\u00f3sito: autoridad; el texto que un hiring manager lee antes de la entrevista. \u00b7 Cadencia: **1 por mes** `[SUPUESTO]`\n  - Primeros posts:\n    1. \"How we cut product-photo costs by 60% with an AI pipeline\" \u2014 compa\u00f1ero del caso 1, centrado en el proceso (prompts, control de calidad, lo que NO se automatiz\u00f3). *Plan B: si la secci\u00f3n Work tarda en construirse, este post puede salir primero en el blog y el caso de estudio se publica despu\u00e9s en Work con enfoque distinto.*\n    2. \"What seven years of product pages taught me about designing chatbots\"\n    3. \"The judgment layer: the part of AI content work that doesn't automate\"\n    4. \"From product pages to prompts: notes on becoming an AI Experience Designer\" (la narrativa de transici\u00f3n; tambi\u00e9n es material perfecto para LinkedIn)\n- **Etiquetas a usar consistentemente (mismas en ambas colecciones):** `ai-workflow`, `image-generation`, `copywriting`, `conversational-ux`, `e-commerce`, `process`, `art`, `career`. Min\u00fasculas, en ingl\u00e9s, m\u00e1ximo 2\u20133 por pieza. (Las etiquetas de los contenidos de relleno actuales desaparecen con ellos.)\n\n## 7. SEO y convenciones de metadatos\n\n- **Palabras clave a poseer:** \"AI experience designer\" (+ \"portfolio\"), \"AI e-commerce content\", \"AI product photography workflow\", \"generative AI for fashion e-commerce\", \"conversation design e-commerce\", \"AI content designer\". Cada post largo apunta adem\u00e1s a una long-tail propia (p. ej. \"Flair.ai vs Midjourney product photography\").\n- **Patr\u00f3n de t\u00edtulos:** \"Topic \u2014 Mariana Ordo\u00f1ez\" en todas las p\u00e1ginas; el home invertido: \"Mariana Ordo\u00f1ez \u2014 AI Experience Designer\". L\u00edmites que el sitio ya respeta: t\u00edtulo \u2264 60 caracteres, descripci\u00f3n \u2264 155. Si un caso de estudio tiene t\u00edtulo largo, se permite soltar el sufijo del nombre.\n- **Notas:**\n  - Descripciones en primera persona, con resultado cuando exista (\"How I cut\u2026\"), sin adjetivos vac\u00edos.\n  - **Nombre:** \"Mariana Ordo\u00f1ez\" (con \u00f1) en todo texto visible; \"mordonez\" (ASCII) en dominio y URLs.\n  - **Imagen social (og-image):** hoy es un SVG de relleno y **las redes (LinkedIn, X, Slack) no renderizan SVG** \u2014 hace falta un PNG/JPG de 1200\u00d7630 con tu nombre y t\u00edtulo. Cada caso de estudio y post puede llevar la suya. (Tarea de construcci\u00f3n, secci\u00f3n 9.)\n  - El dominio configurado hoy (`mordonez.dev`) es un placeholder del montaje; al confirmar el dominio real hay que actualizarlo en la configuraci\u00f3n y en el archivo robots.txt (tarea de construcci\u00f3n).\n  - Si m\u00e1s adelante a\u00f1ades versi\u00f3n en espa\u00f1ol, es una decisi\u00f3n aparte (Fase 3) con sus implicaciones t\u00e9cnicas; no bloquea nada de este plan.\n\n## 8. Checklist de assets\n\nTodo lo que hay que reunir \u2014 es el bloqueador de lanzamiento m\u00e1s com\u00fan. Lo que solo t\u00fa puedes conseguir est\u00e1 primero:\n\n- [ ] **N\u00fameros del caso 1:** costo por foto antes/despu\u00e9s, fotos por mes o campa\u00f1a, tiempo de entrega antes/despu\u00e9s, % de tomas que siguieron siendo f\u00edsicas (pregunta a la marca o revisa tus archivos)\n- [ ] **Permiso de la marca de ropa:** \u00bfse puede nombrar? \u00bfse pueden mostrar fotos finales y antes/despu\u00e9s?\n- [ ] **NDA del chatbot:** confirmar qu\u00e9 se puede mostrar anonimizado (flujos redibujados, di\u00e1logos recreados, m\u00e9tricas agregadas)\n- [ ] **M\u00e9tricas del chatbot** si el NDA lo permite: resoluci\u00f3n sin humano, CSAT, conversi\u00f3n asistida\n- [ ] Retrato profesional (About + og-image)\n- [ ] CV en ingl\u00e9s actualizado y alineado con el posicionamiento de este plan (PDF descargable) \u2014 hoy probablemente dice \"e-commerce content specialist\"; debe decir lo mismo que el sitio\n- [ ] URL de LinkedIn (con titular igual al del sitio) + Behance/Instagram si quieres enlazarlos\n- [ ] Decidir el **email de contacto** p\u00fablico\n- [ ] Confirmar el **dominio** definitivo\n- [ ] Pares antes/despu\u00e9s y progresiones prompt\u2192final del pipeline de fotos\n- [ ] Diagramas redibujados del flujo del chatbot (versi\u00f3n NDA-safe)\n- [ ] Selecci\u00f3n curada de arte: 1\u20132 series, 10\u201315 piezas + statement corto (para Fase 2)\n- [ ] 1\u20132 testimonios o citas de clientes/colegas (opcional, alto impacto)\n\n## 9. Hoja de ruta\n\n- **Fase 1 \u2014 lista para aplicar (objetivo: ~4 semanas, mediados de julio 2026 `[SUPUESTO]`):**\n  1. Construcci\u00f3n (ver tareas abajo): secci\u00f3n Work, p\u00e1gina About, bloque de contacto, navegaci\u00f3n actualizada.\n  2. Contenido: home reescrito con el posicionamiento \u00b7 About completo \u00b7 caso 1 (pipeline de fotos) \u00b7 caso 2 (chatbot, anonimizado) \u00b7 3 entradas de journal (de la lista de la secci\u00f3n 6) \u00b7 eliminar el post y la entrada de relleno.\n  3. Remate: og-image PNG, dominio definitivo, CV enlazado, LinkedIn espejando el titular.\n- **Fase 2 \u2014 profundidad (las 4\u20136 semanas siguientes):**\n  - Caso 3 (arte) con selecci\u00f3n curada \u00b7 primeros 2 posts de blog \u00b7 testimonios si llegan \u00b7 nota de journal sobre este sitio como proyecto \u00b7 feed RSS para journal/blog (el texto actual del home lo promete, pero el feed no existe todav\u00eda \u2014 tarea de construcci\u00f3n).\n- **Fase 3 \u2014 continuo:**\n  - Journal semanal, blog mensual \u00b7 actualizar casos cuando consigas m\u00e9tricas nuevas \u00b7 compartir cada pieza en LinkedIn (es donde te van a encontrar los recruiters) \u00b7 evaluar versi\u00f3n en espa\u00f1ol del sitio \u00b7 a\u00f1adir trabajo nuevo a medida que salga.\n- **Tareas de construcci\u00f3n (p\u00eddeselas a Claude Code o a un developer, en este orden):**\n  1. \"Crear la secci\u00f3n Work: una colecci\u00f3n de casos de estudio con campos para rol, cliente (o an\u00f3nimo), herramientas, m\u00e9trica destacada e imagen de portada; con su p\u00e1gina \u00edndice y la plantilla de detalle; a\u00f1adirla a la navegaci\u00f3n.\"\n  2. \"Crear la p\u00e1gina About con bloque de contacto y enlace a CV en PDF.\"\n  3. \"A\u00f1adir el bloque de contacto al pie de todas las p\u00e1ginas.\"\n  4. \"Reescribir el home seg\u00fan la secci\u00f3n 4 del plan de contenido.\" (los textos salen de este plan)\n  5. \"Reemplazar la og-image SVG por un PNG de 1200\u00d7630 y permitir og-image por p\u00e1gina.\"\n  6. \"Configurar el dominio definitivo en el sitio y en robots.txt.\" (cuando lo confirmes)\n  7. \"A\u00f1adir feed RSS para blog y journal.\" (Fase 2)\n  8. \"Eliminar el post y la entrada de relleno cuando exista contenido real.\"\n\n## 10. Supuestos y preguntas abiertas\n\nCada `[SUPUESTO]` del plan, convertido en pregunta para que respondas cuando quieras \u2014 el plan no se frena por ninguna:\n\n- [ ] **Idioma:** \u00bfde acuerdo con publicar el sitio en ingl\u00e9s (con posible versi\u00f3n en espa\u00f1ol en Fase 3)?\n- [ ] **Fecha:** \u00bfcu\u00e1ndo quieres empezar a aplicar? (asum\u00ed ~4 semanas; si ya est\u00e1s aplicando, priorizamos home + caso 1)\n- [ ] **Marca de ropa (caso 1):** \u00bfse puede nombrar y mostrar im\u00e1genes, o queda anonimizada como el chatbot?\n- [ ] **NDA del chatbot:** \u00bfqu\u00e9 permite exactamente mostrar (flujos redibujados, m\u00e9tricas, di\u00e1logos recreados)?\n- [ ] **Arte:** \u00bfte parece bien como tercer proyecto dentro de Work en Fase 2, o lo quieres como secci\u00f3n/galer\u00eda propia desde el inicio?\n- [ ] **Roles adyacentes:** \u00bfcu\u00e1les de la lista (AI Content Designer, Conversation Designer, Product Designer AI, GenAI Creative Strategist) te interesan de verdad? \u00bfTienes empresas-sue\u00f1o u ofertas concretas que sirvan para calibrar el lenguaje?\n- [ ] **Cadencia:** \u00bf1 journal/semana y 1 blog/mes es sostenible mientras buscas trabajo?\n- [ ] **Contacto:** \u00bfqu\u00e9 email p\u00fablico usamos? \u00bfSolo email + LinkedIn, o tambi\u00e9n Instagram/Behance?\n- [ ] **Dominio:** \u00bfcu\u00e1l ser\u00e1 el definitivo?\n- [ ] **El sitio como proyecto:** \u00bfde acuerdo en contarlo como nota de journal (no como caso de estudio)?\n- [ ] **CV:** \u00bftu CV actual refleja este posicionamiento? Si no, es el primer pendiente paralelo a la Fase 1.\n\n## Changelog\n\n- 2026-06-09 \u2014 Plan creado a partir del contexto inicial de Mariana y la auditor\u00eda del sitio. Ejecuci\u00f3n no interactiva (sin entrevista): decisiones marcadas como `[SUPUESTO]` y recogidas en la secci\u00f3n 10.\n"}], "grading": {"expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: rich-context-spanish/with_skill/outputs/content-plan.md (223 lines, a complete 10-section content plan plus changelog)."}, {"text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language", "passed": true, "evidence": "Title and all headings are Spanish: \"# Plan de contenido \u2014 Portafolio de Mariana Ordo\u00f1ez\", \"## 3. Mapa del sitio\", \"## 9. Hoja de ruta\", \"## 10. Supuestos y preguntas abiertas\". Body prose is Spanish throughout; English appears only in proposed site copy, an explicitly marked decision (\"El sitio se publica en ingl\u00e9s... El plan est\u00e1 en espa\u00f1ol para ti [SUPUESTO]\")."}, {"text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections", "passed": true, "evidence": "Section 3 \"Mapa del sitio\" is a table with rows for Home, About, \"Work / Casos de estudio\", Journal, Blog, Contacto and Arte, each with purpose and status."}, {"text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built", "passed": true, "evidence": "Section 3: \"el sitio tiene home, blog y journal funcionando (con contenido de relleno), y no tiene About, Work ni contacto\"; About and Work rows say \"No existe \u2192 construir\". Repo claims verified accurate: journal placeholder \"Field Note 001\" = src/content/journal/field-note-001.md and blog placeholder \"Starting With a Durable Web Home\" = src/content/blog/first-post.md (confirmed by grep); only blog+journal collections exist in src/content.config.ts."}, {"text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented", "passed": true, "evidence": "Section 5: Caso 1 \"Cutting product-photo costs ~60% with an AI pipeline\" (\u221260% kept, e.g. \"conocida: \u221260% costo por foto\"); Caso 2 \"tienda de belleza, bajo NDA \u2192 anonimizar como 'a beauty retailer'\" (never named, no invented name); Caso 3 \"A generative art practice\". All three projects are case studies."}, {"text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up", "passed": true, "evidence": "Every case has an explicit M\u00e9tricas line. Caso 1: \"conocida: \u221260% costo por foto. Por conseguir: costo antes/despu\u00e9s en cifras, fotos por mes o por campa\u00f1a, tiempo de entrega antes/despu\u00e9s, % de tomas que siguieron siendo fotograf\u00eda f\u00edsica...\". Caso 2: \"ninguna confirmada a\u00fan. Por perseguir: tasa de resoluci\u00f3n sin humano, satisfacci\u00f3n (CSAT), conversi\u00f3n asistida, ticket promedio, volumen de conversaciones\". Caso 3 addresses it head-on: \"no aplican; aqu\u00ed la evidencia es el criterio. Si hay exposiciones, ventas o publicaciones, mencionarlas\"."}, {"text": "Journal and blog get distinct purposes plus concrete first topic ideas for each", "passed": true, "evidence": "Section 6: journal = \"registrar en 150\u2013400 palabras lo que descubres trabajando con IA\" with 8 titled first entries (e.g. \"Flair.ai vs. Midjourney for product shots: where each one wins\"); blog = \"autoridad; el texto que un hiring manager lee antes de la entrevista\" with 4 titled posts (e.g. \"How we cut product-photo costs by 60% with an AI pipeline\")."}, {"text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields", "passed": true, "evidence": "Concrete title + description pairs for Home (\"Mariana Ordo\u00f1ez \u2014 AI Experience Designer\" / \"AI Experience Designer with 7 years of e-commerce content for fashion and beauty...\"), About, Work, Journal and Blog. Section 4 states they map \"a los campos `title` y `description` que el sitio ya exige\", which matches the writingSchema in src/content.config.ts; section 7 adds length limits (t\u00edtulo \u2264 60, descripci\u00f3n \u2264 155)."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 9 \"Hoja de ruta\": \"Fase 1 \u2014 lista para aplicar (objetivo: ~4 semanas...)\", followed by \"Fase 2 \u2014 profundidad\" and \"Fase 3 \u2014 continuo\", plus an ordered build-task list."}, {"text": "Assumptions/open questions are collected in a dedicated section", "passed": true, "evidence": "Section 10 \"Supuestos y preguntas abiertas\" collects every inline marker (grep counts 15 [SUPUESTO] occurrences) as 11 checkbox questions: \"Cada [SUPUESTO] del plan, convertido en pregunta para que respondas cuando quieras\"."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "summary": {"passed": 11, "failed": 0, "total": 11, "pass_rate": 1.0}, "eval_feedback": {"suggestions": [{"assertion": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up", "reason": "Metrics genuinely don't apply to the personal art project; this run passed by explicitly writing 'M\u00e9tricas: no aplican' plus substitute evidence (exposiciones, ventas, publicaciones). Consider amending the assertion to '...or explicitly states why metrics do not apply and what evidence substitutes' so graders rule consistently on the art case."}, {"assertion": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "reason": "Not verifiable from the run's own artifacts (no transcript, no per-run git snapshot); graded from the orchestrator's post-hoc `git status --porcelain`. Capturing that output into each run directory would make the assertion self-contained."}], "overall": "All 11 assertions pass on genuine substance; every spot-checked repo claim (placeholder titles, mordonez.dev domain, og-default.svg) was accurate."}}}, {"id": "eval-0-rich-context-spanish-without_skill-run-1", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "content-plan.md", "type": "text", "content": "# Plan de contenido \u2014 mordonez.dev\n\n**Para:** Mariana Ordonez \u2014 dise\u00f1adora y artista, 7 a\u00f1os en contenido e-commerce (moda y belleza), 2 a\u00f1os integrando IA en producci\u00f3n.\n**Objetivo:** conseguir trabajo como **AI Experience Designer**, remoto, para empresas de Estados Unidos o Europa, con mejor salario.\n**Sitio:** Astro 6 en `mordonez.dev` \u2014 hoy tiene Home, Blog y Journal con contenido placeholder. Este plan define qu\u00e9 contenido crear, en qu\u00e9 orden y por qu\u00e9.\n\n---\n\n## 1. Resumen ejecutivo\n\nEl sitio no es un portafolio gen\u00e9rico de dise\u00f1adora: es una **m\u00e1quina de conversi\u00f3n hacia un rol de AI Experience Designer**. Cada p\u00e1gina debe responder, en menos de 30 segundos, la pregunta que se hace un hiring manager: *\"\u00bfesta persona puede dise\u00f1ar experiencias con IA que generen resultados de negocio?\"*\n\nTres decisiones estrat\u00e9gicas que ordenan todo lo dem\u00e1s:\n\n1. **Ingl\u00e9s primero en las p\u00e1ginas de contrataci\u00f3n** (Home, Work, About, casos de estudio): tu audiencia que paga est\u00e1 en EE. UU. y Europa. El espa\u00f1ol vive en el Journal y en versiones seleccionadas del blog \u2014 sin montar i18n completo al inicio.\n2. **Liderar con resultados, no con herramientas.** \"Baj\u00e9 el costo por foto 60%\" contrata; \"uso Midjourney\" no. Las herramientas aparecen como evidencia, nunca como titular.\n3. **El caso de estudio del pipeline de fotos (\u201360% costo) es la pieza ancla.** Es el \u00fanico proyecto con m\u00e9trica dura: se publica primero y todo lo dem\u00e1s enlaza hacia \u00e9l.\n\nResultado esperado en 12 semanas: 3 casos de estudio publicados, p\u00e1gina About con CTA de contrataci\u00f3n, 5\u20136 posts de blog, journal activo, y un sitio que puedes pegar en cualquier aplicaci\u00f3n o mensaje de LinkedIn sin pedir disculpas.\n\n---\n\n## 2. Posicionamiento y mensaje central\n\n### El puente que te diferencia\n\nNo compites como \"dise\u00f1adora que aprendi\u00f3 IA\" ni como \"prompt engineer\". Tu posici\u00f3n \u00fanica es la intersecci\u00f3n de tres cosas que casi nadie tiene juntas:\n\n- **Dominio profundo de operaci\u00f3n de contenido e-commerce** (7 a\u00f1os: fotos de producto, copys, fichas \u2014 sabes qu\u00e9 cuesta, qu\u00e9 convierte y qu\u00e9 aprueba un brand manager).\n- **IA aplicada en producci\u00f3n real, con resultados medibles** (no demos: pipelines que un equipo usa todos los d\u00edas).\n- **Pr\u00e1ctica art\u00edstica con herramientas generativas** (criterio visual y oficio \u2014 la prueba de que tienes gusto, no solo proceso).\n\n### Statement de posicionamiento (para Home, About, LinkedIn)\n\n**EN (versi\u00f3n principal):**\n> I design AI-powered content systems and shopping experiences for fashion and beauty e-commerce. Seven years producing the content; the last two rebuilding it with generative AI \u2014 including a product photo pipeline that cut cost per photo by ~60%.\n\n**ES (referencia para LinkedIn en espa\u00f1ol):**\n> Dise\u00f1o sistemas de contenido y experiencias de compra con IA para e-commerce de moda y belleza. Siete a\u00f1os produciendo el contenido; los \u00faltimos dos redise\u00f1\u00e1ndolo con IA generativa \u2014 incluido un pipeline de fotos de producto que baj\u00f3 el costo por foto ~60%.\n\n### Audiencias, en orden de prioridad\n\n1. **Hiring managers / design leads** en e-commerce, retail tech y startups de IA (EE. UU./UE) \u2014 leen Work y About; deciden en minutos.\n2. **Recruiters** que buscan t\u00edtulos: usar en el sitio las variantes que ellos buscan \u2014 *AI Experience Designer, AI Content Designer, Conversational Designer, GenAI Creative Technologist*.\n3. **Comunidad de dise\u00f1o + IA** (potenciales referidos) \u2014 leen Blog y Journal.\n4. **Clientes freelance** (plan B de ingresos mientras llega el rol) \u2014 aterrizan v\u00eda SEO en casos de estudio.\n\n### Estrategia de idioma (decisi\u00f3n cerrada, sin i18n al inicio)\n\n| Contenido | Idioma | Raz\u00f3n |\n|---|---|---|\n| Home, About, Work (casos de estudio) | **Ingl\u00e9s** | Es lo que lee quien contrata. El sitio ya est\u00e1 en `lang=\"en\"`. |\n| Blog | **Ingl\u00e9s por defecto**; 2\u20133 posts clave tambi\u00e9n en espa\u00f1ol | Alcance + SEO en EN; visibilidad en comunidad hispana con piezas seleccionadas (marcar \"(ES)\" en el t\u00edtulo o tag `es`). |\n| Journal | **Espa\u00f1ol primero**, ingl\u00e9s cuando salga natural | Es tu espacio de proceso; la autenticidad vale m\u00e1s que el alcance. Una nota breve en frontmatter o primera l\u00ednea (\"*Field note in Spanish*\") evita confusi\u00f3n. |\n\nM\u00e1s adelante (no ahora): i18n de Astro con `hreflang` si el contenido en espa\u00f1ol crece. No bloquear el lanzamiento por esto.\n\n---\n\n## 3. Arquitectura del sitio: de lo que hay a lo que se necesita\n\n### Estado actual (auditado en el repo)\n\n- Colecciones: `blog` y `journal` (schema compartido: `title`, `description`, `pubDate`, `updatedDate`, `draft`, `tags`) en `src/content.config.ts`.\n- P\u00e1ginas: Home (`src/pages/index.astro`), `/blog/` + detalle, `/journal/` + detalle.\n- **No existe secci\u00f3n de portafolio** (la Home la menciona como concepto, pero no hay colecci\u00f3n ni rutas `work`).\n- **No hay p\u00e1gina About ni contacto.**\n- Contenido placeholder por reemplazar: `src/content/blog/first-post.md` y `src/content/journal/field-note-001.md`.\n- SEO base bien resuelto: canonical, Open Graph, sitemap, robots.txt apuntando a `mordonez.dev`. El OG image (`public/og-default.svg`) es gen\u00e9rico.\n- La Home promete \"RSS-ready\" pero no hay feed RSS instalado (`@astrojs/rss` no est\u00e1 en `package.json`).\n\n### Estructura objetivo\n\n```\n/                  Home (reescribir hero y secciones)\n/work/             \u00cdndice de casos de estudio  \u2190 NUEVO (colecci\u00f3n `work`)\n/work/[slug]/      Caso de estudio             \u2190 NUEVO\n/about/            Bio + qu\u00e9 busco + contacto  \u2190 NUEVO\n/blog/             (existe \u2014 solo contenido nuevo)\n/journal/          (existe \u2014 solo contenido nuevo)\n```\n\nNavegaci\u00f3n en `BaseLayout.astro`: **Work \u00b7 About \u00b7 Blog \u00b7 Journal** (Work primero: es lo que importa para contratar). El arte generativo vive como caso de estudio dentro de Work (`/work/generative-studio/`), no como secci\u00f3n aparte \u2014 menos mantenimiento y posiciona el arte como pr\u00e1ctica profesional, no como hobby separado.\n\n### Schema propuesto para la colecci\u00f3n `work`\n\nCuando se implemente, extender `src/content.config.ts` con algo as\u00ed (los campos importan para el plan de contenido porque definen qu\u00e9 informaci\u00f3n debe tener cada caso):\n\n```ts\nconst work = defineCollection({\n  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/work' }),\n  schema: z.object({\n    title: z.string(),\n    description: z.string(),        // \u2264160 caracteres, es el meta description\n    pubDate: z.date(),\n    client: z.string(),             // \"Fashion brand (LATAM)\" si est\u00e1 anonimizado\n    role: z.string(),               // \"AI workflow design lead\"\n    timeframe: z.string(),          // \"2024\u20132025\"\n    tools: z.array(z.string()),\n    metrics: z.array(z.string()).default([]),  // [\"~60% lower cost per photo\"]\n    nda: z.boolean().default(false),\n    order: z.number().default(99),  // control manual del orden en el \u00edndice\n    draft: z.boolean().default(false),\n    tags: z.array(z.string()).default([]),\n  }),\n});\n```\n\n---\n\n## 4. Contenido p\u00e1gina por p\u00e1gina\n\n### 4.1 Home (reescritura de `index.astro`)\n\n- **Eyebrow:** `AI Experience Designer \u2014 E-commerce \u00b7 Fashion & Beauty`\n- **H1:** `Mariana Ordonez` (mantener)\n- **Lede (borrador EN):** *\"I design AI-powered content systems and shopping experiences for fashion and beauty e-commerce. Seven years producing product photos, copy, and PDPs; the last two rebuilding those workflows with generative AI \u2014 like a photo pipeline that cut cost per photo by ~60%.\"*\n- **L\u00ednea de disponibilidad (clave para el objetivo):** *\"Open to remote AI experience design roles \u2014 US & EU time zones.\"* Visible sin scroll.\n- **CTAs:** `View work` (primario) \u00b7 `About me` (secundario). Blog/Journal quedan en la nav.\n- **Secci\u00f3n \"Selected work\":** 3 tarjetas (los 3 casos de estudio) con m\u00e9trica o gancho en cada una. Reemplaza la secci\u00f3n actual \"Structure\" que describe el sitio en vez de venderte a ti.\n- **Secci\u00f3n \"Latest writing\":** mantener la que existe (mezcla blog + journal, ya funciona).\n\n### 4.2 About (`/about/`) \u2014 la p\u00e1gina que cierra la venta\n\nOrden del contenido:\n\n1. **Foto + bio corta (EN, 120\u2013150 palabras):** la historia-puente \u2014 de producir contenido e-commerce a dise\u00f1ar los sistemas de IA que lo producen. Una l\u00ednea sobre la pr\u00e1ctica art\u00edstica.\n2. **\"What I do\"** \u2014 3 bullets: *AI content pipelines* (imagen + copy a escala con control de marca) \u00b7 *Conversational shopping experiences* (dise\u00f1o de asistentes de compra) \u00b7 *Generative art practice* (investigaci\u00f3n visual que alimenta el trabajo de cliente).\n3. **\"How I work\"** \u2014 m\u00e9todos, no solo herramientas: workflow mapping, evaluaci\u00f3n de herramientas con criterios de marca, dise\u00f1o de prompts como sistema, QA y guardrails, medici\u00f3n de costo/resultado.\n4. **Herramientas:** Midjourney, Flair.ai, Claude, ChatGPT + las de dise\u00f1o que uses (Figma, suite Adobe\u2026). En segundo plano, despu\u00e9s de los m\u00e9todos.\n5. **\"What I'm looking for\"** \u2014 expl\u00edcito: *\"AI Experience Designer / AI Content Designer roles. Remote, US or EU time zones. Full-time or contract-to-hire.\"*\n6. **Idiomas:** *Spanish (native), English (professional)* \u2014 para roles remotos es un dato de contrataci\u00f3n, no decorativo.\n7. **Contacto:** email profesional del dominio (p. ej. `hola@mordonez.dev`) + LinkedIn + **CV en PDF descargable** (una p\u00e1gina, EN). Los recruiters siguen pidiendo PDF.\n\n### 4.3 Work \u00edndice (`/work/`)\n\n- Intro de 2 l\u00edneas (qu\u00e9 tipo de problemas resuelves) + tarjetas de casos ordenadas por `order`: 1) Pipeline de fotos, 2) Chatbot de belleza, 3) Estudio generativo.\n- Cada tarjeta: t\u00edtulo, cliente (anonimizado si aplica), 1 m\u00e9trica o gancho, rol.\n\n---\n\n## 5. Los tres casos de estudio (las piezas m\u00e1s importantes del sitio)\n\n**Plantilla com\u00fan** (consistencia = se lee profesional): TL;DR con tarjetas de m\u00e9tricas \u2192 Contexto \u2192 Mi rol \u2192 Proceso (la secci\u00f3n m\u00e1s larga: decisiones y por qu\u00e9) \u2192 Resultados \u2192 Limitaciones y \u00e9tica \u2192 Aprendizajes. Cierre con CTA: *\"Hiring for AI experience design? \u2192 about/contact.\"* Longitud objetivo: 900\u20131.400 palabras + 4\u20136 visuales cada uno.\n\n**Regla de oro de m\u00e9tricas:** publicar solo n\u00fameros que puedas defender en una entrevista. \"~60%\" con tilde de aproximaci\u00f3n es perfecto; inventar precisi\u00f3n (\"61,4%\") es un riesgo.\n\n### 5.1 `/work/ai-product-photo-pipeline/` \u2014 ANCLA, se publica primero\n\n- **T\u00edtulo (EN):** *\"Cutting product photo costs ~60% with an AI-assisted photography pipeline\"*\n- **Cliente:** \"Fashion brand\" (anonimizar salvo que tengas permiso escrito para nombrarla \u2014 confirmar antes de publicar).\n- **Historia que contar:** el costo real de una foto de producto tradicional (estudio, modelos, log\u00edstica, reshoots) \u2192 evaluaci\u00f3n de herramientas con criterios de fidelidad de prenda y consistencia de marca \u2192 dise\u00f1o del pipeline **h\u00edbrido** (qu\u00e9 se queda en estudio porque la verdad de la tela importa, qu\u00e9 se genera: fondos, escenas, variantes) \u2192 guardrails de marca (plantillas de prompts, gu\u00eda de estilo traducida a prompts, checklist de QA, flujo de aprobaci\u00f3n) \u2192 rollout y entrenamiento del equipo.\n- **M\u00e9tricas:** ~60% menos costo por foto + cualquier otra que tengas (tiempo de entrega, variantes por SKU, volumen mensual).\n- **Secci\u00f3n que te diferencia:** limitaciones honestas \u2014 d\u00f3nde la foto generada NO es apropiada (riesgo de devoluciones por fidelidad de prenda, expectativas del cliente) y c\u00f3mo lo manejaron. Esto demuestra criterio, que es lo que compra un hiring manager.\n- **Visuales necesarios:** diagrama antes/despu\u00e9s del workflow, desglose de costos (gr\u00e1fico simple), ejemplos de im\u00e1genes (con permiso, o recreadas con producto gen\u00e9rico), foto del checklist de QA.\n\n### 5.2 `/work/beauty-shopping-assistant/` \u2014 el caso NDA\n\n- **T\u00edtulo (EN):** *\"Designing a conversational shopping assistant for a beauty retailer\"*\n- **Manejo del NDA (esto suma, no resta):** banner al inicio \u2014 *\"Client name and proprietary data withheld under NDA. Flows and dialogues below are recreated and sanitized.\"* Respetar un NDA visiblemente es una se\u00f1al de profesionalismo que los empleadores valoran. Nada de pantallazos reales: recrear flujos y di\u00e1logos con una marca ficticia.\n- **Historia que contar:** por qu\u00e9 un retailer de belleza necesita un asistente (shade matching, armar rutinas, regalos, preguntas de ingredientes) \u2192 discovery con preguntas reales de clientes (logs de servicio, b\u00fasquedas) \u2192 persona y tono del asistente alineados a la voz de marca \u2192 dise\u00f1o de flujos de conversaci\u00f3n (recomendaci\u00f3n, rutina, ingredientes, handoff a humano) \u2192 dise\u00f1o de prompts + grounding en datos de cat\u00e1logo \u2192 **guardrails**: claims cosm\u00e9ticos regulados, alergias y piel sensible, temas fuera de alcance \u2192 prototipado y testing con di\u00e1logos de ejemplo.\n- **Resultados:** si las m\u00e9tricas son NDA, usar resultados cualitativos verificables (se lanz\u00f3 a piloto, lo adopt\u00f3 el equipo X, decisiones que cambi\u00f3). **No inventar n\u00fameros.**\n- **Visuales:** diagrama de flujo anonimizado, 2\u20133 di\u00e1logos de ejemplo recreados, tarjeta de persona del asistente, mapa de guardrails.\n- **Por qu\u00e9 importa:** este caso es el que m\u00e1s grita \"AI **Experience** Designer\" \u2014 dise\u00f1o de conversaci\u00f3n, confianza y seguridad, no solo producci\u00f3n de contenido.\n\n### 5.3 `/work/generative-studio/` \u2014 la pr\u00e1ctica de arte como laboratorio\n\n- **T\u00edtulo (EN):** *\"Generative studio: an art practice that doubles as R&D\"*\n- **Encuadre estrat\u00e9gico:** no es una galer\u00eda; es la prueba de **gusto y oficio**. Posicionarlo como laboratorio personal: aqu\u00ed es donde desarrollas intuici\u00f3n sobre el comportamiento de los modelos, sistemas visuales y prompt craft que luego aplicas en trabajo de cliente.\n- **Contenido:** statement corto (por qu\u00e9 arte con herramientas generativas) \u2192 2\u20133 series seleccionadas con nota de intenci\u00f3n y proceso \u2192 **una pieza \"abierta en canal\"**: prompt \u2192 iteraciones \u2192 edici\u00f3n final, mostrando el criterio en cada paso \u2192 qu\u00e9 le ha aportado a tu trabajo comercial.\n- **Visuales:** las obras (curar duro: 9\u201312 piezas m\u00e1ximo, solo lo mejor) + la cadena de proceso de una pieza.\n- Este caso alimenta posts de journal de forma natural (ver \u00a77).\n\n---\n\n## 6. Blog: pilares y banco de ideas\n\n**Prop\u00f3sito:** demostrar pensamiento (no solo ejecuci\u00f3n), generar SEO de descubrimiento y darte material para LinkedIn. **Cadencia realista: 1 post cada 2\u20133 semanas.** Mejor 2 posts excelentes al mes que 4 mediocres.\n\n### Pilares\n\n| Pilar | Tema | % aprox. | A qui\u00e9n le habla |\n|---|---|---|---|\n| P1 | **AI content ops para e-commerce** (workflows, costos, QA) | 35% | Hiring managers \u2014 tu mayor autoridad |\n| P2 | **Dise\u00f1o de experiencias con IA** (conversaci\u00f3n, confianza, guardrails) | 30% | Hiring managers + comunidad UX |\n| P3 | **Oficio y herramientas** (prompts, Midjourney/Flair/Claude en producci\u00f3n) | 25% | Comunidad + SEO de cola larga |\n| P4 | **Carrera y pr\u00e1ctica** (la transici\u00f3n a AI Experience Design) | 10% | Recruiters + comunidad hispana |\n\n### Banco de 12 ideas (t\u00edtulos de trabajo en EN)\n\n1. **\"What 7 years of e-commerce content taught me about AI image pipelines\"** \u2014 P1, pieza cornerstone; enlaza al caso ancla. *(Post #1)*\n2. **\"The real cost of a product photo \u2014 and how AI changes the math\"** \u2014 P1; desglose de costos que casi nadie publica; im\u00e1n de enlaces.\n3. **\"A QA checklist for AI-generated product imagery\"** \u2014 P1; recurso descargable/copiable, muy enlazable.\n4. **\"Brand consistency with Midjourney: turning a style guide into prompts\"** \u2014 P3; SEO: *midjourney brand consistency*.\n5. **\"Flair.ai vs. a photo studio: what each is actually for\"** \u2014 P3; comparaci\u00f3n honesta, b\u00fasqueda con intenci\u00f3n comercial.\n6. **\"My working prompts for product descriptions with Claude\"** \u2014 P3; incluir plantillas reales. **Publicar tambi\u00e9n en ES** (*\"Mis prompts de trabajo para fichas de producto con Claude\"*).\n7. **\"Conversation design for shopping assistants: where chatbots lose customers\"** \u2014 P2; conecta con el caso NDA.\n8. **\"Designing AI advice when claims are regulated: lessons from beauty\"** \u2014 P2; nadie m\u00e1s en tu nicho escribe esto; expertise diferencial puro.\n9. **\"When customers should know it's AI \u2014 and when it's non-negotiable\"** \u2014 P2; \u00e9tica y disclosure en im\u00e1genes de producto y chat.\n10. **\"From e-commerce content producer to AI Experience Designer: mapping the skills\"** \u2014 P4; tu narrativa de carrera. **Publicar tambi\u00e9n en ES** \u2014 viajar\u00e1 en la comunidad hispana de dise\u00f1o y es tu mejor post para LinkedIn.\n11. **\"Six prompts I deleted: failures from a production AI workflow\"** \u2014 P3; los posts de fracasos generan m\u00e1s confianza que los de \u00e9xitos.\n12. **\"My art practice is my R&D lab\"** \u2014 P4; cruza con el caso 3.\n\n**Formato est\u00e1ndar de post:** 800\u20131.500 palabras, un visual propio m\u00ednimo (diagrama, captura del proceso), `description` \u2264160 caracteres pensada como meta description, cierre con enlace a un caso de estudio o al About.\n\n---\n\n## 7. Journal: el espacio en espa\u00f1ol\n\n**Prop\u00f3sito:** ritmo y autenticidad sin la presi\u00f3n del blog. Notas de 100\u2013400 palabras, 15\u201330 minutos de esfuerzo, **1 por semana**. Es adem\u00e1s tu archivo p\u00fablico de aprendizaje de IA \u2014 exactamente lo que dijiste que quer\u00edas escribir.\n\nFormatos que se sostienen solos:\n\n- **Bit\u00e1cora de experimento:** \"Prob\u00e9 X versi\u00f3n de Midjourney con telas satinadas; esto pas\u00f3\" + imagen.\n- **Prompt de la semana:** un prompt real, qu\u00e9 produjo, qu\u00e9 cambiar\u00edas.\n- **Nota de lectura/lanzamiento:** qu\u00e9 significa tal feature nuevo para contenido e-commerce, en 3 p\u00e1rrafos.\n- **WIP de arte:** una iteraci\u00f3n del estudio generativo con 3 l\u00edneas de contexto.\n- **Pregunta abierta:** algo que a\u00fan no sabes resolver (genera conversaci\u00f3n).\n\nPrimeras 6 entradas sugeridas: (1) nota de relanzamiento del sitio \u2014 qu\u00e9 es este espacio y en qu\u00e9 idiomas escribes; (2) un experimento de fondos con Flair.ai; (3) el prompt de descripciones que m\u00e1s usas; (4) una iteraci\u00f3n de arte con proceso; (5) reacci\u00f3n a un lanzamiento reciente de modelos de imagen; (6) \"lo que un brand manager le dir\u00eda a tu modelo generativo\".\n\nReemplazar/eliminar el placeholder `field-note-001.md` con la entrada (1).\n\n---\n\n## 8. Taxonom\u00eda de tags (compartida entre colecciones)\n\nM\u00e1ximo 2\u20133 tags por pieza, en ingl\u00e9s, en min\u00fasculas. Lista cerrada inicial \u2014 no inventar tags nuevos sin necesidad:\n\n- **Dominio:** `ecommerce`, `fashion`, `beauty`\n- **Disciplina:** `ai-workflows`, `conversational-design`, `image-pipeline`, `content-design`, `art`\n- **Herramienta:** `midjourney`, `flair-ai`, `claude`, `chatgpt`\n- **Meta:** `career`, `ethics`, `es` (marca contenido en espa\u00f1ol)\n\n---\n\n## 9. SEO y metadata\n\nLo t\u00e9cnico ya est\u00e1 bien encaminado (canonical, OG, sitemap, robots). Lo que falta es de contenido:\n\n- **Queries objetivo por p\u00e1gina:**\n  - Home/About: *AI experience designer portfolio*, *AI content designer e-commerce*, *conversational designer fashion beauty*.\n  - Caso 1: *AI product photography workflow*, *AI product photos fashion cost*.\n  - Caso 2: *conversational commerce design case study*, *beauty chatbot UX*.\n  - Posts P3: cola larga por herramienta (*midjourney brand consistency*, *flair.ai product photos*, *claude product descriptions*).\n- **Patrones de t\u00edtulo** (el layout ya los soporta v\u00eda props): p\u00e1ginas \u2192 `{Page} | Mariana Ordonez`; casos \u2192 t\u00edtulo con m\u00e9trica incluida (el CTR agradece los n\u00fameros).\n- **Descriptions:** escribirlas como copy de venta de \u2264160 caracteres, no como resumen burocr\u00e1tico.\n- **OG images:** reemplazar `og-default.svg` por una imagen de marca con el statement; ideal una OG propia por caso de estudio (puede salir de tu propio pipeline generativo \u2014 meta y demostrativo).\n- **Pendientes t\u00e9cnicos derivados del plan** (anotar como tareas de implementaci\u00f3n, no de contenido): colecci\u00f3n `work` + rutas, p\u00e1gina About, nav actualizada, feed RSS con `@astrojs/rss` (la Home ya lo promete), JSON-LD `Person` en Home/About con `jobTitle: \"AI Experience Designer\"`, y eliminar los dos placeholders.\n\n---\n\n## 10. Calendario editorial \u2014 12 semanas (arranque 15 jun 2026)\n\n| Semana | Foco | Entregables |\n|---|---|---|\n| 1 (15 jun) | Fundaci\u00f3n | Reescribir Home (hero + selected work + disponibilidad). Redactar About. Definir colecci\u00f3n `work`. |\n| 2 (22 jun) | Fundaci\u00f3n | Publicar About + CV PDF. Eliminar placeholders. Journal #1 (nota de relanzamiento, ES). |\n| 3 (29 jun) | Caso ancla | Redactar caso 1 (pipeline fotos) + diagrama de workflow + desglose de costos. Confirmar permisos con la marca. |\n| 4 (6 jul) | Caso ancla | **Publicar caso 1.** Anunciar en LinkedIn (EN + ES). Journal #2. |\n| 5 (13 jul) | Blog | **Publicar post #1** (\"What 7 years\u2026\"). Journal #3. |\n| 6 (20 jul) | Caso NDA | Redactar caso 2: recrear flujos y di\u00e1logos sanitizados. Journal #4. |\n| 7 (27 jul) | Caso NDA | **Publicar caso 2** + post LinkedIn sobre dise\u00f1ar bajo NDA. Journal #5. |\n| 8 (3 ago) | Blog | **Publicar post #10** (\"From content producer to\u2026\") en EN y ES. Es tu post de mayor alcance: distribuir fuerte. |\n| 9 (10 ago) | Arte | Curar series del estudio generativo (9\u201312 piezas) + documentar una pieza con proceso completo. Journal #6. |\n| 10 (17 ago) | Arte | **Publicar caso 3** (generative studio). Journal #7. |\n| 11 (24 ago) | Blog | **Publicar post #2** (\"The real cost of a product photo\"). Journal #8. |\n| 12 (31 ago) | Revisi\u00f3n | **Publicar post #7** (conversation design). Revisar analytics y respuestas; ajustar banco de ideas del trimestre siguiente. |\n\n**Cadencia de crucero (desde sept):** 1\u20132 posts de blog/mes + 1 journal/semana + 1 actualizaci\u00f3n de caso de estudio por trimestre.\n\n**Regla de desbloqueo:** si una semana no alcanza el tiempo, se sacrifica el blog, nunca el caso de estudio pendiente. Los casos son los que consiguen entrevistas.\n\n---\n\n## 11. Distribuci\u00f3n (el sitio no se descubre solo)\n\nEl objetivo es un empleo: cada pieza necesita un plan de salida.\n\n- **LinkedIn (canal #1 para tu objetivo):** cada caso/post \u2192 post nativo en EN con la m\u00e9trica o el insight en la primera l\u00ednea + enlace. Los posts P4 tambi\u00e9n en ES. Actualizar titular de perfil al statement de posicionamiento y enlazar `mordonez.dev` en el perfil.\n- **CTA transversal:** todos los casos y el About cierran con *\"Open to remote AI experience design roles (US/EU). \u2192 email / LinkedIn.\"*\n- **Comunidades:** compartir piezas concretas (no autopromoci\u00f3n vac\u00eda) en comunidades de UX/IA (ADPList, Designer Hangout, Discords de dise\u00f1o + IA) y en comunidades hispanas/latinas de tech para los posts en ES.\n- **Aplicaciones:** en cada postulaci\u00f3n, enlazar el caso de estudio relevante, no la home (\"Aqu\u00ed est\u00e1 c\u00f3mo baj\u00e9 60% el costo por foto: \u2026/work/ai-product-photo-pipeline/\").\n- **Versi\u00f3n m\u00ednima de newsletter:** no montar una todav\u00eda; el RSS + LinkedIn cubren el alcance hasta que haya tracci\u00f3n.\n\n---\n\n## 12. Voz, estilo y reglas \u00e9ticas\n\n- **Voz:** pr\u00e1ctica, espec\u00edfica y honesta. Primera persona. Mostrar el trabajo: prompts reales, iteraciones, n\u00fameros, fracasos. Cero hype de IA (\"revolucionario\", \"el futuro de\u2026\") \u2014 el p\u00fablico que te va a contratar est\u00e1 vacunado contra eso.\n- **Credibilidad con n\u00fameros:** solo m\u00e9tricas defendibles en entrevista; usar \"~\" para aproximaciones; explicar el baseline cuando se cita una mejora.\n- **NDA y permisos:** confirmar por escrito qu\u00e9 se puede mostrar del caso 1; el caso 2 siempre anonimizado y con banner de NDA; nunca pantallazos reales de material confidencial.\n- **Disclosure de IA:** cuando una imagen del sitio sea generada, decirlo en el pie. En tu nicho, la transparencia ES el portafolio.\n- **Ingl\u00e9s:** escribir directo en EN y pasar una revisi\u00f3n propia (o con Claude) de naturalidad; no traducir literalmente del espa\u00f1ol.\n\n---\n\n## 13. M\u00e9tricas de \u00e9xito\n\n| Horizonte | Se\u00f1al |\n|---|---|\n| Semana 4 | Home + About + caso ancla publicados; el enlace ya se puede usar en aplicaciones. |\n| Semana 8 | 2 casos + 2 posts; \u22652 conversaciones entrantes (recruiter o referido) atribuibles al sitio/LinkedIn. |\n| Semana 12 | 3 casos + 5\u20136 posts + 8 journals; el sitio aparece para tu nombre + \"AI experience designer\"; pipeline de \u22653 procesos de entrevista activos. |\n| Continuo | Cada entrevista en la que te digan \"vi tu caso del pipeline de fotos\" = el plan est\u00e1 funcionando. |\n\n---\n\n## Ap\u00e9ndice A \u2014 Inventario de tareas de contenido (orden de ejecuci\u00f3n)\n\n1. Reescribir hero y secciones de Home (EN) \u2014 borradores en \u00a74.1.\n2. Redactar y publicar About + CV PDF (EN) \u2014 estructura en \u00a74.2.\n3. Eliminar `first-post.md` y `field-note-001.md`; publicar Journal #1.\n4. Crear colecci\u00f3n y rutas `work` (tarea t\u00e9cnica) con el schema de \u00a73.\n5. Caso 1 \u2014 pipeline de fotos (\u00a75.1). **Prioridad m\u00e1xima.**\n6. Posts #1 y #10 del banco (\u00a76).\n7. Caso 2 \u2014 chatbot belleza, anonimizado (\u00a75.2).\n8. Caso 3 \u2014 estudio generativo (\u00a75.3).\n9. Posts #2 y #7; journal semanal en paralelo.\n10. OG images de marca + RSS + JSON-LD (tareas t\u00e9cnicas de soporte).\n\n## Ap\u00e9ndice B \u2014 Checklist previa a publicar cualquier caso de estudio\n\n- [ ] M\u00e9trica del TL;DR defendible en entrevista (con baseline claro).\n- [ ] Permisos/anonimizaci\u00f3n confirmados; banner NDA si aplica.\n- [ ] Diagrama de proceso propio (no stock).\n- [ ] Secci\u00f3n de limitaciones/\u00e9tica incluida.\n- [ ] `description` \u2264160 caracteres escrita como copy.\n- [ ] CTA final hacia About/contacto.\n- [ ] Revisi\u00f3n de naturalidad del ingl\u00e9s.\n- [ ] Post de LinkedIn redactado antes de publicar (se publica el mismo d\u00eda).\n"}], "grading": {"expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: rich-context-spanish/without_skill/outputs/content-plan.md (331 lines, 13 sections plus two appendices)."}, {"text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language", "passed": true, "evidence": "Headings and body are Spanish throughout: \"# Plan de contenido \u2014 mordonez.dev\", \"## 1. Resumen ejecutivo\", \"## 3. Arquitectura del sitio: de lo que hay a lo que se necesita\", \"## 10. Calendario editorial\". English appears only in proposed site copy (statements, case-study titles), with the language strategy stated explicitly in section 2."}, {"text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections", "passed": true, "evidence": "Section 3 \"Estructura objetivo\" lists: \"/ Home (reescribir hero y secciones), /work/ \u00cdndice de casos de estudio \u2190 NUEVO, /work/[slug]/ Caso de estudio \u2190 NUEVO, /about/ Bio + qu\u00e9 busco + contacto \u2190 NUEVO, /blog/ (existe), /journal/ (existe)\", plus nav order \"Work \u00b7 About \u00b7 Blog \u00b7 Journal\"."}, {"text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built", "passed": true, "evidence": "Section 3 \"Estado actual (auditado en el repo)\": \"Colecciones: `blog` y `journal` (schema compartido: `title`, `description`, `pubDate`, `updatedDate`, `draft`, `tags`)...\", \"No existe secci\u00f3n de portafolio... no hay colecci\u00f3n ni rutas `work`\", \"No hay p\u00e1gina About ni contacto\"; /work/ and /about/ flagged \"\u2190 NUEVO\". All claims verified accurate against src/content.config.ts, src/pages/, and the placeholder files first-post.md / field-note-001.md."}, {"text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented", "passed": true, "evidence": "Section 5 defines three case studies: 5.1 /work/ai-product-photo-pipeline/ (\"M\u00e9tricas: ~60% menos costo por foto\"), 5.2 /work/beauty-shopping-assistant/ with NDA banner \"Client name and proprietary data withheld under NDA. Flows and dialogues below are recreated and sanitized\" and \"No inventar n\u00fameros\", 5.3 /work/generative-studio/ (the art practice). Beauty client is anonymized, never named or invented."}, {"text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up", "passed": true, "evidence": "Shared template for all three cases: \"TL;DR con tarjetas de m\u00e9tricas \u2192 ... \u2192 Resultados \u2192 Limitaciones y \u00e9tica \u2192 Aprendizajes\". 5.1: \"~60% menos costo por foto + cualquier otra que tengas (tiempo de entrega, variantes por SKU, volumen mensual)\". 5.2: names the verifiable results to use under NDA (\"se lanz\u00f3 a piloto, lo adopt\u00f3 el equipo X, decisiones que cambi\u00f3\"). Ap\u00e9ndice B gates publishing any case on \"M\u00e9trica del TL;DR defendible en entrevista (con baseline claro)\"."}, {"text": "Journal and blog get distinct purposes plus concrete first topic ideas for each", "passed": true, "evidence": "Section 6 blog: \"demostrar pensamiento (no solo ejecuci\u00f3n), generar SEO... material para LinkedIn\" with a bank of 12 titled ideas (e.g. \"What 7 years of e-commerce content taught me about AI image pipelines\"). Section 7 journal: \"ritmo y autenticidad... el espacio en espa\u00f1ol\" with 5 formats and 6 concrete first entries (\"un experimento de fondos con Flair.ai\", \"el prompt de descripciones que m\u00e1s usas\", etc.)."}, {"text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields", "passed": false, "evidence": "Section 9 offers only patterns and rules, not concrete metadata: \"Patrones de t\u00edtulo... p\u00e1ginas \u2192 `{Page} | Mariana Ordonez`\" and \"Descriptions: escribirlas como copy de venta de \u2264160 caracteres, no como resumen burocr\u00e1tico\". No actual title text and no description text is proposed for any main page (home, about, work, blog, journal) \u2014 only target queries per page. This is the vague mention the assertion excludes."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 10 is a phased 12-week calendar (Fundaci\u00f3n \u2192 Caso ancla \u2192 Blog \u2192 Caso NDA \u2192 Arte \u2192 Revisi\u00f3n) plus \"Cadencia de crucero\". Apply-readiness of the first arc is explicitly marked in section 13: \"Semana 4 | Home + About + caso ancla publicados; el enlace ya se puede usar en aplicaciones.\""}, {"text": "Assumptions/open questions are collected in a dedicated section", "passed": false, "evidence": "No dedicated assumptions/open-questions section exists anywhere in the 13 sections + 2 appendices. grep for SUPUESTO/ASSUMPTION/GUESS markers returns 0 matches. Decisions are presented as closed (\"Estrategia de idioma (decisi\u00f3n cerrada, sin i18n al inicio)\"); pending items appear only inline as tasks (\"Confirmar permisos con la marca\"), never collected for the user to confirm."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "summary": {"passed": 9, "failed": 2, "total": 11, "pass_rate": 0.82}, "eval_feedback": {"suggestions": [{"assertion": "Phased roadmap exists with a clearly-marked apply-ready first phase", "reason": "This run passed via an apply-ready milestone in a separate success-metrics table (week 4) rather than a phase labeled apply-ready in the roadmap itself. If the eval intends the roadmap's first phase to be explicitly designated, tighten the wording; as written, a clear milestone elsewhere satisfies it."}], "overall": "Strong, factually accurate plan that fails exactly where the skill adds discipline: no concrete SEO title/description text and no dedicated assumptions/open-questions section (0 assumption markers)."}}}, {"id": "eval-1-sparse-context-english-with_skill-run-1", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "content-plan.md", "type": "text", "content": "# Content plan \u2014 Mariana Ordo\u00f1ez portfolio (mordonez.dev)\n\n**Date:** 2026-06-09 \u00b7 **Status:** draft \u2014 written for you to react to, nothing is locked in \u00b7 **For:** Mariana Ordo\u00f1ez\n\n**How to read this plan.** You asked for a plan without an interview, so every call I couldn't confirm is marked `[ASSUMPTION]` inline and restated as a question in section 10 \u2014 answer those and the plan tightens itself. Before anything else, react to the three decisions that shape everything downstream:\n\n1. **Lead with the intersection, not the destination.** The site positions you as \"AI experience designer with years of real e-commerce content operations\" \u2014 not as a generalist designer who recently added AI. Plenty of people claim AI skills; almost none pair them with shipped e-commerce content work at scale.\n2. **English-first, aimed at remote roles.** `[ASSUMPTION]` The site is already built in English on mordonez.dev; I kept it that way, assuming you're targeting remote US/EU-salary roles. A Spanish track can come later.\n3. **Launch small and apply.** Two strong case studies, a real About page, and three journal entries beat a complete archive that ships next quarter. The roadmap (section 9) is phased around that.\n\n---\n\n## 1. Goal & positioning\n\n- **Goal:** Land a role designing AI-powered experiences (in-house or product team), with the site apply-ready in **~3 weeks** so applications can start while Phase 2 content is still being written. `[ASSUMPTION \u2014 \"starting to job hunt\" read as \"applying within a month\", not \"exploring for six months\"]`\n- **Positioning statement:** *Mariana Ordo\u00f1ez is an AI experience designer who spent years running e-commerce content at scale \u2014 she designs AI-powered content systems and experiences that actually ship.* `[ASSUMPTION \u2014 exact years and scale numbers to be filled in by you; see section 8]`\n- **Elevator pitch (home page + About opening):**\n  > I design AI-powered experiences with the judgment of someone who has run e-commerce content operations for real catalogs \u2014 thousands of products, hard deadlines, measurable outcomes. I know where AI genuinely speeds up content work, where it quietly degrades it, and how to design the workflows and interfaces that keep humans in control of quality. Lately that means [flagship project one-liner \u2014 fill in once case study 1 is chosen].\n- **Target roles:** `[ASSUMPTION \u2014 based on your background; trim to the titles you actually see in postings]`\n  - AI Experience Designer / AI Product Designer\n  - Product Designer (AI features / AI-native products)\n  - AI Content Designer / Content Designer, AI\n  - Content Systems Designer / Content Strategist on AI teams (fallback titles that value the e-commerce depth)\n\nThe tone rule for every page: the site radiates craft and judgment, never \"please hire me\". Outcomes and process do the persuading; the word \"passionate\" is banned.\n\n## 2. Audience\n\n| Audience | What they need to see | Priority |\n|---|---|---|\n| Design hiring managers / design leads at AI-product companies | Process with AI: prompts, iterations, what you rejected and why; judgment, not tool lists | **Primary** |\n| Recruiters & talent partners (30-second skim) | Instant positioning on the home page, role keywords, one impressive proof, easy contact + resume link | **Primary** |\n| Founders / e-commerce teams needing AI content help (possible freelance income during the hunt) | Outcomes and reliability: numbers, before/afters, \"she's done this at scale\" | Secondary `[ASSUMPTION \u2014 freelance is worth keeping open, but the site optimizes for employment first]` |\n| Design & art community peers | Journal voice, art practice, taste | Tertiary |\n\n## 3. Site map\n\nStatuses come from auditing the repo as it exists today (Astro site with `blog` and `journal` collections only).\n\n| Section | Purpose | Status |\n|---|---|---|\n| Home | 30-second pitch: who you are, what you design, one impressive proof \u2014 without scrolling | **Exists, but placeholder copy** \u2014 current hero says \"a search-friendly home for selected work\", which sells the website, not you. Needs rewrite (content task) |\n| Work / case studies | The heart of the portfolio: 2\u20134 case studies proving AI + e-commerce judgment | **Needs build (ask Claude Code):** no `work` collection or pages exist yet |\n| About | Make the career change feel inevitable, not desperate; photo + story + contact | **Needs build (ask Claude Code):** no about page exists |\n| Journal | Short field notes on working with AI \u2014 proof of an active mind between jobs | **Exists** \u2014 1 generic placeholder entry to replace |\n| Blog | Longer essays and case-study write-ups | **Exists** \u2014 1 generic placeholder post to replace |\n| Contact | One obvious way to reach you from every page | **Needs build (ask Claude Code):** suggest a contact block on Home + About and a site footer, not a separate page `[ASSUMPTION]` |\n\nNavigation note: the header currently links only to Blog and Journal. Once Work and About exist, the nav order should be **Work \u00b7 About \u00b7 Journal \u00b7 Blog** \u2014 Work first, because that's what hiring managers come for (build task).\n\n## 4. Page-by-page outline\n\n### Home\n- **Job of this page:** pass the 30-second recruiter test \u2014 who, what, one proof, where to click next.\n- **Content blocks, in order:**\n  1. Hero: name + title (\"AI Experience Designer\") + one-line intersection pitch + one proof point with a number `[ASSUMPTION \u2014 strongest number likely comes from the e-commerce content operation; see section 8]`\n  2. Selected work: 2\u20133 case study cards (image, outcome-first title, one-line result)\n  3. Short \"how I work with AI\" strip: 3 bullets on judgment/process (not a tool logo wall)\n  4. Latest writing: keep the existing journal/blog feed, but below the work\n  5. Contact block: email + LinkedIn + resume link\n- **Assets needed:** 1 cover image per featured case study; resume PDF; final headline number.\n- **SEO:** title: \"Mariana Ordo\u00f1ez \u2014 AI Experience Designer\" \u00b7 description: \"AI experience designer with deep e-commerce content roots. I design AI-powered content systems and experiences that ship. See selected work and field notes.\"\n\n### Work (index)\n- **Job of this page:** let a hiring manager pick a case study in under 10 seconds.\n- **Content blocks, in order:** intro line (one sentence, no fluff) \u2192 case study cards ordered by relevance to AI roles (not chronology) \u2192 contact block.\n- **Assets needed:** cover image + outcome line per case study.\n- **SEO:** title: \"Work \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Case studies in AI-powered e-commerce content and experience design: pipelines, systems, and the judgment behind them.\"\n\n### Case study pages (template for each)\n- **Job of this page:** prove judgment with AI, not tool usage.\n- **Content blocks, in order:**\n  1. Outcome-first title + 3-fact summary bar (role \u00b7 timeframe \u00b7 result)\n  2. Context: client (or anonymized) + the problem in business terms\n  3. Her role: what *you* decided, made, led \u2014 first person, specific\n  4. Where AI entered: tools, prompts, iterations, and crucially **what you rejected and why**\n  5. Outcome: numbers, before/afters\n  6. \"What I'd do differently\" (one honest paragraph \u2014 reads as seniority)\n  7. Next/previous case study + contact block\n- **Assets needed:** see section 5 per study.\n- **SEO:** title pattern: \"[Outcome-first case study title] \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: one-sentence result with the number in it.\n\n### About\n- **Job of this page:** make design \u2192 art \u2192 e-commerce content \u2192 AI feel like one inevitable thread, and give a human reason to say yes.\n- **Content blocks, in order:**\n  1. Portrait photo + 2\u20133 paragraph story told as a through-line: trained as a designer; art practice sharpened taste; e-commerce content taught scale, deadlines and quality systems; AI is where all three converge `[ASSUMPTION \u2014 the real connecting thread is yours to confirm; this is the frame I'd pitch]`\n  2. \"What I bring\" \u2014 3\u20134 evidence-backed capabilities (content ops at scale, AI workflow design, visual judgment, systems thinking)\n  3. Tools & methods strip (kept short; judgment over logos)\n  4. Art practice teaser: 1\u20132 images linking to journal entries tagged `art` `[ASSUMPTION \u2014 art stays light-touch at launch; see section 10]`\n  5. Contact block + resume link\n- **Assets needed:** portrait photo; resume PDF; 1\u20132 art images.\n- **SEO:** title: \"About \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Designer and artist who ran e-commerce content at scale, now designing AI-powered experiences. The path from catalogs to AI, and what carries over.\"\n\n### Journal (index + entries)\n- **Job of this page:** show an active, honest mind working with AI \u2014 frequency over polish.\n- **Content blocks, in order:** one-line purpose statement (\"Field notes from designing with AI \u2014 experiments, prompts, dead ends\") \u2192 entry list (exists). Replace the placeholder \"Field Note 001\" with real entries from section 6.\n- **Assets needed:** screenshots per entry where relevant (sanitized prompts, before/afters).\n- **SEO:** title: \"Journal \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Short field notes on designing with AI: experiments, prompt libraries, quality checks, and honest dead ends from real content work.\"\n\n### Blog (index + posts)\n- **Job of this page:** depth and authority \u2014 pieces a hiring manager might share internally.\n- **Content blocks, in order:** one-line purpose statement \u2192 post list (exists). Replace the placeholder post (\"Starting With a Durable Web Home\") or rewrite it as the \"built this site with AI\" post (section 6).\n- **Assets needed:** 1 illustrative image per post (can be own work).\n- **SEO:** title: \"Blog \u2014 Mariana Ordo\u00f1ez\" \u00b7 description: \"Essays on AI experience design and e-commerce content: frameworks, case-study write-ups, and what actually transfers between the two.\"\n\n### Contact (block, not page)\n- **Job:** zero-friction next step on every page.\n- **Content:** one line (\"Hiring for an AI experience team, or need e-commerce content help? \u2192\") + email + LinkedIn + resume PDF. `[ASSUMPTION \u2014 email address and LinkedIn URL unknown; see section 8]`\n\n## 5. Case studies\n\nYou said you have a few projects but haven't decided which ones. Since I don't know the actual projects, this section gives you **(a) a selection scorecard** and **(b) four proposed slots** based on your profile \u2014 map your real projects onto the slots, or veto the slots that don't fit. Every slot description is an `[ASSUMPTION]` about the kind of work you have.\n\n**Selection scorecard \u2014 pick the 2\u20134 projects that score highest:**\n\n| Criterion | Question | Weight |\n|---|---|---|\n| Role-match | Does it look like the job you want next (AI in the workflow or the product)? | \u00d73 |\n| Outcome | Is there a number, or a metric you could realistically dig up? | \u00d72 |\n| Your fingerprints | Can you show decisions *you* made, not just deliverables you touched? | \u00d72 |\n| Assets | Do images, before/afters, prototypes, or live links exist? | \u00d71 |\n| NDA risk | Can it be named \u2014 or anonymized without losing the substance? (Never drop a story over a name: \"a beauty retailer\" works fine.) | \u00d71 |\n\nNote: the project you're proudest of and the project that best matches the target jobs may be different projects. If so, the role-match one leads the Work page; the proud one still gets a slot.\n\n### Slot 1 \u2014 \"How I put AI inside a real e-commerce content operation\" (flagship)\n- **Client/context:** `[ASSUMPTION]` your main e-commerce employer/client \u2014 anonymize if needed (\"a [category] retailer with an N-thousand-product catalog\").\n- **Her role:** designing/running the content workflow and deciding where AI belonged in it.\n- **Story arc:** the cost/volume/consistency problem \u2192 the workflow you designed \u2192 where AI entered (tools, prompts, iterations) and the quality bar you enforced \u2192 what you rejected and why \u2192 outcome.\n- **Metrics:** to dig up \u2014 products or assets per month, production time per asset before/after, cost per asset, rework rate, time-to-publish, any conversion effect (see section 8).\n- **Assets:** before/after product content, workflow diagram (can be redrawn), sanitized prompt examples.\n- **Priority:** **1 \u2014 write first.** This is the intersection no one else can claim.\n\n### Slot 2 \u2014 \"E-commerce content at scale, pre-AI\" (credibility anchor)\n- **Client/context:** `[ASSUMPTION]` the same or another e-commerce operation, before/without AI.\n- **Her role:** content systems \u2014 templates, guidelines, photography direction, catalog structure.\n- **Story arc:** scale problem \u2192 the system you designed \u2192 how it held up \u2192 outcome. Positioned as \"I understood content operations deeply enough to know where AI would actually help\" \u2014 it's the setup for Slot 1.\n- **Metrics:** catalog size, team size, throughput, error reduction.\n- **Assets:** screenshots of live PDPs/listings, guideline excerpts.\n- **Priority:** 2.\n\n### Slot 3 \u2014 \"Designing an AI experience end-to-end\" (aspiration proof)\n- **Client/context:** `[ASSUMPTION \u2014 this is the slot I'm least sure exists]` a project where AI is in the *product*, not just the workflow \u2014 an AI-assisted shopping/content feature, a conversational flow, a tool concept. **If no client project fits, fill it with a self-initiated concept project** \u2014 for AI-experience roles, a rigorous self-initiated piece beats nothing, and the plan flags it honestly as a concept.\n- **Story arc:** user problem \u2192 interaction/UX decisions specific to AI (uncertainty, trust, feedback loops, failure states) \u2192 prototype \u2192 what you learned.\n- **Metrics:** prototype-test findings if any; otherwise framed as design rationale.\n- **Assets:** prototype link or video, screens.\n- **Priority:** 3 \u2014 Phase 2, unless a real project fits, in which case it may jump to priority 1\u20132.\n\n### Slot 4 \u2014 \"This site, built with an AI coding agent\" (meta, small)\n- **Client/context:** this repo \u2014 you direct Claude Code; the site itself is exhibit A of designing *with* AI.\n- **Story arc:** what you specified vs. what you delegated \u2192 how you reviewed and corrected the AI \u2192 taste decisions a non-designer wouldn't have made.\n- **Metrics:** time from zero to live site.\n- **Assets:** already exist (the site, this plan, prompts).\n- **Priority:** 4 \u2014 ship as a journal series or one blog post rather than a full case study, so it doesn't compete with client work. `[ASSUMPTION]`\n\n## 6. Editorial plan \u2014 journal & blog\n\n- **Journal (short field notes):** purpose: visible proof of hands-on AI thinking between jobs; 5\u201315 minutes to write, screenshots welcome, dead ends encouraged \u00b7 cadence: **1 per week while job hunting** `[ASSUMPTION \u2014 honest-cadence check needed; better 1/week sustained than 3/week for two weeks]`\n  - First entries (pick the 6 that feel effortless):\n    1. \"Five prompt iterations to one usable product image\" (with the four rejects)\n    2. \"What's in my prompt library, and how it's organized\"\n    3. \"A checklist I run before any AI-generated content ships\"\n    4. \"Rewriting one product description: me vs. AI vs. me+AI\"\n    5. \"Three AI tools I dropped this month, and why\"\n    6. \"Directing an AI coding agent to build this site \u2014 week one notes\"\n    7. \"Taste is the bottleneck: notes from last night's image session\" (art \u00d7 AI crossover)\n    8. \"What a 10,000-SKU catalog taught me about reviewing AI output at scale\" `[ASSUMPTION \u2014 adjust the number to your real catalog]`\n- **Blog (long form):** purpose: authority pieces a design lead might share; each doubles as application material \u00b7 cadence: **1 per month** `[ASSUMPTION]`\n  - First posts:\n    1. \"From e-commerce content to AI experience design: what actually transfers\" (your repositioning argument, in public)\n    2. The flagship case study (Slot 1) adapted as a narrative post\n    3. \"A quality framework for AI-generated content at e-commerce scale\"\n    4. Rework or replace the existing placeholder post into \"Building a portfolio with an AI coding agent: a designer's field report\"\n- **Tags to use consistently (across both collections):** `ai-workflow` \u00b7 `e-commerce` \u00b7 `case-study` \u00b7 `process` \u00b7 `prompts` \u00b7 `art` \u00b7 `site` \u2014 current placeholder tags (`seo`, `journal`) fold into these.\n\n## 7. SEO & metadata conventions\n\n- **Keywords to own:** \"AI experience designer\", \"AI e-commerce content\", \"AI content design\", \"e-commerce content operations\", \"designing with AI\" \u2014 used naturally in titles/descriptions, never stuffed.\n- **Title pattern:** \"[Page or post topic] \u2014 Mariana Ordo\u00f1ez\". (Templates currently use \"|\" on some pages; standardize on the em-dash \u2014 small build task.)\n- **Name spelling:** the site currently renders \"Mariana Ordonez\" (no \u00f1). Pick one display spelling and use it everywhere; suggestion: \"Mariana Ordo\u00f1ez\" on pages, ASCII \"mordonez\" in the domain/URLs only. `[ASSUMPTION \u2014 your call]`\n- **Notes:** descriptions \u2264 155 characters, written in first person, each containing one concrete proof (\"ran content for N products\") rather than adjectives; `title` and `description` map directly to the frontmatter fields every entry already requires. Replace `og-default.svg` with a real 1200\u00d7630 OG image (name + title + one proof line) \u2014 build/asset task. Confirm **mordonez.dev** is the final domain; it's currently set in the config and robots.txt but reads like a scaffold default `[ASSUMPTION \u2014 unconfirmed]`.\n\n## 8. Asset checklist\n\nEverything only you can gather \u2014 the usual launch blockers:\n\n- [ ] Portrait photo for About (and a square crop for OG/social)\n- [ ] Resume PDF aligned with the \"AI Experience Designer\" positioning (if your current CV still says e-commerce content specialist, that's a follow-up task \u2014 recruiters cross-check)\n- [ ] **Metrics for Slot 1/2** \u2014 ask former employer/client or reconstruct from memory: catalog size, assets produced per month, production time per asset before vs. after AI, cost per asset, rework rate, any conversion/revenue effect\n- [ ] Before/after examples of product content (images + copy) \u2014 sanitized for NDA\n- [ ] Permission check per project: can the client be named? If not, agree the anonymized label (\"a [category] retailer\")\n- [ ] Sanitized prompt examples / prompt-library screenshots\n- [ ] Prototype links or screen recordings for Slot 3 (if it exists)\n- [ ] 1\u20132 art images you're willing to show on About / in the journal\n- [ ] Final contact email + LinkedIn URL (+ Instagram/Behance if you want them linked)\n- [ ] Domain confirmation: keep mordonez.dev or use another? (config + robots.txt need the final answer)\n- [ ] Any testimonials or quotable feedback from past managers/clients\n\n## 9. Roadmap\n\n- **Phase 1 \u2014 apply-ready (target: ~3 weeks, by end of June 2026 `[ASSUMPTION]`):**\n  1. Decide on the 3 headline calls (top of this plan) and answer section 10\n  2. Build tasks batch 1 (below): Work section, About page, contact block, nav\n  3. Write Slot 1 case study + one more (Slot 2, or Slot 3 if a real project fits)\n  4. Rewrite Home copy around the positioning statement\n  5. Write About\n  6. Publish 3 journal entries; retire or rewrite the two placeholder entries\n  7. Resume PDF linked; metadata + OG image done\n  8. **Start applying \u2014 don't wait for Phase 2**\n- **Phase 2 \u2014 depth (weeks 4\u20138):** third/fourth case study \u00b7 blog post #1 (\"what actually transfers\") \u00b7 art presence on About/journal \u00b7 testimonials added to case studies \u00b7 case-study #1 adapted into a blog post\n- **Phase 3 \u2014 ongoing:** journal weekly \u00b7 blog monthly \u00b7 new work added as it ships \u00b7 revisit positioning after the first ~10 applications (which case study gets mentioned in interviews? lead with it) \u00b7 optional Spanish versions if targeting bilingual markets `[ASSUMPTION \u2014 deferred]`\n- **Build tasks (for Claude Code / a developer \u2014 none of this is content):**\n  1. Create a `work` content collection (suggested frontmatter: title, description, pubDate, cover image, role, client/anonymized label, timeframe, tools, outcome summary, metrics, draft flag) + Work index and case-study pages\n  2. Create the About page\n  3. Add contact block component (Home, About, case-study footers) + site footer with social links\n  4. Update header nav to Work \u00b7 About \u00b7 Journal \u00b7 Blog\n  5. Home page layout updates: featured-work cards above the writing feed\n  6. Replace `og-default.svg` with the real OG image; standardize title pattern to \"\u2014\"; unify name spelling site-wide\n  7. Add an RSS feed (the blog copy already promises \"RSS-ready\"; no feed route exists yet)\n  8. When the domain is confirmed: verify `site` in `astro.config.mjs` and the sitemap URL in `robots.txt`\n\n## 10. Assumptions & open questions\n\nEvery `[ASSUMPTION]` above, restated as a question you can answer in one line \u2014 reply to any of these and the plan gets updated:\n\n- [ ] **Timeline:** are you applying within ~a month (plan assumes yes), or is the runway longer?\n- [ ] **Market & language:** remote US/EU roles, English-first site \u2014 correct? Any need for Spanish at launch?\n- [ ] **Target titles:** which of the four role titles in section 1 match the postings you're actually seeing? Any dream companies?\n- [ ] **Positioning years/scale:** how many years of e-commerce content work, and how big was the catalog/operation? (These two numbers power the hero line.)\n- [ ] **Projects:** which real projects map onto Slots 1\u20133? Which are you proudest of, and which best matches the jobs \u2014 same project or different?\n- [ ] **Slot 3:** does a real \"AI in the product\" project exist, or should we plan a self-initiated concept piece?\n- [ ] **NDA:** which clients can be named, which need anonymizing?\n- [ ] **Metrics:** can you get the Slot 1 numbers (volume, time, cost), and from whom?\n- [ ] **Art:** light-touch (About teaser + journal tag, as assumed), a dedicated gallery, or off the site entirely? Is any of your art AI-assisted? (That intersection is directly relevant \u2014 say so if yes.)\n- [ ] **Cadence:** is 1 journal entry/week + 1 blog post/month honest for you while job hunting?\n- [ ] **Freelance:** keep the door visibly open on the site (assumed yes, quietly), or employment-only?\n- [ ] **Domain & contact:** is mordonez.dev final, and what email/LinkedIn should the site use?\n- [ ] **Name spelling:** \"Ordo\u00f1ez\" or \"Ordonez\" on the site?\n- [ ] **Resume:** does your current CV match this positioning, or does it need a rewrite alongside Phase 1?\n- [ ] **Deadlines:** any fixed dates (visa, specific openings, events) the roadmap must respect?\n\n## Changelog\n\n- 2026-06-09 \u2014 Created (first version). Written non-interactively at Mariana's request (\"don't ask me questions\"); repo audited (blog + journal collections exist; Work/About/contact do not); all guesses marked `[ASSUMPTION]` and collected in section 10 for her reaction.\n"}], "grading": {"expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: sparse-context-english/with_skill/outputs/content-plan.md (244 lines, 10 sections plus changelog)."}, {"text": "Written in English, matching the user's language", "passed": true, "evidence": "Entire document is English: \"# Content plan \u2014 Mariana Ordo\u00f1ez portfolio (mordonez.dev)\", \"## 1. Goal & positioning\", \"## 10. Assumptions & open questions\"."}, {"text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to", "passed": true, "evidence": "grep counts 25 [ASSUMPTION] markers inline (e.g. \"[ASSUMPTION \u2014 'starting to job hunt' read as 'applying within a month'...]\"). Dedicated section 10 \"Assumptions & open questions\" restates each as a one-line checkbox question: \"Every [ASSUMPTION] above, restated as a question you can answer in one line\" (15 questions)."}, {"text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks", "passed": true, "evidence": "Section 3 table: Home \"Exists, but placeholder copy\"; Work / case studies \"Needs build (ask Claude Code): no `work` collection or pages exist yet\"; About \"Needs build (ask Claude Code): no about page exists\"; Journal \"Exists \u2014 1 generic placeholder entry to replace\"; Blog \"Exists \u2014 1 generic placeholder post to replace\"; Contact \"Needs build\". Header note \"Statuses come from auditing the repo as it exists today (Astro site with `blog` and `journal` collections only)\" \u2014 verified accurate against src/content.config.ts and src/pages/."}, {"text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided", "passed": true, "evidence": "Four slots with explicit structure, e.g. Slot 1: \"Her role: designing/running the content workflow and deciding where AI belonged in it\", story arc with \"where AI entered (tools, prompts, iterations)\", and \"Metrics: to dig up \u2014 products or assets per month, production time per asset before/after, cost per asset, rework rate, time-to-publish, any conversion effect\". A weighted selection scorecard handles the undecided projects (\"map your real projects onto the slots\"), and the case-study page template leads with \"Outcome-first title + 3-fact summary bar (role \u00b7 timeframe \u00b7 result)\"."}, {"text": "Journal and blog get distinct purposes plus concrete starter topics", "passed": true, "evidence": "Section 6: journal purpose \"visible proof of hands-on AI thinking between jobs\" with 8 titled starter entries (e.g. \"Five prompt iterations to one usable product image\", \"Three AI tools I dropped this month, and why\"); blog purpose \"authority pieces a design lead might share; each doubles as application material\" with 4 titled posts (e.g. \"From e-commerce content to AI experience design: what actually transfers\")."}, {"text": "SEO metadata proposed: a title and description for at least the main pages", "passed": true, "evidence": "Concrete title + description pairs for every main page, e.g. Home: title \"Mariana Ordo\u00f1ez \u2014 AI Experience Designer\" / description \"AI experience designer with deep e-commerce content roots. I design AI-powered content systems and experiences that ship...\"; also Work, About, Journal, Blog, plus a case-study pattern. Section 7 notes \"`title` and `description` map directly to the frontmatter fields every entry already requires\"."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 9: \"Phase 1 \u2014 apply-ready (target: ~3 weeks, by end of June 2026 [ASSUMPTION])\" with 8 steps ending \"Start applying \u2014 don't wait for Phase 2\", followed by \"Phase 2 \u2014 depth (weeks 4\u20138)\" and \"Phase 3 \u2014 ongoing\", plus a separate build-task list for Claude Code."}, {"text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap", "passed": true, "evidence": "Decision 1: \"Lead with the intersection, not the destination... Plenty of people claim AI skills; almost none pair them with shipped e-commerce content work at scale.\" Positioning statement leads with the e-commerce depth, and Slot 1 is framed as \"the intersection no one else can claim\"."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "summary": {"passed": 10, "failed": 0, "total": 10, "pass_rate": 1.0}, "eval_feedback": {"suggestions": [{"assertion": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "reason": "Not verifiable from the run's own artifacts (no transcript, no per-run git snapshot); graded from the orchestrator's post-hoc `git status --porcelain`. Capturing that output into each run directory would make the assertion self-contained."}], "overall": "All 10 assertions pass with concrete substance; repo facts cited in the plan (placeholders, og-default.svg, missing RSS route, mordonez.dev scaffold domain) all verified accurate."}}}, {"id": "eval-1-sparse-context-english-without_skill-run-1", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "content-plan.md", "type": "text", "content": "# Content Plan \u2014 mordonez.dev\n\nA job-hunt-ready content plan for the portfolio site of a designer moving from e-commerce content work into AI experience design.\n\n**How to read this:** Everything grounded in the repo or your brief is stated plainly. Anything I had to invent or assume is marked **[GUESS]**. React by striking what's wrong and confirming what's right \u2014 the whole plan is built to be corrected, not obeyed.\n\n---\n\n## 0. What I'm working from\n\n**Facts (from the repo):**\n- The site is an Astro static site for **Mariana Ordonez**, domain configured as `mordonez.dev`, with strong SEO plumbing already in place (canonical URLs, Open Graph, sitemap, robots.txt).\n- Two content collections exist: `blog` and `journal` (shared frontmatter: title, description, pubDate, updatedDate, draft, tags). Each has one placeholder entry.\n- The homepage promises a **Portfolio** section, but no work/case-study collection, no About page, and no Contact exist yet. The nav only links Blog and Journal.\n- The default social-share image (`og-default.svg`) is a generic placeholder.\n\n**Brief (from you):** designer, e-commerce content work \u2192 AI experience design, starting to job hunt, a few candidate projects, undecided which to show.\n\n**Key assumptions I had to make** (all expanded inline below):\n1. **[GUESS]** Target roles: AI product/experience designer or content designer for AI products at product companies \u2014 not freelance clients, not agencies.\n2. **[GUESS]** Seniority: mid-to-senior (you have a body of e-commerce work worth showing, so 4+ years).\n3. **[GUESS]** Your candidate projects are e-commerce-era work (PDP/checkout content systems, personalization, experimentation, content ops) plus at most one early AI-adjacent piece. I invented plausible archetypes in \u00a74 \u2014 swap in your real projects.\n4. **[GUESS]** Timeline: you want to be sending applications within ~3\u20134 weeks, so the plan is phased around a minimum credible launch, not a perfect site.\n5. **[GUESS]** Some past work is under NDA or hard to screenshot, so the case-study template includes a workaround.\n\n---\n\n## 1. Positioning \u2014 the one sentence the whole site serves\n\nA career-changer portfolio has one job: make the transition look like a **trajectory, not a pivot**. E-commerce content work is genuinely strong raw material for AI experience design \u2014 both are about shaping language systems at scale, designing for variable/generated content, and measuring whether words actually move behavior. The site should say that out loud instead of hoping a hiring manager connects the dots.\n\n**Recommended positioning line (hero, react to these):**\n\n- Option A \u2014 *\"I design how products talk. Ten years of making e-commerce content convert, now applied to making AI experiences make sense.\"* **[GUESS \u2014 \"ten years\" is invented; replace with your real number]**\n- Option B \u2014 *\"Experience designer working on AI products. I came up through e-commerce content design, where every word had a conversion rate \u2014 I bring that same accountability to conversational and generative interfaces.\"*\n- Option C (plainest) \u2014 *\"AI experience designer. Formerly content design for e-commerce at scale.\"*\n\n**Target reader [GUESS]:** a design manager or recruiter at an AI-product company who spends 60\u201390 seconds on the site before deciding whether to open a case study. Every page should survive that skim.\n\n**Anti-goal:** do not position as \"aspiring AI designer\" or lead with the learning journey. Lead with competence; let the blog/journal show the learning.\n\n---\n\n## 2. Site architecture \u2014 what to add and what to keep\n\nCurrent: Home, Blog, Journal. Recommended end state:\n\n| Section | Status | Priority | Notes |\n|---|---|---|---|\n| **Work** (`/work/` + case-study pages) | **Missing \u2014 build it** | P0 | New `work` content collection, mirroring how `blog`/`journal` are set up. This is the site's reason to exist during a job hunt. |\n| **About** (`/about/`) | Missing \u2014 build it | P0 | The transition narrative lives here, not in the hero. |\n| **Home** | Exists, generic copy | P0 | Rewrite around positioning; feature 2\u20133 case studies above the writing feed. |\n| **Contact** | Missing | P0 | Doesn't need a page \u2014 email + LinkedIn in the footer and at the end of every case study. |\n| **Blog** | Exists, 1 placeholder | P1 | Your credibility engine as a career changer \u2014 see \u00a75. Delete or rewrite the placeholder post before launch. |\n| **Journal** | Exists, 1 placeholder | P2 | Keep, but it's optional for launch. Repurpose as an \"AI design field notes\" stream \u2014 see \u00a76. |\n| **Resume** | Missing | P1 | A `/resume.pdf` link in nav or footer. Recruiters will look for it. |\n\n**Nav order:** Work \u00b7 About \u00b7 Blog \u00b7 Journal. (Work first \u2014 it's currently absent from the nav entirely.)\n\n**Suggested `work` frontmatter** (consistent with the existing typed schema): title, description, pubDate, tags, plus `role`, `timeframe`, `outcome` (one-line metric), and `featured` (boolean for homepage). Keep `draft: true` available so you can stage case studies without publishing.\n\n---\n\n## 3. Page-by-page plan\n\n### 3.1 Homepage (rewrite)\n\nCurrent copy is about the site's architecture (\"a search-friendly home for selected work\u2026\") \u2014 it sells Astro, not you. Replace with:\n\n1. **Hero:** name, positioning line (\u00a71), one CTA \u2192 \"See selected work.\"\n2. **Featured work:** 2\u20133 case-study cards with outcome-first blurbs (\"Cut content production time 40%\" beats \"A content system project\"). Replaces the current Portfolio/Blog/Journal feature grid, which describes sections instead of showing work.\n3. **Short transition paragraph:** 2\u20133 sentences of the \u00a71 story, linking to About.\n4. **Recent writing:** keep the existing latest-posts feed \u2014 it's already built and it signals an active mind.\n5. **Footer:** email, LinkedIn, resume. **[GUESS]** I don't know your preferred contact email or LinkedIn URL \u2014 the git history shows `marianaordonez04@gmail.com`; confirm what you actually want public.\n\n### 3.2 Work index (`/work/`)\n\nA simple list of 3 case studies (see \u00a74 for which three). One line of framing at the top: what kinds of problems you take on. Resist adding more than 4 projects \u2014 a job-hunt portfolio is an argument, not an archive.\n\n### 3.3 Case-study template (use for all of them)\n\nTarget 800\u20131,200 words, 10-minute read max, skimmable from headers alone:\n\n1. **Header block:** title, one-line outcome, role, team size, timeframe.\n2. **Context:** the business problem in 3 sentences. No company history.\n3. **Constraints:** what made it hard (this is where senior judgment shows).\n4. **Process:** 2\u20133 key decisions with the *reasoning*, not a deliverables tour. For the AI-relevant angle, explicitly name the transferable mechanic (e.g., \"designing templates for content we couldn't fully control\" \u2192 exactly the generative-UI problem).\n5. **Artifacts:** 3\u20136 images max. **NDA workaround [GUESS that you need it]:** recreate sanitized mockups, abstract the data, and say plainly \"details anonymized\" \u2014 hiring managers respect this and it reads better than nothing.\n6. **Outcome:** numbers if you have them; honest qualitative results if you don't (\"adopted by 3 teams\" counts).\n7. **What I'd do differently:** 2\u20133 sentences. Disarms interviewers and signals reflection.\n8. **CTA:** \"Currently looking for AI experience design roles \u2014 email me.\"\n\n### 3.4 About (`/about/`)\n\n- The transition story as a through-line, ~300\u2013400 words: what e-commerce content taught you (systems for language at scale, measurement, designing for content you don't control) \u2192 why AI experience design is the same problem with higher stakes \u2192 what you've done about it (courses, side projects, experiments \u2014 **[GUESS]** that you have some of these; list whatever is real).\n- A \"how I work\" list of 4\u20135 principles.\n- Photo optional; tools list optional and only if it includes AI tooling (Figma + prompt work + whatever model/agent tools you actually use).\n- End with what you're looking for: **[GUESS]** \"product teams building AI features, where content, behavior, and interface get designed together.\"\n\n---\n\n## 4. Which projects to show \u2014 selection rubric + recommended mix\n\nYou said you haven't decided. Here's a decision tool plus my recommended slate.\n\n**Score each candidate project 1\u20135 on:**\n\n| Criterion | Weight | Why |\n|---|---|---|\n| AI-relevance (real or reframable) | \u00d73 | The whole site argues you can do AI work |\n| Outcome strength (metrics, adoption) | \u00d72 | Career-changers get extra scrutiny on impact |\n| Story you're allowed to tell (NDA, assets) | \u00d72 | A great project you can't show loses to a good one you can |\n| Recency | \u00d71 | Tiebreaker only |\n\nPick the top 3. Two from your e-commerce work, one AI-native.\n\n**Recommended slate \u2014 these three slots, with [GUESS] archetypes as stand-ins:**\n\n1. **The systems story [GUESS at archetype]:** an e-commerce content *system* \u2014 PDP template system, content design system, localization/scaling framework. Reframe: \"designing rules for content that varies\" = prompt/template design for generative output.\n2. **The evidence story [GUESS at archetype]:** an experimentation/optimization project \u2014 copy testing, checkout flow, personalization. Reframe: \"I treat language as a measurable interface\" = exactly how good AI products are evaluated.\n3. **The AI-native story \u2014 this slot is non-negotiable, even if the project is self-initiated.** **[GUESS]** that you don't yet have a shipped AI project. If so, build one in week 1\u20132 of this plan rather than skipping the slot. Strong one-week options:\n   - Redesign a real AI flaw you've experienced (e.g., a shopping assistant's failure modes: hallucinated availability, dead-end clarifying questions) \u2014 document the redesign with the same rigor as client work, labeled \"self-initiated.\"\n   - A pattern study: \"error and uncertainty states in 5 AI products\" with your redesigns.\n   - This slot doubles as the proof that the transition is already underway, not aspirational.\n\n**Explicitly leave out:** anything purely visual/branding, anything pre-dating your strongest era, and any project whose story is \"I executed someone else's decisions.\"\n\n---\n\n## 5. Blog \u2014 the career-changer's credibility engine (4 seed posts)\n\nFor someone whose shipped AI work is thin, *published thinking* is the strongest available signal. One good essay can do as much as a case study. Seed list (titles are drafts \u2014 react):\n\n1. **\"What e-commerce content design taught me about designing for AI\"** \u2014 the bridge essay; the About page's argument at full length. Write this one first; it's also your LinkedIn artifact for the job hunt.\n2. **\"Designing for content you don't control: from CMS templates to model outputs\"** \u2014 the systems argument, deepened.\n3. **A teardown:** one AI product's experience choices, analyzed concretely (pick a product in or near commerce \u2014 assistant-driven shopping, AI search \u2014 so both halves of your story show up). **[GUESS]** at the product domain; pick whatever you genuinely use.\n4. **\"Conversion thinking for conversational interfaces\"** \u2014 what funnels, friction, and trust signals look like when the interface is a dialogue.\n\nCadence after launch **[GUESS at your capacity]:** one post a month is plenty. Delete `first-post.md` (it's about the site's tech stack, wrong story for a design audience) or rewrite it as a short \"why this site\" note.\n\n---\n\n## 6. Journal \u2014 low-cost signal of momentum\n\nKeep the existing journal as a **field-notes stream about AI experience patterns**: 100\u2013200-word observations \u2014 a prompt experiment, an interaction pattern spotted, a paper or product note. 2\u20134 entries a month, zero polish. Its job is to make the site look alive between blog posts while you're interviewing. Replace the `field-note-001.md` placeholder with a real observation on day one. This section is **optional for launch** \u2014 don't let it delay the case studies.\n\n---\n\n## 7. Voice, SEO, and metadata (the plumbing is built \u2014 use it)\n\n- **Voice:** first person, concrete, outcome-led. Confident about the e-commerce past, curious-but-rigorous about AI. Never apologetic about the transition.\n- **Descriptions** (the schema requires them): write each as the search-result pitch \u2014 \"How I rebuilt X's product content system and cut production time 40%,\" not \"A case study about content.\"\n- **Tags:** keep a small controlled set so archive pages stay coherent \u2014 e.g., `ai-ux`, `content-design`, `e-commerce`, `case-study`, `process`. **[GUESS]** at the taxonomy; prune to what you'll actually reuse.\n- **OG images:** replace the placeholder `og-default.svg` with a simple branded card (name + positioning line); ideally give each case study its own share image, since these pages will be pasted into Slack by hiring teams.\n- **Title pattern:** the layout already appends \"| Mariana Ordonez\" \u2014 keep titles under ~55 characters so they don't truncate.\n\n---\n\n## 8. Roadmap \u2014 phased for a job hunt\n\n**Phase 1 \u2014 Minimum credible launch (weeks 1\u20132).** Don't apply anywhere until this exists:\n- [ ] Decide the 3 projects using the \u00a74 rubric (1 evening)\n- [ ] Homepage rewrite + footer contact + resume PDF\n- [ ] About page\n- [ ] Case study #1 (your strongest e-commerce systems story) published; case study #3 scoped (the AI-native piece, started)\n- [ ] Delete/replace both placeholder posts; replace the OG image\n\n**Phase 2 \u2014 Full argument (weeks 3\u20134):**\n- [ ] Case studies #2 and #3 published\n- [ ] Bridge essay (blog post 1) published \u2014 share it on LinkedIn the same week you start applying\n- [ ] 2\u20133 journal entries so the stream isn't empty\n\n**Phase 3 \u2014 Ongoing while interviewing:**\n- [ ] One blog post/month, journal as fuel\n- [ ] Teardown post (#3 in \u00a75) timed to companies you're targeting\n- [ ] Add a 4th case study only if interviews reveal a gap (e.g., everyone asks about research and you have none shown)\n\n---\n\n## 9. Everything I guessed, in one list \u2014 react to these first\n\n| # | Guess | If wrong, what changes |\n|---|---|---|\n| 1 | Target = in-house AI product/experience design roles | If freelance/consulting: add services framing and stronger CTA; positioning shifts from \"hire me\" to \"engage me\" |\n| 2 | Mid-to-senior, ~4+ years | If earlier-career: 2 case studies suffice; lean harder on the AI-native project and blog |\n| 3 | Your projects match the archetypes in \u00a74 (content systems / experimentation / no shipped AI work yet) | Swap real projects into the slots; if you *do* have shipped AI work, it takes slot 1 and the self-initiated piece becomes optional |\n| 4 | ~3\u20134 week runway before applying in earnest | If sooner: Phase 1 only, with one case study and a \"more work coming\" note |\n| 5 | NDA constraints on some work | If everything is showable, ignore the sanitization guidance |\n| 6 | Public contact = an email you'll confirm (git shows a Gmail) + LinkedIn | Footer/contact copy updates |\n| 7 | \"Ten years\" in hero Option A, tag taxonomy, teardown product domain, posting cadence | Cosmetic \u2014 replace with real numbers/choices |\n| 8 | English-only site | If you want Spanish too **[GUESS that you might, given the name]**, that's a structural decision to make before writing 3 case studies, not after |\n\n---\n\n*Plan grounded in the repo as of 2026-06-09: Astro 6, collections `blog` + `journal` only, no work/about/contact yet, SEO metadata and sitemap already wired, all current content placeholder.*\n"}], "grading": {"expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: sparse-context-english/without_skill/outputs/content-plan.md (195 lines, sections 0\u20139)."}, {"text": "Written in English, matching the user's language", "passed": true, "evidence": "Entire document is English: \"# Content Plan \u2014 mordonez.dev\", \"## 1. Positioning \u2014 the one sentence the whole site serves\", \"## 8. Roadmap \u2014 phased for a job hunt\"."}, {"text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to", "passed": true, "evidence": "grep counts 20 [GUESS] markers inline (e.g. \"[GUESS \u2014 'ten years' is invented; replace with your real number]\"). Section 0 lists \"Key assumptions I had to make\" (5 items) and dedicated section 9 \"Everything I guessed, in one list \u2014 react to these first\" tabulates 8 guesses each with an \"If wrong, what changes\" column."}, {"text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks", "passed": true, "evidence": "Section 2 table: Work \"Missing \u2014 build it\" (P0, \"New `work` content collection, mirroring how `blog`/`journal` are set up\"); About \"Missing \u2014 build it\"; Home \"Exists, generic copy\"; Contact \"Missing\"; Blog \"Exists, 1 placeholder\"; Journal \"Exists, 1 placeholder\". Section 0 repo facts (\"Two content collections exist: `blog` and `journal` (shared frontmatter: title, description, pubDate, updatedDate, draft, tags)\") verified accurate against src/content.config.ts."}, {"text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided", "passed": true, "evidence": "Section 3.3 template mandates per case: \"Header block: title, one-line outcome, role, team size, timeframe\" and \"Outcome: numbers if you have them; honest qualitative results if you don't ('adopted by 3 teams' counts)\". Section 4 defines three slots with the AI mechanic named per slot (\"'designing rules for content that varies' = prompt/template design for generative output\"; slot 3 \"The AI-native story \u2014 this slot is non-negotiable\") and a weighted rubric scoring \"Outcome strength (metrics, adoption) \u00d72\" for the undecided projects."}, {"text": "Journal and blog get distinct purposes plus concrete starter topics", "passed": false, "evidence": "Purposes are distinct (blog \u00a75 \"the career-changer's credibility engine\"; journal \u00a76 \"low-cost signal of momentum... field-notes stream\") and the blog gets 4 titled seed posts. But the journal gets no concrete starter topics \u2014 only format categories (\"a prompt experiment, an interaction pattern spotted, a paper or product note\") and \"Replace the field-note-001.md placeholder with a real observation on day one\". The roadmap likewise says only \"2\u20133 journal entries so the stream isn't empty\". Half the assertion is unmet; no partial credit."}, {"text": "SEO metadata proposed: a title and description for at least the main pages", "passed": false, "evidence": "Section 7 gives only guidance, not metadata: descriptions \"write each as the search-result pitch \u2014 'How I rebuilt X's product content system and cut production time 40%'\" (a generic example, not a page's description) and a title rule (\"the layout already appends '| Mariana Ordonez' \u2014 keep titles under ~55 characters\"). No concrete title or description text is proposed for any main page (home, about, work, blog, journal); the \u00a71 hero options are page copy, not metadata."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 8 \"Roadmap \u2014 phased for a job hunt\": \"Phase 1 \u2014 Minimum credible launch (weeks 1\u20132). Don't apply anywhere until this exists:\" with a 5-item checklist, then \"Phase 2 \u2014 Full argument (weeks 3\u20134)\" and \"Phase 3 \u2014 Ongoing while interviewing\". Phase 1 is explicitly the apply-gating launch slice."}, {"text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap", "passed": true, "evidence": "Section 1: \"make the transition look like a trajectory, not a pivot. E-commerce content work is genuinely strong raw material for AI experience design \u2014 both are about shaping language systems at scale... measuring whether words actually move behavior\"; hero option B: \"where every word had a conversion rate \u2014 I bring that same accountability to conversational and generative interfaces\"; \"Anti-goal: do not position as 'aspiring AI designer'\"."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "summary": {"passed": 8, "failed": 2, "total": 10, "pass_rate": 0.8}, "eval_feedback": {"suggestions": [{"reason": "No assertion checks the factual accuracy of the plan's repo claims. This run mined a personal email from git history (\"the git history shows marianaordonez04@gmail.com\" \u2014 verified accurate via git log), but a hallucinated repo 'fact' would currently pass ungraded; consider an assertion that repo claims in the plan are verifiably true."}], "overall": "Solid grounded plan that fails on concrete journal starter topics and concrete SEO titles/descriptions \u2014 both genuine, discriminating gaps versus the with-skill run."}}}], "previous_feedback": {}, "previous_outputs": {}, "benchmark": {"metadata": {"skill_name": "content-plan", "skill_path": "<path/to/skill>", "executor_model": "<model-name>", "analyzer_model": "<model-name>", "timestamp": "2026-06-10T00:34:11Z", "evals_run": [0, 1], "runs_per_configuration": 3}, "runs": [{"eval_id": 0, "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 11, "failed": 0, "total": 11, "time_seconds": 385.7, "tokens": 61827, "tool_calls": 0, "errors": 0}, "expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: rich-context-spanish/with_skill/outputs/content-plan.md (223 lines, a complete 10-section content plan plus changelog)."}, {"text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language", "passed": true, "evidence": "Title and all headings are Spanish: \"# Plan de contenido \u2014 Portafolio de Mariana Ordo\u00f1ez\", \"## 3. Mapa del sitio\", \"## 9. Hoja de ruta\", \"## 10. Supuestos y preguntas abiertas\". Body prose is Spanish throughout; English appears only in proposed site copy, an explicitly marked decision (\"El sitio se publica en ingl\u00e9s... El plan est\u00e1 en espa\u00f1ol para ti [SUPUESTO]\")."}, {"text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections", "passed": true, "evidence": "Section 3 \"Mapa del sitio\" is a table with rows for Home, About, \"Work / Casos de estudio\", Journal, Blog, Contacto and Arte, each with purpose and status."}, {"text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built", "passed": true, "evidence": "Section 3: \"el sitio tiene home, blog y journal funcionando (con contenido de relleno), y no tiene About, Work ni contacto\"; About and Work rows say \"No existe \u2192 construir\". Repo claims verified accurate: journal placeholder \"Field Note 001\" = src/content/journal/field-note-001.md and blog placeholder \"Starting With a Durable Web Home\" = src/content/blog/first-post.md (confirmed by grep); only blog+journal collections exist in src/content.config.ts."}, {"text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented", "passed": true, "evidence": "Section 5: Caso 1 \"Cutting product-photo costs ~60% with an AI pipeline\" (\u221260% kept, e.g. \"conocida: \u221260% costo por foto\"); Caso 2 \"tienda de belleza, bajo NDA \u2192 anonimizar como 'a beauty retailer'\" (never named, no invented name); Caso 3 \"A generative art practice\". All three projects are case studies."}, {"text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up", "passed": true, "evidence": "Every case has an explicit M\u00e9tricas line. Caso 1: \"conocida: \u221260% costo por foto. Por conseguir: costo antes/despu\u00e9s en cifras, fotos por mes o por campa\u00f1a, tiempo de entrega antes/despu\u00e9s, % de tomas que siguieron siendo fotograf\u00eda f\u00edsica...\". Caso 2: \"ninguna confirmada a\u00fan. Por perseguir: tasa de resoluci\u00f3n sin humano, satisfacci\u00f3n (CSAT), conversi\u00f3n asistida, ticket promedio, volumen de conversaciones\". Caso 3 addresses it head-on: \"no aplican; aqu\u00ed la evidencia es el criterio. Si hay exposiciones, ventas o publicaciones, mencionarlas\"."}, {"text": "Journal and blog get distinct purposes plus concrete first topic ideas for each", "passed": true, "evidence": "Section 6: journal = \"registrar en 150\u2013400 palabras lo que descubres trabajando con IA\" with 8 titled first entries (e.g. \"Flair.ai vs. Midjourney for product shots: where each one wins\"); blog = \"autoridad; el texto que un hiring manager lee antes de la entrevista\" with 4 titled posts (e.g. \"How we cut product-photo costs by 60% with an AI pipeline\")."}, {"text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields", "passed": true, "evidence": "Concrete title + description pairs for Home (\"Mariana Ordo\u00f1ez \u2014 AI Experience Designer\" / \"AI Experience Designer with 7 years of e-commerce content for fashion and beauty...\"), About, Work, Journal and Blog. Section 4 states they map \"a los campos `title` y `description` que el sitio ya exige\", which matches the writingSchema in src/content.config.ts; section 7 adds length limits (t\u00edtulo \u2264 60, descripci\u00f3n \u2264 155)."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 9 \"Hoja de ruta\": \"Fase 1 \u2014 lista para aplicar (objetivo: ~4 semanas...)\", followed by \"Fase 2 \u2014 profundidad\" and \"Fase 3 \u2014 continuo\", plus an ordered build-task list."}, {"text": "Assumptions/open questions are collected in a dedicated section", "passed": true, "evidence": "Section 10 \"Supuestos y preguntas abiertas\" collects every inline marker (grep counts 15 [SUPUESTO] occurrences) as 11 checkbox questions: \"Cada [SUPUESTO] del plan, convertido en pregunta para que respondas cuando quieras\"."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "notes": []}, {"eval_id": 1, "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 10, "failed": 0, "total": 10, "time_seconds": 415.4, "tokens": 64447, "tool_calls": 0, "errors": 0}, "expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: sparse-context-english/with_skill/outputs/content-plan.md (244 lines, 10 sections plus changelog)."}, {"text": "Written in English, matching the user's language", "passed": true, "evidence": "Entire document is English: \"# Content plan \u2014 Mariana Ordo\u00f1ez portfolio (mordonez.dev)\", \"## 1. Goal & positioning\", \"## 10. Assumptions & open questions\"."}, {"text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to", "passed": true, "evidence": "grep counts 25 [ASSUMPTION] markers inline (e.g. \"[ASSUMPTION \u2014 'starting to job hunt' read as 'applying within a month'...]\"). Dedicated section 10 \"Assumptions & open questions\" restates each as a one-line checkbox question: \"Every [ASSUMPTION] above, restated as a question you can answer in one line\" (15 questions)."}, {"text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks", "passed": true, "evidence": "Section 3 table: Home \"Exists, but placeholder copy\"; Work / case studies \"Needs build (ask Claude Code): no `work` collection or pages exist yet\"; About \"Needs build (ask Claude Code): no about page exists\"; Journal \"Exists \u2014 1 generic placeholder entry to replace\"; Blog \"Exists \u2014 1 generic placeholder post to replace\"; Contact \"Needs build\". Header note \"Statuses come from auditing the repo as it exists today (Astro site with `blog` and `journal` collections only)\" \u2014 verified accurate against src/content.config.ts and src/pages/."}, {"text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided", "passed": true, "evidence": "Four slots with explicit structure, e.g. Slot 1: \"Her role: designing/running the content workflow and deciding where AI belonged in it\", story arc with \"where AI entered (tools, prompts, iterations)\", and \"Metrics: to dig up \u2014 products or assets per month, production time per asset before/after, cost per asset, rework rate, time-to-publish, any conversion effect\". A weighted selection scorecard handles the undecided projects (\"map your real projects onto the slots\"), and the case-study page template leads with \"Outcome-first title + 3-fact summary bar (role \u00b7 timeframe \u00b7 result)\"."}, {"text": "Journal and blog get distinct purposes plus concrete starter topics", "passed": true, "evidence": "Section 6: journal purpose \"visible proof of hands-on AI thinking between jobs\" with 8 titled starter entries (e.g. \"Five prompt iterations to one usable product image\", \"Three AI tools I dropped this month, and why\"); blog purpose \"authority pieces a design lead might share; each doubles as application material\" with 4 titled posts (e.g. \"From e-commerce content to AI experience design: what actually transfers\")."}, {"text": "SEO metadata proposed: a title and description for at least the main pages", "passed": true, "evidence": "Concrete title + description pairs for every main page, e.g. Home: title \"Mariana Ordo\u00f1ez \u2014 AI Experience Designer\" / description \"AI experience designer with deep e-commerce content roots. I design AI-powered content systems and experiences that ship...\"; also Work, About, Journal, Blog, plus a case-study pattern. Section 7 notes \"`title` and `description` map directly to the frontmatter fields every entry already requires\"."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 9: \"Phase 1 \u2014 apply-ready (target: ~3 weeks, by end of June 2026 [ASSUMPTION])\" with 8 steps ending \"Start applying \u2014 don't wait for Phase 2\", followed by \"Phase 2 \u2014 depth (weeks 4\u20138)\" and \"Phase 3 \u2014 ongoing\", plus a separate build-task list for Claude Code."}, {"text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap", "passed": true, "evidence": "Decision 1: \"Lead with the intersection, not the destination... Plenty of people claim AI skills; almost none pair them with shipped e-commerce content work at scale.\" Positioning statement leads with the e-commerce depth, and Slot 1 is framed as \"the intersection no one else can claim\"."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "notes": []}, {"eval_id": 0, "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 0.82, "passed": 9, "failed": 2, "total": 11, "time_seconds": 328.2, "tokens": 51866, "tool_calls": 0, "errors": 0}, "expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: rich-context-spanish/without_skill/outputs/content-plan.md (331 lines, 13 sections plus two appendices)."}, {"text": "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language", "passed": true, "evidence": "Headings and body are Spanish throughout: \"# Plan de contenido \u2014 mordonez.dev\", \"## 1. Resumen ejecutivo\", \"## 3. Arquitectura del sitio: de lo que hay a lo que se necesita\", \"## 10. Calendario editorial\". English appears only in proposed site copy (statements, case-study titles), with the language strategy stated explicitly in section 2."}, {"text": "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections", "passed": true, "evidence": "Section 3 \"Estructura objetivo\" lists: \"/ Home (reescribir hero y secciones), /work/ \u00cdndice de casos de estudio \u2190 NUEVO, /work/[slug]/ Caso de estudio \u2190 NUEVO, /about/ Bio + qu\u00e9 busco + contacto \u2190 NUEVO, /blog/ (existe), /journal/ (existe)\", plus nav order \"Work \u00b7 About \u00b7 Blog \u00b7 Journal\"."}, {"text": "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built", "passed": true, "evidence": "Section 3 \"Estado actual (auditado en el repo)\": \"Colecciones: `blog` y `journal` (schema compartido: `title`, `description`, `pubDate`, `updatedDate`, `draft`, `tags`)...\", \"No existe secci\u00f3n de portafolio... no hay colecci\u00f3n ni rutas `work`\", \"No hay p\u00e1gina About ni contacto\"; /work/ and /about/ flagged \"\u2190 NUEVO\". All claims verified accurate against src/content.config.ts, src/pages/, and the placeholder files first-post.md / field-note-001.md."}, {"text": "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented", "passed": true, "evidence": "Section 5 defines three case studies: 5.1 /work/ai-product-photo-pipeline/ (\"M\u00e9tricas: ~60% menos costo por foto\"), 5.2 /work/beauty-shopping-assistant/ with NDA banner \"Client name and proprietary data withheld under NDA. Flows and dialogues below are recreated and sanitized\" and \"No inventar n\u00fameros\", 5.3 /work/generative-studio/ (the art practice). Beauty client is anonymized, never named or invented."}, {"text": "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up", "passed": true, "evidence": "Shared template for all three cases: \"TL;DR con tarjetas de m\u00e9tricas \u2192 ... \u2192 Resultados \u2192 Limitaciones y \u00e9tica \u2192 Aprendizajes\". 5.1: \"~60% menos costo por foto + cualquier otra que tengas (tiempo de entrega, variantes por SKU, volumen mensual)\". 5.2: names the verifiable results to use under NDA (\"se lanz\u00f3 a piloto, lo adopt\u00f3 el equipo X, decisiones que cambi\u00f3\"). Ap\u00e9ndice B gates publishing any case on \"M\u00e9trica del TL;DR defendible en entrevista (con baseline claro)\"."}, {"text": "Journal and blog get distinct purposes plus concrete first topic ideas for each", "passed": true, "evidence": "Section 6 blog: \"demostrar pensamiento (no solo ejecuci\u00f3n), generar SEO... material para LinkedIn\" with a bank of 12 titled ideas (e.g. \"What 7 years of e-commerce content taught me about AI image pipelines\"). Section 7 journal: \"ritmo y autenticidad... el espacio en espa\u00f1ol\" with 5 formats and 6 concrete first entries (\"un experimento de fondos con Flair.ai\", \"el prompt de descripciones que m\u00e1s usas\", etc.)."}, {"text": "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields", "passed": false, "evidence": "Section 9 offers only patterns and rules, not concrete metadata: \"Patrones de t\u00edtulo... p\u00e1ginas \u2192 `{Page} | Mariana Ordonez`\" and \"Descriptions: escribirlas como copy de venta de \u2264160 caracteres, no como resumen burocr\u00e1tico\". No actual title text and no description text is proposed for any main page (home, about, work, blog, journal) \u2014 only target queries per page. This is the vague mention the assertion excludes."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 10 is a phased 12-week calendar (Fundaci\u00f3n \u2192 Caso ancla \u2192 Blog \u2192 Caso NDA \u2192 Arte \u2192 Revisi\u00f3n) plus \"Cadencia de crucero\". Apply-readiness of the first arc is explicitly marked in section 13: \"Semana 4 | Home + About + caso ancla publicados; el enlace ya se puede usar en aplicaciones.\""}, {"text": "Assumptions/open questions are collected in a dedicated section", "passed": false, "evidence": "No dedicated assumptions/open-questions section exists anywhere in the 13 sections + 2 appendices. grep for SUPUESTO/ASSUMPTION/GUESS markers returns 0 matches. Decisions are presented as closed (\"Estrategia de idioma (decisi\u00f3n cerrada, sin i18n al inicio)\"); pending items appear only inline as tasks (\"Confirmar permisos con la marca\"), never collected for the user to confirm."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "notes": []}, {"eval_id": 1, "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 0.8, "passed": 8, "failed": 2, "total": 10, "time_seconds": 421.4, "tokens": 61352, "tool_calls": 0, "errors": 0}, "expectations": [{"text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory", "passed": true, "evidence": "File exists: sparse-context-english/without_skill/outputs/content-plan.md (195 lines, sections 0\u20139)."}, {"text": "Written in English, matching the user's language", "passed": true, "evidence": "Entire document is English: \"# Content Plan \u2014 mordonez.dev\", \"## 1. Positioning \u2014 the one sentence the whole site serves\", \"## 8. Roadmap \u2014 phased for a job hunt\"."}, {"text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to", "passed": true, "evidence": "grep counts 20 [GUESS] markers inline (e.g. \"[GUESS \u2014 'ten years' is invented; replace with your real number]\"). Section 0 lists \"Key assumptions I had to make\" (5 items) and dedicated section 9 \"Everything I guessed, in one list \u2014 react to these first\" tabulates 8 guesses each with an \"If wrong, what changes\" column."}, {"text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks", "passed": true, "evidence": "Section 2 table: Work \"Missing \u2014 build it\" (P0, \"New `work` content collection, mirroring how `blog`/`journal` are set up\"); About \"Missing \u2014 build it\"; Home \"Exists, generic copy\"; Contact \"Missing\"; Blog \"Exists, 1 placeholder\"; Journal \"Exists, 1 placeholder\". Section 0 repo facts (\"Two content collections exist: `blog` and `journal` (shared frontmatter: title, description, pubDate, updatedDate, draft, tags)\") verified accurate against src/content.config.ts."}, {"text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided", "passed": true, "evidence": "Section 3.3 template mandates per case: \"Header block: title, one-line outcome, role, team size, timeframe\" and \"Outcome: numbers if you have them; honest qualitative results if you don't ('adopted by 3 teams' counts)\". Section 4 defines three slots with the AI mechanic named per slot (\"'designing rules for content that varies' = prompt/template design for generative output\"; slot 3 \"The AI-native story \u2014 this slot is non-negotiable\") and a weighted rubric scoring \"Outcome strength (metrics, adoption) \u00d72\" for the undecided projects."}, {"text": "Journal and blog get distinct purposes plus concrete starter topics", "passed": false, "evidence": "Purposes are distinct (blog \u00a75 \"the career-changer's credibility engine\"; journal \u00a76 \"low-cost signal of momentum... field-notes stream\") and the blog gets 4 titled seed posts. But the journal gets no concrete starter topics \u2014 only format categories (\"a prompt experiment, an interaction pattern spotted, a paper or product note\") and \"Replace the field-note-001.md placeholder with a real observation on day one\". The roadmap likewise says only \"2\u20133 journal entries so the stream isn't empty\". Half the assertion is unmet; no partial credit."}, {"text": "SEO metadata proposed: a title and description for at least the main pages", "passed": false, "evidence": "Section 7 gives only guidance, not metadata: descriptions \"write each as the search-result pitch \u2014 'How I rebuilt X's product content system and cut production time 40%'\" (a generic example, not a page's description) and a title rule (\"the layout already appends '| Mariana Ordonez' \u2014 keep titles under ~55 characters\"). No concrete title or description text is proposed for any main page (home, about, work, blog, journal); the \u00a71 hero options are page copy, not metadata."}, {"text": "Phased roadmap exists with a clearly-marked apply-ready first phase", "passed": true, "evidence": "Section 8 \"Roadmap \u2014 phased for a job hunt\": \"Phase 1 \u2014 Minimum credible launch (weeks 1\u20132). Don't apply anywhere until this exists:\" with a 5-item checklist, then \"Phase 2 \u2014 Full argument (weeks 3\u20134)\" and \"Phase 3 \u2014 Ongoing while interviewing\". Phase 1 is explicitly the apply-gating launch slice."}, {"text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap", "passed": true, "evidence": "Section 1: \"make the transition look like a trajectory, not a pivot. E-commerce content work is genuinely strong raw material for AI experience design \u2014 both are about shaping language systems at scale... measuring whether words actually move behavior\"; hero option B: \"where every word had a conversion rate \u2014 I bring that same accountability to conversational and generative interfaces\"; \"Anti-goal: do not position as 'aspiring AI designer'\"."}, {"text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)", "passed": true, "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."}], "notes": []}], "run_summary": {"with_skill": {"pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0}, "time_seconds": {"mean": 400.55, "stddev": 21.0011, "min": 385.7, "max": 415.4}, "tokens": {"mean": 63137.0, "stddev": 1852.6198, "min": 61827, "max": 64447}}, "without_skill": {"pass_rate": {"mean": 0.81, "stddev": 0.0141, "min": 0.8, "max": 0.82}, "time_seconds": {"mean": 374.8, "stddev": 65.9024, "min": 328.2, "max": 421.4}, "tokens": {"mean": 56609.0, "stddev": 6707.6149, "min": 51866, "max": 61352}}, "delta": {"pass_rate": "+0.19", "time_seconds": "+25.8", "tokens": "+6528"}}, "notes": ["Cleanest discriminator: concrete SEO metadata. Both without-skill runs proposed only naming patterns (no actual title/description text per page) and failed that assertion; both with-skill runs shipped concrete pairs for every main page.", "Assumptions discipline: the Spanish-rich baseline presented guesses as closed decisions (0 assumption markers, no reaction section). With-skill runs marked 15-25 assumptions inline and collected them for Mariana to react to. The sparse-English baseline only marked guesses because the prompt explicitly demanded it - the skill makes this behavior unconditional.", "Non-discriminating assertions (passed in all 4 runs): plan file saved, correct language, phased roadmap, mapping to the real repo collections. A strong base model already does these; they remain as regression guards.", "Cost of the skill: +19pt pass rate for roughly +10k tokens on the rich eval (61.8k vs 51.9k) and +3k on the sparse eval (64.4k vs 61.4k); wall-clock comparable.", "Privacy observation: one baseline run mined a personal Gmail address out of git history and put it in the plan; the skill instead asks for her preferred contact method in the interview. Consider an explicit assertion for this.", "Grader eval-feedback: make the repo-untouched assertion self-contained (per-run git snapshot); metrics assertion is ambiguous for the art project where metrics genuinely do not apply; no assertion checks factual accuracy of repo claims (all spot-checked claims happened to be accurate this round)."]}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

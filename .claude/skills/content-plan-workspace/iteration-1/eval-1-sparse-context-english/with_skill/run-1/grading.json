@@ -1,0 +1,69 @@
+{
+  "expectations": [
+    {
+      "text": "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+      "passed": true,
+      "evidence": "File exists: sparse-context-english/with_skill/outputs/content-plan.md (244 lines, 10 sections plus changelog)."
+    },
+    {
+      "text": "Written in English, matching the user's language",
+      "passed": true,
+      "evidence": "Entire document is English: \"# Content plan — Mariana Ordoñez portfolio (mordonez.dev)\", \"## 1. Goal & positioning\", \"## 10. Assumptions & open questions\"."
+    },
+    {
+      "text": "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to",
+      "passed": true,
+      "evidence": "grep counts 25 [ASSUMPTION] markers inline (e.g. \"[ASSUMPTION — 'starting to job hunt' read as 'applying within a month'...]\"). Dedicated section 10 \"Assumptions & open questions\" restates each as a one-line checkbox question: \"Every [ASSUMPTION] above, restated as a question you can answer in one line\" (15 questions)."
+    },
+    {
+      "text": "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks",
+      "passed": true,
+      "evidence": "Section 3 table: Home \"Exists, but placeholder copy\"; Work / case studies \"Needs build (ask Claude Code): no `work` collection or pages exist yet\"; About \"Needs build (ask Claude Code): no about page exists\"; Journal \"Exists — 1 generic placeholder entry to replace\"; Blog \"Exists — 1 generic placeholder post to replace\"; Contact \"Needs build\". Header note \"Statuses come from auditing the repo as it exists today (Astro site with `blog` and `journal` collections only)\" — verified accurate against src/content.config.ts and src/pages/."
+    },
+    {
+      "text": "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided",
+      "passed": true,
+      "evidence": "Four slots with explicit structure, e.g. Slot 1: \"Her role: designing/running the content workflow and deciding where AI belonged in it\", story arc with \"where AI entered (tools, prompts, iterations)\", and \"Metrics: to dig up — products or assets per month, production time per asset before/after, cost per asset, rework rate, time-to-publish, any conversion effect\". A weighted selection scorecard handles the undecided projects (\"map your real projects onto the slots\"), and the case-study page template leads with \"Outcome-first title + 3-fact summary bar (role · timeframe · result)\"."
+    },
+    {
+      "text": "Journal and blog get distinct purposes plus concrete starter topics",
+      "passed": true,
+      "evidence": "Section 6: journal purpose \"visible proof of hands-on AI thinking between jobs\" with 8 titled starter entries (e.g. \"Five prompt iterations to one usable product image\", \"Three AI tools I dropped this month, and why\"); blog purpose \"authority pieces a design lead might share; each doubles as application material\" with 4 titled posts (e.g. \"From e-commerce content to AI experience design: what actually transfers\")."
+    },
+    {
+      "text": "SEO metadata proposed: a title and description for at least the main pages",
+      "passed": true,
+      "evidence": "Concrete title + description pairs for every main page, e.g. Home: title \"Mariana Ordoñez — AI Experience Designer\" / description \"AI experience designer with deep e-commerce content roots. I design AI-powered content systems and experiences that ship...\"; also Work, About, Journal, Blog, plus a case-study pattern. Section 7 notes \"`title` and `description` map directly to the frontmatter fields every entry already requires\"."
+    },
+    {
+      "text": "Phased roadmap exists with a clearly-marked apply-ready first phase",
+      "passed": true,
+      "evidence": "Section 9: \"Phase 1 — apply-ready (target: ~3 weeks, by end of June 2026 [ASSUMPTION])\" with 8 steps ending \"Start applying — don't wait for Phase 2\", followed by \"Phase 2 — depth (weeks 4–8)\" and \"Phase 3 — ongoing\", plus a separate build-task list for Claude Code."
+    },
+    {
+      "text": "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap",
+      "passed": true,
+      "evidence": "Decision 1: \"Lead with the intersection, not the destination... Plenty of people claim AI skills; almost none pair them with shipped e-commerce content work at scale.\" Positioning statement leads with the e-commerce depth, and Slot 1 is framed as \"the intersection no one else can claim\"."
+    },
+    {
+      "text": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+      "passed": true,
+      "evidence": "Orchestrator verified with `git status --porcelain` after all runs: only `M .gitignore` and untracked `.claude/`, both made by the orchestrator during setup, not by executor agents. This executor wrote only its own outputs/content-plan.md inside the workspace."
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 0,
+    "total": 10,
+    "pass_rate": 1.0
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)",
+        "reason": "Not verifiable from the run's own artifacts (no transcript, no per-run git snapshot); graded from the orchestrator's post-hoc `git status --porcelain`. Capturing that output into each run directory would make the assertion self-contained."
+      }
+    ],
+    "overall": "All 10 assertions pass with concrete substance; repo facts cited in the plan (placeholders, og-default.svg, missing RSS route, mordonez.dev scaffold domain) all verified accurate."
+  }
+}

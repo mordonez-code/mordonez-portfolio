@@ -1,17 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { beyondUx, capabilities, site, socialLinks, contactHref } from "../data/site";
+import { beyondUx, breadcrumbSchema, capabilities, personId, site, socialLinks, contactHref } from "../data/site";
 
+// The full Person node lives in Layout.astro; reference it rather than a second, thinner copy.
 const profileSchema = {
-	"@context": "https://schema.org",
 	"@type": "ProfilePage",
-	mainEntity: {
-		"@type": "Person",
-		name: site.name,
-		jobTitle: site.role,
-		url: site.url,
-		email: site.email,
-	},
+	url: `${site.url}/about/`,
+	mainEntity: { "@id": personId },
 };
 ---
 
@@ -20,8 +15,8 @@ const profileSchema = {
 	description="Remote Ecommerce Graphic Designer in Colombia, working US hours. Shopify, Amazon A+, email and paid-social creative for Ferrero USA brands and DTC, with 8 years of conversion-driven commerce. AI-accelerated in Figma."
 	path="/about/"
 	type="profile"
+	schema={[profileSchema, breadcrumbSchema([["About", "/about/"]])]}
 >
-	<script type="application/ld+json" set:html={JSON.stringify(profileSchema)} />
 	<main>
 		<section class="container page-hero">
 			<p class="eyebrow"><span class="dot" aria-hidden="true"></span>Remote nearshore ecommerce designer</p>

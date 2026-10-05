@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "sparse-context-english",
+  "prompt": "I need a plan for what to put on this site. Quick version: I'm a designer moving from e-commerce content work into AI experience design and I'm starting to job hunt. I have a few projects I could show but haven't decided which ones. Don't ask me questions — make me a content plan I can react to, and clearly mark anything you had to guess.",
+  "assertions": [
+    "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+    "Written in English, matching the user's language",
+    "Guesses are explicitly marked: assumptions flagged inline (e.g. [ASSUMPTION]) or in a clearly labeled list, and a dedicated assumptions/open-questions section exists for her to react to",
+    "Site map covers the core sections (home, about, work/case studies, journal/blog) and maps to the real repo: blog/journal acknowledged as existing, missing sections flagged as build tasks",
+    "Case-study slots are defined with an outcome-oriented structure (role, AI involvement, metrics to gather) even though specific projects are undecided",
+    "Journal and blog get distinct purposes plus concrete starter topics",
+    "SEO metadata proposed: a title and description for at least the main pages",
+    "Phased roadmap exists with a clearly-marked apply-ready first phase",
+    "Positioning frames the e-commerce-to-AI transition as a niche/asset rather than a gap",
+    "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)"
+  ]
+}

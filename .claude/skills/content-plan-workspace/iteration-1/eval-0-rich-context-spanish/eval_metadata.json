@@ -1,0 +1,18 @@
+{
+  "eval_id": 0,
+  "eval_name": "rich-context-spanish",
+  "prompt": "Quiero planear el contenido de mi sitio web (este repo). Contexto: soy Mariana, diseñadora y artista. Llevo como 7 años haciendo contenido de e-commerce (fotos de producto, copys, fichas de producto) para marcas de moda y belleza, y los últimos dos años he metido IA en todo el flujo: Midjourney y Flair.ai para imágenes, ChatGPT y Claude para copys y descripciones. Quiero conseguir trabajo como AI Experience Designer, con mejor salario, idealmente remoto para empresas de Estados Unidos o Europa. Proyectos que puedo mostrar: (1) rediseñé el flujo de fotos de producto con IA para una marca de ropa y bajamos el costo por foto como un 60%; (2) ayudé a diseñar un chatbot de compras para una tienda de belleza, pero no puedo decir el nombre de la marca; (3) mi práctica de arte personal con herramientas generativas. También quiero escribir sobre lo que voy aprendiendo de IA. Mi idioma es español aunque mi inglés es bueno. No me preguntes nada — arma el plan de contenido con esta información.",
+  "assertions": [
+    "Plan file saved: a content-plan.md (or equivalent markdown plan) exists in the outputs directory",
+    "Written in Spanish: headings and body of the plan are in Spanish, matching the user's language",
+    "Site map covers the core sections: home, about, work/case studies, and journal appear as planned sections",
+    "Maps to the real repo: plan reflects that blog and journal collections already exist and flags work/case-studies and about as sections that still need to be built",
+    "All three projects become case studies; the 60% cost metric is kept and the beauty client is anonymized rather than named or invented",
+    "Case studies are outcome-oriented: each lists known metrics or names the specific metrics to dig up",
+    "Journal and blog get distinct purposes plus concrete first topic ideas for each",
+    "SEO metadata proposed: a title and description for at least the main pages, consistent with the site's frontmatter fields",
+    "Phased roadmap exists with a clearly-marked apply-ready first phase",
+    "Assumptions/open questions are collected in a dedicated section",
+    "Repo left untouched: no files created or modified outside the workspace outputs directory (git status of the repo shows no changes beyond the workspace)"
+  ]
+}
