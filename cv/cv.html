@@ -1,0 +1,205 @@
+<!doctype html>
+<!--
+  Source for public/Mariana-Ordonez-CV.pdf (one US Letter page).
+  Rebuild after editing:  npm run cv
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mariana Ordoñez Alarcón — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  @page { size: Letter; margin: 0; }
+  :root {
+    --accent: #861c2c;
+    --rule: #e6d3d6;
+    --ink: #1d1d1f;
+    --muted: #5f5f66;
+    --paper: #fdfbf6;
+    --panel: #f3efe8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); }
+  body {
+    width: 8.5in; height: 11in; overflow: hidden;
+    padding: 0.45in 0.6in 0.3in;
+    font: 400 8.3pt/1.42 Inter, system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+  .serif { font-family: "Source Serif 4", Georgia, serif; }
+
+  header { position: relative; padding-bottom: 10pt; border-bottom: 2.2pt solid var(--accent); }
+  h1 { font: 700 27pt/1.1 "Source Serif 4", Georgia, serif; letter-spacing: -0.2pt; }
+  .title { color: var(--accent); font-weight: 600; font-size: 11pt; margin-top: 4pt; }
+  .contact { color: var(--muted); font-size: 7.9pt; margin-top: 9pt; }
+  .contact b { color: var(--accent); font-weight: 600; }
+  .contact .sep { margin: 0 4pt; color: #b9b9be; }
+  .mono {
+    position: absolute; right: 0; top: 0; width: 34pt; height: 34pt; border-radius: 7pt;
+    background: var(--accent); color: #fff; display: grid; place-items: center;
+    font: 700 19pt/1 "Source Serif 4", Georgia, serif;
+  }
+
+  .cols { display: grid; grid-template-columns: 1.85in 1fr; gap: 0.32in; margin-top: 12pt; }
+  h2 {
+    color: var(--accent); font-size: 6.9pt; font-weight: 700; letter-spacing: 1.6pt;
+    text-transform: uppercase; padding-bottom: 4pt; border-bottom: 0.8pt solid var(--rule);
+    margin-bottom: 6pt;
+  }
+  section + section { margin-top: 10pt; }
+
+  aside h3 { font-size: 8.4pt; font-weight: 600; margin-top: 7pt; }
+  aside h3:first-of-type { margin-top: 0; }
+  aside p { color: var(--muted); font-size: 7.7pt; line-height: 1.5; }
+  aside p strong { color: var(--ink); font-weight: 600; }
+
+  .profile { font-size: 8.8pt; line-height: 1.5; }
+  .profile strong, li strong { font-weight: 600; }
+
+  .job + .job { margin-top: 7pt; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .job-head h3 { font: 600 11pt/1.25 "Source Serif 4", Georgia, serif; }
+  .dates { color: var(--muted); font-size: 7.7pt; white-space: nowrap; }
+  .org { color: var(--accent); font-weight: 600; font-size: 8pt; margin: 0 0 2pt; }
+  ul { list-style: none; }
+  li { position: relative; padding-left: 10pt; margin-top: 1.5pt; line-height: 1.42; }
+  li::before { content: "•"; position: absolute; left: 1pt; color: #b9b9be; }
+
+  .callout {
+    background: var(--panel); border-left: 2.4pt solid var(--accent);
+    border-radius: 0 5pt 5pt 0; padding: 8pt 11pt; line-height: 1.55;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Mariana Ordoñez Alarcón</h1>
+    <p class="title">Agentic Product &amp; AI UX Designer</p>
+    <p class="contact">
+      <a href="mailto:marianaordonez04@gmail.com">marianaordonez04@gmail.com</a><span class="sep">·</span>
+      <a href="https://mordonez.com"><b>mordonez.com</b></a><span class="sep">·</span>
+      <a href="https://www.linkedin.com/in/marianaordonezalarcon/">LinkedIn</a><span class="sep">·</span>
+      Behance<span class="sep">·</span>
+      Bogotá, Colombia — remote, US hours (UTC-5)
+    </p>
+    <div class="mono">M</div>
+  </header>
+
+  <div class="cols">
+    <aside>
+      <section>
+        <h2>Expertise</h2>
+        <h3>Agentic &amp; AI UX</h3>
+        <p>AI-native design workflows · agentic prototyping with Claude Code · AI copilot UX · research synthesis · conversational UX · usability</p>
+        <h3>eCommerce &amp; CRO</h3>
+        <p>Digital shelf · A+/enhanced content · Amazon Brand Stores · PDP optimization · A/B testing · Shopify · lifecycle</p>
+        <h3>Product &amp; systems</h3>
+        <p>End-to-end UX/UI · design systems · Figma variables &amp; components · prototyping · design-to-code · brand craft</p>
+      </section>
+
+      <section>
+        <h2>Tools</h2>
+        <p><strong>Figma</strong> (auto layout, variables, libraries) · <strong>Claude Code</strong> · ChatGPT · Gemini · <strong>Shopify</strong> (Liquid, HTML, CSS, JS) · Adobe Creative Cloud · Salsify · Procreate · Klaviyo · Notion · Asana</p>
+      </section>
+
+      <section>
+        <h2>Certifications</h2>
+        <h3>Generative AI for UI/UX Design</h3>
+        <p>IBM — 2026</p>
+        <h3>Conversation Design Fundamentals</h3>
+        <p>Google — 2026</p>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <h3>B.A. Gastronomy</h3>
+        <p>Universidad de La Sabana<br>2014 – 2019</p>
+      </section>
+
+      <section>
+        <h2>Languages</h2>
+        <h3>English</h3>
+        <p>Full professional</p>
+        <h3>Spanish</h3>
+        <p>Native</p>
+      </section>
+    </aside>
+
+    <main>
+      <section>
+        <h2>Profile</h2>
+        <p class="profile">
+          Product designer with <strong>6+ years</strong> designing end-to-end product and
+          conversion-focused commerce experiences, now working AI-native. I design the
+          <strong>Ferrero digital shelf</strong> across major US marketplaces, and I designed,
+          coded and run <strong>my own Shopify store</strong> — built with <strong>Claude Code</strong>
+          from design to production. AI moves me faster on research, prototyping and code while
+          human judgment and craft stay at the center. Fully remote with US teams since 2018.
+        </p>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+
+        <div class="job">
+          <div class="job-head"><h3>Founder, Designer &amp; Developer</h3><span class="dates">Jun 2026 – Present</span></div>
+          <p class="org">Mariana Ordoñez Art · tienda.mordonez.com · Self-employed</p>
+          <ul>
+            <li>Designed, coded and run a <strong>DTC Shopify store</strong> for original watercolors, limited editions, cards, digital downloads and commissions.</li>
+            <li>Built a <strong>custom Shopify theme</strong> (Liquid, HTML, CSS, JS) with an AI-assisted development workflow — from design to production — plus a guided commission configurator.</li>
+            <li>Applied CRO: free-shipping threshold, early-access email capture, pricing anchors and SEO-optimized product titles.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head"><h3>Digital Shelf Designer</h3><span class="dates">Sep 2024 – Present</span></div>
+          <p class="org">eStoreLabs (Ferrero USA) · Remote, US</p>
+          <ul>
+            <li>Design A+/enhanced content, PDP imagery and Brand Stores for Ferrero brands — <strong>Nutella, Kinder, Ferrero Rocher, Tic Tac</strong> — across Amazon, Walmart, Target, Kroger and Instacart.</li>
+            <li>Run <strong>A/B testing and PDP optimization</strong> at scale, translating global brand guidelines into marketplace-native experiences built to convert at thumbnail scale.</li>
+            <li>Designed the UX of the team's <strong>internal AI copilot</strong>, which scores marketplace imagery against best practices and prioritizes fixes.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head"><h3>Ecommerce &amp; Campaign Designer (DTC)</h3><span class="dates">Jul 2023 – Present</span></div>
+          <p class="org">Planet of the Vapes · Freelance, Remote (EST team)</p>
+          <ul>
+            <li>Design launch campaigns, landing pages and lifecycle touchpoints across social, email/SMS and on-site — one visual system across channels.</li>
+            <li>Built an AI-assisted production workflow for faster, on-brand output; apply UX principles to on-site discovery.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head"><h3>UX/UI Product Designer</h3><span class="dates">Jul 2022 – Dec 2023</span></div>
+          <p class="org">trades.org · Remote</p>
+          <ul>
+            <li>End-to-end UX/UI across parallel web products — research, prototyping and usability testing — plus a <strong>scalable design system</strong> (components, variants, documentation) shipped with engineering.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head"><h3>Ecommerce Designer · Shopify &amp; CRO</h3><span class="dates">Sep 2018 – Jun 2022</span></div>
+          <p class="org">Casabianca Cycling Apparel · Remote</p>
+          <ul>
+            <li>Designed and optimized the Shopify store and brand system — restructured IA, product-page hierarchy and checkout for a calmer, more premium experience.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Selected project</h2>
+        <p class="callout">
+          <strong>Conversational AI Checkout Assistant</strong> (self-initiated) — a SaaS checkout and
+          conversational assistant for payment recovery, billing transparency and context-preserving
+          escalation, built end to end with an AI-assisted workflow (IBM Generative AI for UI/UX).
+          <strong>Full case studies at mordonez.com/work</strong>
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
