@@ -18,7 +18,7 @@
 
 - **Goal:** Land an AI Experience Designer or Product Designer (AI team) role at a US/EU remote
   company. Start applying ~July 2026 (within ~1 month). Based in Bogotá; English full professional.
-- **Positioning statement:** *Mariana Ordoñez is a product designer (6+ yrs) who designs AI-powered
+- **Positioning statement:** *Mariana Ordoñez is a product designer (8 yrs) who designs AI-powered
   e-commerce experiences — from the Ferrero digital shelf on Amazon & Walmart to AI-integrated
   content workflows.*
 - **Elevator pitch:** I design e-commerce experiences for global brands and build AI into how that
@@ -63,7 +63,7 @@
   5. Latest writing (already built) — keep, but below the work.
   6. Contact strip: email + LinkedIn + "View CV".
 - **Assets needed:** portrait, 1 hero visual from the Ferrero work (check what can be shown publicly), CV link, LinkedIn URL.
-- **SEO:** title: "Mariana Ordoñez — AI & E-commerce Product Designer" · description: "Product designer (6+ yrs) designing AI-powered e-commerce experiences — Ferrero digital shelf on Amazon & Walmart, AI-integrated content workflows, and AI product UX."
+- **SEO:** title: "Mariana Ordoñez — AI & E-commerce Product Designer" · description: "Product designer (8 yrs) designing AI-powered e-commerce experiences — Ferrero digital shelf on Amazon & Walmart, AI-integrated content workflows, and AI product UX."
 
 ### About (build)
 - **Job of this page:** Make the path — gastronomy → self-taught designer → e-commerce → AI — feel inevitable. Establish the e-commerce × AI edge and the credibility signals.
