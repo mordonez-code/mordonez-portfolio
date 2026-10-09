@@ -55,7 +55,7 @@ const personSchema = {
 	familyName: "Ordoñez Alarcón",
 	jobTitle: site.role,
 	description:
-		"Ecommerce graphic designer with 8 years designing Shopify storefronts, Amazon A+ content and product detail page imagery, and email and paid social campaign creative for DTC brands and retail marketplaces.",
+		"Ecommerce graphic designer with 8 years designing Shopify storefronts and themes, Amazon A+ content and product detail page imagery, and email and paid social campaign creative for DTC brands and retail marketplaces.",
 	url: site.url,
 	image: new URL("/brand/avatar-512-wine.png", site.url).toString(),
 	email: site.email,
@@ -94,18 +94,24 @@ const personSchema = {
 		"Brand and visual identity",
 		"Product photography and retouching",
 		"AI-assisted design production",
+		"AI UX design",
+		"AI copilot UX",
+		"Conversational UX",
+		"Agentic prototyping and development with Claude Code",
+		"Shopify theme development (Liquid)",
 	],
 	hasOccupation: {
 		"@type": "Occupation",
 		name: site.role,
 		occupationLocation: { "@type": "Country", name: "Colombia" },
 		skills:
-			"Shopify, Amazon A+ Content, digital shelf and PDP design, Klaviyo email, paid social creative, CRO and A/B testing, Figma design systems, Adobe Creative Cloud, Salsify",
+			"AI UX and agentic workflows, Shopify and Liquid theme development, Amazon A+ Content, digital shelf and PDP design, Klaviyo email, paid social creative, CRO and A/B testing, Figma design systems, Adobe Creative Cloud, Salsify",
 		responsibilities:
-			"Designs Shopify storefronts, Amazon A+ content and marketplace listing imagery, and email and paid social campaign creative for DTC brands and retail marketplaces.",
+			"Designs and builds Shopify storefronts, Amazon A+ content and marketplace listing imagery, and email and paid social campaign creative for DTC brands and retail marketplaces.",
 	},
 	hasCredential: [
 		["Generative AI for UI/UX Design", "IBM", "2026"],
+		["Conversation Design Fundamentals", "Google", "2026"],
 		["Syndication Proficiency", "Salsify", "2024"],
 		["Google UX Design Certificate", "Coursera", "2023"],
 	].map(([name, issuer, year]) => ({

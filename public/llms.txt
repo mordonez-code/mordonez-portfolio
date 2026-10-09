@@ -1,11 +1,13 @@
 # Mariana Ordoñez Alarcón
 
-> Ecommerce graphic designer, 8 years. Shopify storefronts, Amazon A+ content and
-> product detail page imagery, email and paid social campaign creative for DTC brands
+> Ecommerce graphic designer, 8 years. Shopify storefronts and themes, Amazon A+ content
+> and product detail page imagery, email and paid social campaign creative for DTC brands
 > and retail marketplaces. Based in Bogotá, Colombia; works remotely on US hours (UTC-5).
 
 Currently designing the digital shelf for Ferrero USA brands (Kinder, Nutella, Ferrero
-Rocher, Tic Tac, Butterfinger) across Amazon, Walmart and Instacart at eStoreLabs.
+Rocher, Tic Tac, Butterfinger) across Amazon, Walmart and Instacart at eStoreLabs, and
+running her own Shopify store, Mariana Ordoñez Art (https://tienda.mordonez.com/), which she
+designed and coded with Claude Code from design to production.
 Available for full-time remote ecommerce, marketing and creative design roles.
 
 Contact: marianaordonez04@gmail.com
@@ -31,10 +33,13 @@ Contact: marianaordonez04@gmail.com
 
 ## Skills
 
+AI UX and agentic workflows: AI copilot UX, conversational UX, agentic prototyping and
+development with Claude Code, AI-assisted production workflows, research synthesis.
 Marketplace and digital shelf: Amazon A+ Content and Premium A+, listing and hero images,
 infographics, image carousels, Amazon Brand Stores, variant and bundle selectors, Walmart
 and Instacart specs, Salsify syndication.
-Shopify and conversion: Shopify storefront and theme design, product detail pages,
+Shopify and conversion: Shopify storefront and theme design and development (Liquid),
+product detail pages,
 collections, landing pages, checkout flow, conversion rate optimization, A/B test variants.
 Campaign and brand creative: paid social and Meta ad creative, Klaviyo email and lifecycle
 templates, seasonal campaigns, brand and visual identity, product photography and retouching.

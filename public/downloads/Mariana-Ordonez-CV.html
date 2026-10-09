@@ -47,9 +47,31 @@
 	ul { margin: 0; padding-left: 18px; }
 	li { margin-bottom: 4px; }
 	a { color: inherit; }
-	@page { size: Letter; margin: 0.5in; }
+	@page { size: Letter; margin: 0.4in 0.5in 0.32in; }
+	/* Print = the one-page PDF: same content as the web page, compacted. */
 	@media print {
-		body { padding: 0; font-size: 10.5pt; background: #fff; }
+		body { padding: 0; font-size: 8.2pt; line-height: 1.34; background: #fff; }
+		main { max-width: none; }
+		h1 { font-size: 20pt; }
+		.role { margin: 2px 0 5px; font-size: 10pt; }
+		header { padding-bottom: 5px; border-bottom: 1.5pt solid var(--wine); }
+		h2 { margin: 9px 0 4px; padding-bottom: 2px; font-size: 9.5pt; }
+		h3 { margin: 6px 0 0; font-size: 8.8pt; }
+		p { margin: 0 0 3px; }
+		.meta { margin: 0 0 1px; }
+		ul { padding-left: 14px; }
+		li { margin-bottom: 1px; }
+		section ul li:only-child { margin-bottom: 0; }
+		/* One-line job headers: "Title — Company · Location · Dates". */
+		h3 { display: inline; }
+		h3 + .meta { display: inline; }
+		h3 + .meta::before { content: " — "; }
+		h3 + .meta + ul { margin-top: 1px; }
+		h3:not(:first-of-type) { display: inline-block; margin-top: 6px; }
+		/* Certifications on one line. */
+		.certs { padding-left: 0; }
+		.certs li { display: inline; list-style: none; }
+		.certs li + li::before { content: " · "; }
 	}
 </style>
 </head>
@@ -62,30 +84,36 @@
 		<p class="contact">
 			<a href="mailto:marianaordonez04@gmail.com">marianaordonez04@gmail.com</a> ·
 			<a href="https://mordonez.com">mordonez.com</a> ·
-			<a href="https://www.linkedin.com/in/mariana-ordo%C3%B1ez-alarc%C3%B3n-ux-designer/">linkedin.com/in/mariana-ordoñez-alarcón-ux-designer</a>
+			<a href="https://www.linkedin.com/in/marianaordonezalarcon/">linkedin.com/in/marianaordonezalarcon</a>
 		</p>
 	</header>
 
 	<section>
 		<h2>Summary</h2>
 		<p>
-			Ecommerce graphic designer with 8 years producing the creative that sells: Shopify storefronts, Amazon A+
-			content and product detail page (PDP) imagery, email and paid social campaign assets for DTC brands and
-			retail marketplaces. Currently designing the digital shelf for Ferrero USA brands across Amazon, Walmart and
-			Instacart. Reusable template systems and an AI assisted production workflow keep output high and on spec,
-			while brand rules, visual craft and final QA stay with me. Fully remote with US teams since 2018.
+			Ecommerce graphic designer with 8 years producing the creative that sells: Shopify storefronts and themes,
+			Amazon A+ content and product detail page (PDP) imagery, email and paid social campaign assets for DTC brands
+			and retail marketplaces. Currently designing the digital shelf for Ferrero USA brands across Amazon, Walmart and
+			Instacart, and running my own Shopify store, which I designed and coded with Claude Code from design to
+			production. AI speeds up research, prototyping, production and code; brand rules, visual craft and final QA
+			stay with me. Fully remote with US teams since 2018.
 		</p>
 	</section>
 
 	<section>
 		<h2>Core skills</h2>
 		<p>
+			<strong>AI UX and agentic workflows:</strong> AI copilot UX, conversational UX, agentic prototyping and
+			development with Claude Code, AI-assisted production workflows, research synthesis.
+		</p>
+		<p>
 			<strong>Marketplace and digital shelf:</strong> Amazon A+ Content and Premium A+, listing and hero images,
 			infographics, image carousels, Amazon Brand Stores, variant and bundle selectors, Walmart and Instacart
 			specs, Salsify syndication.
 		</p>
 		<p>
-			<strong>Shopify and conversion:</strong> Shopify storefront and theme design, product detail pages,
+			<strong>Shopify and conversion:</strong> Shopify storefront and theme design and development (Liquid, HTML, CSS,
+			JavaScript), product detail pages,
 			collections, landing pages, checkout flow, conversion rate optimization (CRO), A/B test variants, average
 			order value (AOV).
 		</p>
@@ -99,14 +127,30 @@
 			usability testing, developer handoff.
 		</p>
 		<p>
-			<strong>Tools:</strong> Figma, Shopify, Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe
-			InDesign, Canva, Salsify, Klaviyo, Procreate, HTML, CSS, React basics, generative AI tools (Claude Code,
-			ChatGPT, Gemini, Adobe Firefly).
+			<strong>Tools:</strong> Figma, Shopify, Claude Code, ChatGPT, Gemini, Adobe Firefly, Adobe Photoshop, Adobe
+			Illustrator, Adobe After Effects, Adobe InDesign, Canva, Salsify, Klaviyo, Procreate, HTML, CSS, JavaScript,
+			Liquid, React basics.
 		</p>
 	</section>
 
 	<section>
 		<h2>Experience</h2>
+
+		<h3>Founder, Designer and Developer</h3>
+		<p class="meta">Mariana Ordoñez Art (tienda.mordonez.com) · Self-employed, Remote · Jun 2026 - Present</p>
+		<ul>
+			<li>
+				Designed, coded and run a DTC Shopify store selling original watercolors, limited editions, greeting
+				cards, digital downloads and custom commissions.
+			</li>
+			<li>
+				Built a custom Shopify theme (Liquid, HTML, CSS, JavaScript) with an AI-assisted development workflow, from design to production.
+			</li>
+			<li>
+				Applied CRO practices: free-shipping threshold, early-access newsletter capture, pricing anchors and SEO
+				optimized product titles; handle merchandising, photography, copy, fulfilment and customer service.
+			</li>
+		</ul>
 
 		<h3>Digital Shelf Designer</h3>
 		<p class="meta">eStoreLabs (client: Ferrero USA) · Remote, US hours · Sep 2024 - Present</p>
@@ -117,20 +161,14 @@
 				Walmart and Instacart.
 			</li>
 			<li>
-				Build A+ and enhanced content as a reusable module system, so every brand ships a complete, on brand
-				listing at marketplace speed.
-			</li>
-			<li>
-				Translate strict global brand guidelines into platform native, spec compliant layouts, applying visual
-				hierarchy and conversion principles to high traffic product pages.
+				Build A+ and enhanced content as a reusable module system, translating strict global brand guidelines into platform native, spec compliant layouts for high traffic product pages.
 			</li>
 			<li>
 				Deliver seasonal and cross brand campaign creative (Easter, Halloween, World Cup) across the portfolio,
 				on weekly deadlines.
 			</li>
 			<li>
-				Shaped the UX of the team's internal AI copilot that scores marketplace imagery against best practice
-				and prioritises fixes before publication.
+				Shaped the UX of the team's internal AI copilot that scores marketplace imagery and prioritises fixes before publication.
 			</li>
 		</ul>
 
@@ -141,10 +179,8 @@
 				Design Shopify product and landing pages, promotional campaigns and email and SMS assets for a large DTC
 				catalogue, built to convert and quick to ship across frequent launches.
 			</li>
-			<li>Improve on site navigation, product discovery and the path from product page to checkout.</li>
 			<li>
-				Work from reusable Shopify sections and a modular design system, and run an AI assisted production
-				workflow that raises output across store, email and social while keeping one visual system.
+				Improve navigation, product discovery and the path to checkout; run an AI assisted production workflow on reusable Shopify sections that raises output across store, email and social while keeping one visual system.
 			</li>
 		</ul>
 
@@ -174,29 +210,21 @@
 		<p class="meta">Casabianca Cycling Apparel · Remote · Sep 2018 - Jun 2022</p>
 		<ul>
 			<li>
-				Designed and continuously optimised the Shopify store for four years: product pages, collections,
-				campaign landing pages and the brand system.
-			</li>
-			<li>
-				Rebuilt product page hierarchy and the checkout experience to reduce friction, and extended the brand
-				into social content, packaging and apparel product design on one visual system.
+				Designed and continuously optimised the Shopify store for four years (product pages, collections, landing pages, brand system); rebuilt product page hierarchy and checkout to reduce friction, and extended the brand into social, packaging and apparel.
 			</li>
 		</ul>
 	</section>
 
 	<section>
 		<h2>Certifications</h2>
-		<ul>
+		<ul class="certs">
 			<li>Generative AI for UI/UX Design — IBM, 2026</li>
+			<li>Conversation Design Fundamentals — Google, 2026</li>
 			<li>Syndication Proficiency — Salsify, 2024</li>
 			<li>Google UX Design Certificate — Coursera, 2023</li>
 		</ul>
 	</section>
 
-	<section>
-		<h2>Education</h2>
-		<p>B.A. Gastronomy — Universidad de La Sabana, Bogotá, Colombia, 2014 - 2019</p>
-	</section>
 </main>
 </body>
 </html>

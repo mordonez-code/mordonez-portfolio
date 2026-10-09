@@ -5,7 +5,7 @@
     "label": "Ecommerce Graphic Designer",
     "email": "marianaordonez04@gmail.com",
     "url": "https://mordonez.com",
-    "summary": "Ecommerce graphic designer with 8 years producing the creative that sells: Shopify storefronts, Amazon A+ content and product detail page (PDP) imagery, email and paid social campaign assets for DTC brands and retail marketplaces. Currently designing the digital shelf for Ferrero USA brands across Amazon, Walmart and Instacart. Reusable template systems and an AI assisted production workflow keep output high and on spec, while brand rules, visual craft and final QA stay with me. Fully remote with US teams since 2018.",
+    "summary": "Ecommerce graphic designer with 8 years producing the creative that sells: Shopify storefronts and themes, Amazon A+ content and product detail page (PDP) imagery, email and paid social campaign assets for DTC brands and retail marketplaces. Currently designing the digital shelf for Ferrero USA brands across Amazon, Walmart and Instacart, and running my own Shopify store, which I designed and coded with Claude Code from design to production. AI speeds up research, prototyping, production and code; brand rules, visual craft and final QA stay with me. Fully remote with US teams since 2018.",
     "location": {
       "city": "Bogotá",
       "countryCode": "CO",
@@ -14,8 +14,8 @@
     "profiles": [
       {
         "network": "LinkedIn",
-        "username": "mariana-ordoñez-alarcón-ux-designer",
-        "url": "https://www.linkedin.com/in/mariana-ordo%C3%B1ez-alarc%C3%B3n-ux-designer/"
+        "username": "marianaordonezalarcon",
+        "url": "https://www.linkedin.com/in/marianaordonezalarcon/"
       },
       {
         "network": "Portfolio",
@@ -25,6 +25,21 @@
     ]
   },
   "work": [
+    {
+      "name": "Mariana Ordoñez Art",
+      "position": "Founder, Designer and Developer",
+      "location": "Self-employed, Remote",
+      "url": "https://tienda.mordonez.com/",
+      "startDate": "2026-06",
+      "summary": "Designed, coded and run a DTC Shopify store selling original watercolors, limited editions, greeting cards, digital downloads and custom commissions.",
+      "highlights": [
+        "Built a custom Shopify theme (Liquid, HTML, CSS, JavaScript) with an AI-assisted development workflow, from design to production.",
+        "Designed the full UX and visual identity, from information architecture (Originals, Cards, Downloads, Commissions) to product pages and checkout.",
+        "Built a guided commission flow where customers configure size, number of elements and level of detail.",
+        "Applied CRO practices: free-shipping threshold, early-access newsletter capture, pricing anchors and SEO optimized product titles.",
+        "Handle merchandising, photography, copywriting, fulfilment and customer service."
+      ]
+    },
     {
       "name": "eStoreLabs",
       "position": "Digital Shelf Designer",
@@ -91,51 +106,144 @@
       ]
     }
   ],
-  "education": [
-    {
-      "institution": "Universidad de La Sabana",
-      "location": "Bogotá, Colombia",
-      "area": "Gastronomy",
-      "studyType": "B.A.",
-      "startDate": "2014",
-      "endDate": "2019"
-    }
-  ],
   "certificates": [
-    { "name": "Generative AI for UI/UX Design", "issuer": "IBM", "date": "2026" },
-    { "name": "Syndication Proficiency", "issuer": "Salsify", "date": "2024" },
-    { "name": "Google UX Design Certificate", "issuer": "Coursera", "date": "2023" }
+    {
+      "name": "Generative AI for UI/UX Design",
+      "issuer": "IBM",
+      "date": "2026"
+    },
+    {
+      "name": "Conversation Design Fundamentals",
+      "issuer": "Google",
+      "date": "2026"
+    },
+    {
+      "name": "Syndication Proficiency",
+      "issuer": "Salsify",
+      "date": "2024"
+    },
+    {
+      "name": "Google UX Design Certificate",
+      "issuer": "Coursera",
+      "date": "2023"
+    }
   ],
   "skills": [
     {
+      "name": "AI UX and agentic workflows",
+      "keywords": [
+        "AI UX design",
+        "AI copilot UX",
+        "conversational UX",
+        "agentic prototyping",
+        "Claude Code",
+        "AI-assisted design production",
+        "AI-assisted development",
+        "research synthesis"
+      ]
+    },
+    {
       "name": "Marketplace and digital shelf",
-      "keywords": ["Amazon A+ Content", "Premium A+", "listing images", "hero images", "infographics", "image carousels", "Amazon Brand Stores", "variant and bundle selectors", "Walmart", "Instacart", "Salsify syndication", "digital shelf"]
+      "keywords": [
+        "Amazon A+ Content",
+        "Premium A+",
+        "listing images",
+        "hero images",
+        "infographics",
+        "image carousels",
+        "Amazon Brand Stores",
+        "variant and bundle selectors",
+        "Walmart",
+        "Instacart",
+        "Salsify syndication",
+        "digital shelf"
+      ]
     },
     {
       "name": "Shopify and conversion",
-      "keywords": ["Shopify", "theme design", "product detail pages", "PDP", "collections", "landing pages", "checkout", "conversion rate optimization", "CRO", "A/B testing", "AOV"]
+      "keywords": [
+        "Shopify",
+        "theme design",
+        "theme development",
+        "Liquid",
+        "product detail pages",
+        "PDP",
+        "collections",
+        "landing pages",
+        "checkout",
+        "conversion rate optimization",
+        "CRO",
+        "A/B testing",
+        "AOV"
+      ]
     },
     {
       "name": "Campaign and brand creative",
-      "keywords": ["paid social", "Meta ad creative", "Klaviyo", "email design", "lifecycle marketing", "seasonal campaigns", "brand identity", "social content systems", "product photography", "retouching", "packaging"]
+      "keywords": [
+        "paid social",
+        "Meta ad creative",
+        "Klaviyo",
+        "email design",
+        "lifecycle marketing",
+        "seasonal campaigns",
+        "brand identity",
+        "social content systems",
+        "product photography",
+        "retouching",
+        "packaging"
+      ]
     },
     {
       "name": "Product and systems",
-      "keywords": ["Figma", "design systems", "components", "wireframing", "prototyping", "usability testing", "developer handoff"]
+      "keywords": [
+        "Figma",
+        "design systems",
+        "components",
+        "wireframing",
+        "prototyping",
+        "usability testing",
+        "developer handoff"
+      ]
     },
     {
       "name": "Tools",
-      "keywords": ["Figma", "Shopify", "Adobe Photoshop", "Adobe Illustrator", "Adobe After Effects", "Adobe InDesign", "Canva", "Salsify", "Klaviyo", "Procreate", "HTML", "CSS", "React", "Claude Code", "ChatGPT", "Gemini", "Adobe Firefly"]
+      "keywords": [
+        "Figma",
+        "Shopify",
+        "Adobe Photoshop",
+        "Adobe Illustrator",
+        "Adobe After Effects",
+        "Adobe InDesign",
+        "Canva",
+        "Salsify",
+        "Klaviyo",
+        "Procreate",
+        "HTML",
+        "CSS",
+        "React",
+        "Claude Code",
+        "ChatGPT",
+        "Gemini",
+        "Adobe Firefly",
+        "JavaScript",
+        "Liquid"
+      ]
     }
   ],
   "languages": [
-    { "language": "Spanish", "fluency": "Native speaker" },
-    { "language": "English", "fluency": "Full professional proficiency" }
+    {
+      "language": "Spanish",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "English",
+      "fluency": "Full professional proficiency"
+    }
   ],
   "meta": {
     "availability": "Open to full time remote ecommerce, marketing and creative design roles",
     "workingHours": "US business hours (UTC-5)",
     "remote": true,
-    "lastModified": "2026-10-02"
+    "lastModified": "2026-10-09"
   }
 }

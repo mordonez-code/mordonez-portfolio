@@ -42,7 +42,7 @@ export const navItems = [
 ];
 
 export const socialLinks = [
-	{ label: "LinkedIn", url: "https://www.linkedin.com/in/mariana-ordo%C3%B1ez-alarc%C3%B3n-ux-designer/" },
+	{ label: "LinkedIn", url: "https://www.linkedin.com/in/marianaordonezalarcon/" },
 	{ label: "Behance", url: "https://www.behance.net/marianaordoez1" },
 	{ label: "Email", url: `mailto:${site.email}` },
 ];
