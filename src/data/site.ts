@@ -1,7 +1,7 @@
 export const site = {
 	name: "Mariana Ordonez",
 	shortName: "M. Ordonez",
-	role: "Agentic Product & AI UX Designer",
+	role: "Ecommerce Graphic Designer",
 	url: "https://mordonez.com",
 	email: "marianaordonez04@gmail.com",
 	location: "Colombia, UTC-5",

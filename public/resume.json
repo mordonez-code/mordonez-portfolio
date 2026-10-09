@@ -2,10 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "Mariana Ordoñez Alarcón",
-    "label": "Agentic Product & AI UX Designer",
+    "label": "Ecommerce Graphic Designer",
     "email": "marianaordonez04@gmail.com",
     "url": "https://mordonez.com",
-    "summary": "Agentic product and AI UX designer with 8 years designing conversion-focused ecommerce: Shopify storefronts and themes, Amazon A+ content and product detail page (PDP) imagery, and campaign creative for DTC brands and retail marketplaces. Currently designing the digital shelf for Ferrero USA brands across Amazon, Walmart and Instacart, and running my own Shopify store, which I designed and coded with Claude Code from design to production. AI speeds up research, prototyping, production and code; brand rules, visual craft and final QA stay with me. Fully remote with US teams since 2018.",
+    "summary": "Ecommerce graphic designer with 8 years producing the creative that sells: Shopify storefronts and themes, Amazon A+ content and product detail page (PDP) imagery, email and paid social campaign assets for DTC brands and retail marketplaces. Currently designing the digital shelf for Ferrero USA brands across Amazon, Walmart and Instacart, and running my own Shopify store, which I designed and coded with Claude Code from design to production. AI speeds up research, prototyping, production and code; brand rules, visual craft and final QA stay with me. Fully remote with US teams since 2018.",
     "location": {
       "city": "Bogotá",
       "countryCode": "CO",
@@ -241,7 +241,7 @@
     }
   ],
   "meta": {
-    "availability": "Open to full time remote product design, AI UX and ecommerce design roles",
+    "availability": "Open to full time remote ecommerce, marketing and creative design roles",
     "workingHours": "US business hours (UTC-5)",
     "remote": true,
     "lastModified": "2026-10-09"
