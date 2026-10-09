@@ -21,6 +21,7 @@ Contact: marianaordonez04@gmail.com
 ## Case studies
 
 - [Ferrero digital shelf, eStoreLabs](https://mordonez.com/work/estore-labs-marketplace-cro/): Amazon A+ content, hero and listing images, image carousels, Brand Stores and seasonal campaigns across Amazon, Walmart and Instacart for six Ferrero USA brands
+- [Mariana Ordoñez Art](https://mordonez.com/work/mariana-ordonez-art-shopify-store/): her own DTC Shopify store for original watercolors, posters, cards, downloads and commissions - custom Liquid theme, commission configurator and CRO basics, designed and coded end to end
 - [Planet of the Vapes](https://mordonez.com/work/planet-of-the-vapes-ecommerce/): Shopify product and landing pages, promotional campaigns, email and SMS creative for a large DTC catalogue
 - [Casabianca Cycling Apparel](https://mordonez.com/work/casabianca-apparel-cro/): four years designing and optimising a Shopify storefront, product pages, collections, checkout and brand system
 - [trades.org](https://mordonez.com/work/trades-design-system-cms/): end-to-end UX/UI, design system and custom CMS/ATS workflows
