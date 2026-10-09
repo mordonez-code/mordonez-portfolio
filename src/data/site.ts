@@ -213,6 +213,43 @@ export const caseStudies = [
 		featured: true,
 	},
 	{
+		slug: "mariana-ordonez-shopify-store",
+		client: "Mariana Ordoñez",
+		title: "Designing and coding my own Shopify art store",
+		outcome: "A DTC Shopify store for original watercolors, designed and coded end to end.",
+		summary:
+			"I designed, built and run tienda.mordonez.com - a Spanish-first Shopify store selling original watercolors, greeting cards, digital downloads and custom commissions - on a custom theme I coded with AI coding agents.",
+		problem:
+			"One small catalog has to sell four very different things: one-of-a-kind originals, cards, instant digital downloads and made-to-order commissions. Each has its own buying logic - scarcity, shipping, file delivery or a quote - and an off-the-shelf theme treated them all as the same product with a quantity box.",
+		process: [
+			"Designed the information architecture around how people actually buy art - Originales, Tarjetas, Descargas, Encargos and a Galería of sold work - and gave each product type its own Shopify template: originals show \"Pieza única\" with no inventory count, and downloads hide quantity and shipping messages.",
+			"Built a custom Online Store 2.0 theme in Liquid, HTML, CSS and JavaScript with AI coding agents, connected to GitHub so every change shipped through a pull request - about 135 commits from first build to the current store.",
+			"Designed a guided commission configurator: size, number of elements and level of detail update a live COP estimate and delivery time, clearly marked as \"no payment yet\", then a separate photo-upload step and a confirmation that explains the 50/50 payment and response time.",
+			"Applied CRO basics a small store can afford: a free-shipping threshold in the announcement bar, explicit COP pricing, Add to cart plus Buy now, a fixed add-to-cart bar and swipeable gallery on mobile, a cart drawer that recalculates as quantities change, and filters that apply on change.",
+			"Run the store end to end - merchandising, product photography, copy, fulfilment and customer service - and fed what shoppers asked back into the theme, from clearer commission steps to a WhatsApp contact option.",
+		],
+		solution:
+			"A quiet, gallery-like storefront where every product type sells the way it should: originals feel rare, cards feel easy, downloads are instant, commissions start with a transparent estimate, and a sold-work gallery quietly proves demand.",
+		impact: "A live, self-run DTC store - designed, coded, merchandised and shipped by one person - that turns the same conversion principles I use for brands into my own sales.",
+		role: "Founder, Designer and Developer",
+		timeline: "Own business, ongoing",
+		period: "Jun 2026 - Present",
+		tools: "Shopify (Liquid), HTML/CSS/JS, Figma, AI coding agents, GitHub",
+		tags: ["Shopify", "CRO", "UI/UX", "Web", "Brand"],
+		cover: "/case-studies/mariana-ordonez-store/cover.webp",
+		liveUrl: "https://tienda.mordonez.com/",
+		coverPosition: "center",
+		gallery: [
+			{ src: "/case-studies/mariana-ordonez-store/home.webp", title: "A gallery first, a shop second", caption: "Full-bleed watercolor photography, a two-line promise - \"Acuarelas, para mirar despacio\" - and two clear paths: buy an original or commission one. Free shipping in Colombia sits in the announcement bar." },
+			{ src: "/case-studies/mariana-ordonez-store/originals.webp", title: "Originals that read as one-of-a-kind", caption: "Every original is shown framed, tagged \"Pieza única\" and priced in COP - with no inventory counter, because there is only ever one." },
+			{ src: "/case-studies/mariana-ordonez-store/product.webp", title: "A product page that tells the story", caption: "The piece, its series and what makes it worth slowing down for - with Add to cart and Buy now kept in view as the shopper reads." },
+			{ src: "/case-studies/mariana-ordonez-store/commissions.webp", title: "A commission flow with a live estimate", caption: "Size, number of elements and level of detail update the estimated price and delivery time instantly - clearly marked as an estimate, with no payment taken until it is confirmed." },
+			{ src: "/case-studies/mariana-ordonez-store/downloads.webp", title: "Digital downloads, without the friction", caption: "A separate template for digital products: no quantity selector and no shipping messages - just the artwork, the price and instant delivery." },
+			{ src: "/case-studies/mariana-ordonez-store/sold.webp", title: "Sold work as social proof", caption: "An automatic gallery of originals that already found a home - proof of demand, and a natural nudge toward commissions." },
+		],
+		featured: false,
+	},
+	{
 		slug: "planet-of-the-vapes-ecommerce",
 		client: "Planet of the Vapes",
 		title: "Shopify PDPs, campaigns and lifecycle design for Planet of the Vapes",

@@ -16,6 +16,7 @@ const media = study as {
 	cover?: string;
 	coverPosition?: string;
 	gallery?: { src: string; title?: string; caption: string; maxWidth?: number }[];
+	liveUrl?: string;
 	liveLinks?: { title: string; body: string; linkLabel?: string; url?: string }[];
 	marketing?: {
 		dir: string;
@@ -37,6 +38,7 @@ const media = study as {
 const cover = media.cover;
 const coverPos = media.coverPosition ?? "center top";
 const gallery = media.gallery;
+const liveUrl = media.liveUrl;
 const liveLinks = media.liveLinks;
 const marketing = media.marketing;
 const showcase = media.showcase;
@@ -95,6 +97,14 @@ const caseStudySchema = {
 			<div><span>Timeline</span><strong>{study.timeline}</strong></div>
 			<div><span>Dates</span><strong>{study.period}</strong></div>
 			<div><span>Tools</span><strong>{study.tools}</strong></div>
+			{
+				liveUrl && (
+					<div>
+						<span>Store</span>
+						<a class="text-link" href={liveUrl} target="_blank" rel="noopener">{new URL(liveUrl).host} <span aria-hidden="true">-></span></a>
+					</div>
+				)
+			}
 			<div>
 				<span>Contact</span>
 				<a class="text-link" href={`mailto:${site.email}`}>Discuss a project</a>
