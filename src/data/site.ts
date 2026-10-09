@@ -1,7 +1,7 @@
 export const site = {
 	name: "Mariana Ordonez",
 	shortName: "M. Ordonez",
-	role: "Ecommerce Graphic Designer",
+	role: "Agentic Product & AI UX Designer",
 	url: "https://mordonez.com",
 	email: "marianaordonez04@gmail.com",
 	location: "Colombia, UTC-5",
@@ -42,7 +42,7 @@ export const navItems = [
 ];
 
 export const socialLinks = [
-	{ label: "LinkedIn", url: "https://www.linkedin.com/in/mariana-ordo%C3%B1ez-alarc%C3%B3n-ux-designer/" },
+	{ label: "LinkedIn", url: "https://www.linkedin.com/in/marianaordonezalarcon/" },
 	{ label: "Behance", url: "https://www.behance.net/marianaordoez1" },
 	{ label: "Email", url: `mailto:${site.email}` },
 ];
