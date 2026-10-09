@@ -108,6 +108,7 @@ export const caseStudies = [
 		tools: "Figma, Adobe CC, Amazon A+, Salsify",
 		tags: ["Digital shelf", "A+ content", "Marketplace"],
 		cover: "/case-studies/estore-labs/cover-shelf.webp",
+		banner: "/case-studies/estore-labs/shelf/fr-ec1.webp",
 		coverPosition: "center",
 		showcase: {
 			dir: "estore-labs/shelf",

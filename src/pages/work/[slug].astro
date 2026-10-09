@@ -15,6 +15,8 @@ const nextStudy = caseStudies[(caseStudies.findIndex((item) => item.slug === stu
 const media = study as {
 	cover?: string;
 	coverPosition?: string;
+	// Optional wide banner shown at the top of the case study; cards keep `cover`.
+	banner?: string;
 	gallery?: { src: string; title?: string; caption: string; maxWidth?: number }[];
 	liveUrl?: string;
 	liveLinks?: { title: string; body: string; linkLabel?: string; url?: string }[];
@@ -36,6 +38,7 @@ const media = study as {
 	};
 };
 const cover = media.cover;
+const heroImage = media.banner ?? cover;
 const coverPos = media.coverPosition ?? "center top";
 const gallery = media.gallery;
 const liveUrl = media.liveUrl;
@@ -85,9 +88,9 @@ const caseStudySchema = {
 		</section>
 
 		{
-			cover && (
+			heroImage && (
 				<section class="container cs-cover">
-					<img src={cover} alt={`${study.client} - ${study.outcome}`} width="1600" loading="eager" style={`object-position: ${coverPos}`} />
+					<img src={heroImage} alt={`${study.client} - ${study.outcome}`} width="1600" loading="eager" style={`object-position: ${coverPos}`} />
 				</section>
 			)
 		}
