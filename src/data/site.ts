@@ -45,7 +45,7 @@ export const socialLinks = [
 	{ label: "LinkedIn", url: "https://www.linkedin.com/in/marianaordonezalarcon/", side: "professional" },
 	{ label: "Behance", url: "https://www.behance.net/marianaordoez1", side: "professional" },
 	{ label: "Instagram", url: "https://www.instagram.com/mariana_en_acuarela/", side: "artist" },
-	{ label: "TikTok", url: "https://www.tiktok.com/@marianaordonezarte", side: "artist" },
+	{ label: "TikTok", url: "https://www.tiktok.com/@marianaordonezalarcon", side: "artist" },
 	{ label: "Email", url: `mailto:${site.email}`, side: "professional" },
 ];
 
@@ -65,8 +65,8 @@ export const socialChannels = [
 	},
 	{
 		platform: "TikTok",
-		handle: "@marianaordonezarte",
-		url: "https://www.tiktok.com/@marianaordonezarte",
+		handle: "@marianaordonezalarcon",
+		url: "https://www.tiktok.com/@marianaordonezalarcon",
 		image: "/play/social/tiktok-grid.webp",
 		width: 1568,
 		height: 321,
