@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { playGallery, socialChannels, socialStrategy, watercolors } from "../data/site";
+import { playGallery, socialChannels, watercolors } from "../data/site";
 
 // The lightbox walks both galleries as one list, in DOM order.
 const lightboxItems = [...watercolors, ...playGallery];
@@ -118,16 +118,6 @@ const lightboxItems = [...watercolors, ...playGallery];
 								</div>
 							</div>
 						</a>
-					))
-				}
-			</div>
-			<div class="mkt-callouts social-strategy">
-				{
-					socialStrategy.map((item) => (
-						<div class="mkt-callout">
-							<strong>{item.title}</strong>
-							<p>{item.body}</p>
-						</div>
 					))
 				}
 			</div>

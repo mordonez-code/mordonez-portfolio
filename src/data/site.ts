@@ -77,21 +77,6 @@ export const socialChannels = [
 	},
 ];
 
-export const socialStrategy = [
-	{
-		title: "A job for each channel",
-		body: "TikTok is where people find me through the making. Instagram is where they see the finished work. The shop is where a piece finds a home.",
-	},
-	{
-		title: "Series over one-offs",
-		body: "La Mirada Lenta and the 30-day card challenge give people a reason to come back for the next piece.",
-	},
-	{
-		title: "One piece, many formats",
-		body: "The same watercolour can be a process Reel, a close-up, a framed shot and a product page - planned once, then cut for each place it lives.",
-	},
-];
-
 export const proofBrands = [
 	"Estore Labs",
 	"Casabianca Cycling",
