@@ -58,7 +58,7 @@ export const socialChannels = [
 		image: "/play/social/instagram-grid.webp",
 		width: 1568,
 		height: 519,
-		alt: "Instagram posts: two framed watercolours, a close-up of a crab claw and a hoof study on a wooden table",
+		alt: "Instagram posts: watercolours of a speckled egg, a blackberry and a strawberry, and a framed golden retriever portrait",
 		title: "The gallery wall.",
 		body: "Finished originals, pet portraits and the La Mirada Lenta series, shown framed, up close and on the table where they were painted. Photos, carousels and Reels, with the shop one tap away on the profile.",
 		tags: ["Originals", "Pet portraits", "Reels"],
