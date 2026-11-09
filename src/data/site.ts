@@ -70,7 +70,7 @@ export const socialChannels = [
 		image: "/play/social/tiktok-grid.webp",
 		width: 1568,
 		height: 321,
-		alt: "TikTok videos from the 30 Days, 30 Christmas Cards series: hand-drawn cards and gift tags, and a video on childhood craft scissors",
+		alt: "TikTok videos from the 30 Days, 30 Christmas Cards series: hand-drawn cards, painted ornaments and gift tags",
 		title: "The making-of.",
 		body: "Handmade, on camera: material tests, techniques and series like 30 Days, 30 Christmas Cards, where people make each card along with me.",
 		tags: ["Make-with-me", "Materials", "Series"],
