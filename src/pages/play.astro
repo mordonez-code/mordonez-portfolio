@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { playGallery, watercolors } from "../data/site";
+import { playGallery, socialChannels, watercolors } from "../data/site";
 
 // The lightbox walks both galleries as one list, in DOM order.
 const lightboxItems = [...watercolors, ...playGallery];
@@ -84,9 +84,48 @@ const lightboxItems = [...watercolors, ...playGallery];
 			</div>
 		</section>
 
+		<section class="container section tight">
+			<div class="section-head">
+				<div>
+					<p class="kicker">Social and content</p>
+					<h2 class="section-title">Painting in public.</h2>
+					<p class="section-copy">
+						I plan, shoot, edit and post my own content. It is the same work I do for brands, with
+						my own paintings as the product.
+					</p>
+				</div>
+			</div>
+			<div class="social-channels">
+				{
+					socialChannels.map((channel) => (
+						<a class="card social-card" href={channel.url} target="_blank" rel="me noopener">
+							<img
+								src={channel.image}
+								alt={channel.alt}
+								width={channel.width}
+								height={channel.height}
+								loading="lazy"
+								decoding="async"
+							/>
+							<div class="social-copy">
+								<p class="kicker">{channel.platform} - {channel.handle}</p>
+								<h3>{channel.title}</h3>
+								<p>{channel.body}</p>
+								<div class="tags">
+									{channel.tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
 		<section class="container cta-band">
 			<h2>Take one home.</h2>
-			<p>Prints, cards and original watercolours - most of what you just scrolled through lives in my shop (in Spanish).</p>
+			<p>Cards, downloads and original watercolours - most of what you just scrolled through lives in my shop (in Spanish).</p>
 			<div class="actions" style="justify-content: center">
 				<a class="button" href="https://tienda.mordonez.com/" target="_blank" rel="noopener">
 					Visit the shop <span aria-hidden="true">-></span>
