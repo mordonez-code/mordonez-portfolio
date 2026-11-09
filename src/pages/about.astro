@@ -94,7 +94,7 @@ const profileSchema = {
 						and resume touchpoints.
 					</p>
 					<div class="tags">
-						{socialLinks.map((link) => <span class="tag">{link.label}</span>)}
+						{socialLinks.filter((link) => link.side === "professional").map((link) => <span class="tag">{link.label}</span>)}
 					</div>
 				</article>
 			</div>

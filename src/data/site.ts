@@ -42,9 +42,54 @@ export const navItems = [
 ];
 
 export const socialLinks = [
-	{ label: "LinkedIn", url: "https://www.linkedin.com/in/marianaordonezalarcon/" },
-	{ label: "Behance", url: "https://www.behance.net/marianaordoez1" },
-	{ label: "Email", url: `mailto:${site.email}` },
+	{ label: "LinkedIn", url: "https://www.linkedin.com/in/marianaordonezalarcon/", side: "professional" },
+	{ label: "Behance", url: "https://www.behance.net/marianaordoez1", side: "professional" },
+	{ label: "Instagram", url: "https://www.instagram.com/mariana_en_acuarela/", side: "artist" },
+	{ label: "TikTok", url: "https://www.tiktok.com/@marianaordonezarte", side: "artist" },
+	{ label: "Email", url: `mailto:${site.email}`, side: "professional" },
+];
+
+// The artist-side channels shown on /play/.
+export const socialChannels = [
+	{
+		platform: "Instagram",
+		handle: "@mariana_en_acuarela",
+		url: "https://www.instagram.com/mariana_en_acuarela/",
+		image: "/play/social/instagram-grid.webp",
+		width: 1568,
+		height: 519,
+		alt: "Instagram posts: two framed watercolours, a close-up of a crab claw and a hoof study on a wooden table",
+		title: "The gallery wall.",
+		body: "Finished originals, pet portraits and the La Mirada Lenta series, shown framed, up close and on the table where they were painted. Photos, carousels and Reels, with the shop one tap away on the profile.",
+		tags: ["Originals", "Pet portraits", "Reels"],
+	},
+	{
+		platform: "TikTok",
+		handle: "@marianaordonezarte",
+		url: "https://www.tiktok.com/@marianaordonezarte",
+		image: "/play/social/tiktok-grid.webp",
+		width: 1568,
+		height: 321,
+		alt: "TikTok videos from the 30 Days, 30 Christmas Cards series: hand-drawn cards and gift tags, and a video on childhood craft scissors",
+		title: "The making-of.",
+		body: "Handmade, on camera: material tests, techniques and series like 30 Days, 30 Christmas Cards, where people make each card along with me.",
+		tags: ["Make-with-me", "Materials", "Series"],
+	},
+];
+
+export const socialStrategy = [
+	{
+		title: "A job for each channel",
+		body: "TikTok is where people find me through the making. Instagram is where they see the finished work. The shop is where a piece finds a home.",
+	},
+	{
+		title: "Series over one-offs",
+		body: "La Mirada Lenta and the 30-day card challenge give people a reason to come back for the next piece.",
+	},
+	{
+		title: "One piece, many formats",
+		body: "The same watercolour can be a process Reel, a close-up, a framed shot and a product page - planned once, then cut for each place it lives.",
+	},
 ];
 
 export const proofBrands = [
