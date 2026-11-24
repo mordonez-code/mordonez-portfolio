@@ -1,0 +1,82 @@
+---
+interface Props {
+	word: string;
+	label?: string;
+	title: string;
+	description: string;
+	descriptionBelowTitle?: boolean;
+	portrait?: string;
+}
+
+const { word, label, title, description, descriptionBelowTitle, portrait } = Astro.props;
+---
+
+<header class="container portfolio-intro">
+	<div class="intro-art" aria-hidden="true">
+		<span>{word}</span>
+		{portrait && <img src={portrait} alt="" width="300" height="300" fetchpriority="high" />}
+	</div>
+	<div class="intro-columns">
+		<div>
+			<h1>{title}</h1>
+			{label && <p class="portfolio-label intro-label">{label}</p>}
+			{descriptionBelowTitle && <p class="intro-description">{description}</p>}
+		</div>
+		<div class="intro-support">
+			{!descriptionBelowTitle && <p class="intro-description">{description}</p>}
+			<slot />
+		</div>
+	</div>
+</header>
+
+<style>
+	.portfolio-intro { padding-bottom: var(--intro-bottom, 64px); }
+	.intro-art {
+		position: relative;
+		display: flex;
+		align-items: end;
+		height: clamp(120px, 27vw, 355px);
+		overflow: hidden;
+		color: var(--brand-wine);
+		font-size: clamp(86px, 28.125vw, 360px);
+		font-weight: 700;
+		line-height: .8;
+		letter-spacing: -.07em;
+	}
+	.intro-art span { margin-left: -.06em; }
+	.intro-art img {
+		position: absolute;
+		top: 24px;
+		right: 0;
+		width: min(26%, 300px);
+		height: auto;
+		aspect-ratio: 1;
+		object-fit: cover;
+		object-position: center 20%;
+		border-radius: 50%;
+	}
+	.intro-columns {
+		display: grid;
+		grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+		align-items: end;
+		gap: 48px;
+		padding-top: 28px;
+	}
+	.intro-columns h1 {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 700;
+		line-height: .98;
+		letter-spacing: -.035em;
+	}
+	.intro-columns > div:first-child { display: flex; flex-direction: column; }
+	.intro-label { order: -1; margin: 0 0 14px; }
+	.intro-description { margin: 0; color: var(--secondary); font-size: 18px; }
+	h1 ~ .intro-description { margin-top: 16px; }
+	.intro-support { display: grid; gap: 20px; }
+	.intro-support:empty { display: none; }
+	@media (max-width: 720px) {
+		.portfolio-intro { padding-bottom: min(var(--intro-bottom, 64px), 48px); }
+		.intro-columns { grid-template-columns: 1fr; gap: 16px; padding-top: 22px; }
+		.intro-art img { top: 10px; }
+	}
+</style>

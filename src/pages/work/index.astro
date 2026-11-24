@@ -1,67 +1,666 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import ClosingBand from "../../components/ClosingBand.astro";
 import { caseStudies, site } from "../../data/site";
+
+const presentation = [
+	{
+		slug: "estore-labs-marketplace-cro",
+		title: "The Ferrero digital shelf",
+		filters: ["AI", "Ecommerce"],
+		tags: ["Ecommerce", "AI", "A+ content"],
+		figure: "3",
+		image: "/case-studies/estore-labs/cover-shelf.webp",
+		imageAlt: "Cross-brand Ferrero marketplace campaign for the 2026 World Cup",
+	},
+	{
+		slug: "trades-design-system-cms",
+		title: "A product system for trades.org",
+		filters: ["Product"],
+		tags: ["Product", "UI/UX"],
+		figure: "1 sys",
+		image: "/case-studies/trades-org/designsystem.webp",
+		imageAlt: "trades.org design system with component and color examples",
+	},
+	{
+		slug: "casabianca-apparel-cro",
+		title: "Casabianca Cycling’s Shopify store",
+		filters: ["Ecommerce"],
+		tags: ["Ecommerce", "CRO"],
+		figure: "4 yrs",
+		image: "/case-studies/casabianca-cycling/cover.webp",
+		imageAlt: "Cyclists wearing Casabianca jerseys on a tree-lined road",
+	},
+	{
+		slug: "mariana-ordonez-shopify-store",
+		title: "My own Shopify store",
+		filters: ["AI", "Ecommerce"],
+		tags: ["AI", "Ecommerce"],
+		figure: "AI",
+		image: "/case-studies/mariana-ordonez-store/cover.webp",
+		imageAlt: "Mariana’s Shopify storefront featuring a watercolor of a cocktail glass",
+	},
+	{
+		slug: "planet-of-the-vapes-ecommerce",
+		title: "Storefront and campaigns for Planet of the Vapes",
+		filters: ["AI", "Ecommerce"],
+		tags: ["Ecommerce", "Lifecycle"],
+		figure: "DTC",
+		image: "/case-studies/planet-of-the-vapes/cover.webp",
+		imageAlt: "Planet of the Vapes ecommerce design",
+	},
+];
+
+const projects = presentation.flatMap((item) => {
+	const study = caseStudies.find(({ slug }) => slug === item.slug);
+	return study ? [{ ...item, study }] : [];
+});
+const [featured, ...otherProjects] = projects;
+const filters = ["All", "AI", "Ecommerce", "Product"];
+
+const shots = [
+	{ file: "/case-studies/estore-labs/shelf/fr-main.webp", label: "Product carousel · Ferrero Rocher", slug: featured.slug, layout: "large" },
+	{ file: "/images/marketing/potv/thumbs/venty-email.webp", label: "Launch email · Planet of the Vapes", slug: "planet-of-the-vapes-ecommerce" },
+	{ file: "/images/marketing/casabianca/thumbs/origins-toucans.webp", label: "Campaign ad · Casabianca", slug: "casabianca-apparel-cro" },
+	{ file: "/case-studies/estore-labs/shelf/thumbs/hero-kinder.webp", label: "Marketplace main image · Kinder", slug: featured.slug },
+	{ file: "/case-studies/estore-labs/shelf/thumbs/rt-tictac-wmkroger.webp", label: "Retailer listing · Tic Tac", slug: featured.slug },
+	{ file: "/case-studies/trades-org/tokens.webp", label: "Design tokens · trades.org", slug: "trades-design-system-cms" },
+	{ file: "/case-studies/planet-of-the-vapes/pdp.webp", label: "Shopify PDP · Planet of the Vapes", slug: "planet-of-the-vapes-ecommerce", layout: "wide" },
+];
+
+const services = [
+	{ title: "AI-accelerated", items: ["Variant sets for A/B tests", "Concept and copy exploration", "Coded storefront prototypes", "AI feature UX"] },
+	{ title: "Ecommerce", items: ["Main images and carousels", "A+ content and Brand Stores", "Shopify PDPs and landing pages", "Email and paid social"] },
+	{ title: "Product", items: ["Figma design systems", "Design tokens", "Responsive templates", "Visual identity"] },
+];
+
+const stats = [
+	{ figure: "12+", label: "consumer brands designed for" },
+	{ figure: "8", label: "years of conversion-focused commerce" },
+	{ figure: projects.length, label: "published case studies" },
+	{ figure: "3", label: "US marketplaces across my Ferrero work" },
+];
 ---
 
 <Layout
-	title="Work - eCommerce CRO & Design Case Studies"
-	description="eCommerce and CRO design case studies by Mariana Ordonez: digital-shelf and marketplace design, PDP and A+ content, brand systems and conversion work."
+	title="Work - Ecommerce & Design Case Studies"
+	description="Case studies by Mariana Ordoñez across ecommerce, marketplace design, Shopify, product design systems and AI-assisted workflows."
 	path="/work/"
 >
-	<main>
-		<section class="container page-hero">
-			<p class="eyebrow"><span class="dot" aria-hidden="true"></span>UX / CRO design case studies</p>
-			<h1 class="page-title">Case studies in eCommerce, CRO and brand design.</h1>
-			<p class="page-lede">
-				Real, shipped work across conversion-focused commerce, marketplace and PDP design,
-				scalable design systems and brand creative.
-			</p>
-			<div class="pill-row" aria-label="Case study filters">
-				<span class="pill">CRO</span>
-				<span class="pill">AI Product</span>
-				<span class="pill">UI/UX</span>
-				<span class="pill">Design systems</span>
-				<span class="pill">Brand</span>
+	<main class="work-page">
+		<PageIntro
+			word="Work"
+			title="Real case studies, with the messy middle left in."
+			description="Variants, tradeoffs and the decisions behind my work across AI, ecommerce and product."
+			descriptionBelowTitle
+		>
+			<div class="portfolio-chips work-filters" aria-label="Filter case studies" role="group">
+				{filters.map((filter) => (
+					<button type="button" data-work-filter={filter} aria-pressed={filter === "All"} aria-controls="work-results">
+						{filter === "All" ? `All · ${projects.length}` : filter}
+					</button>
+				))}
 			</div>
-		</section>
+		</PageIntro>
 
-		<section class="container section tight">
-			<div class="work-list">
-				{
-					caseStudies.map((study) => {
-					const media = study as { cover?: string; coverPosition?: string };
-					const cover = media.cover;
-					const coverPos = media.coverPosition ?? "center";
-					return (
-						<a class="card work-card" href={`/work/${study.slug}/`}>
-							<div class="work-copy">
-								<p class="kicker">{study.client} - {study.period}</p>
-								<h2>{study.outcome}</h2>
-								<p>{study.summary}</p>
-								<div class="tags">
-									{study.tags.map((tag) => (
-										<span class="tag">{tag}</span>
-									))}
-								</div>
-								<p class="metric">{study.impact}</p>
-							</div>
-							<div class={`work-art${cover ? " has-cover" : ""}`} aria-label={`${study.title} visual summary`}>
-							{cover && <img src={cover} alt="" loading="lazy" style={`object-position: ${coverPos}`} />}
+		<p class="work-status" role="status"></p>
+		<section class="container work-results" id="work-results" aria-label="Case studies">
+			<a class="work-feature" href={`/work/${featured.slug}/`} data-work-project={featured.filters.join(" ")}>
+				<img class="work-feature-image" src={featured.image} alt={featured.imageAlt} width="1600" height="1140" />
+				<div class="work-feature-copy">
+					<p class="portfolio-label">Featured · {featured.study.client} · 2024–now</p>
+					<h2>{featured.title}</h2>
+					<p>Main images, carousels, A+ content and seasonal campaigns for Ferrero USA brands on Amazon, Walmart and Instacart.</p>
+					<div class="portfolio-chips">
+						{featured.tags.map((tag) => <span>{tag}</span>)}
+					</div>
+					<div class="work-feature-footer">
+						<div>
+							<strong class="work-figure">{featured.figure}</strong>
+							<small>US marketplaces</small>
 						</div>
-						</a>
-					);
-					})
-				}
+						<span class="work-feature-action">Read case study <span aria-hidden="true">→</span></span>
+					</div>
+				</div>
+			</a>
+
+			<div class="work-rows">
+				{otherProjects.map((project, index) => (
+					<a class="work-row" href={`/work/${project.slug}/`} data-work-project={project.filters.join(" ")}>
+						<span class="work-position" aria-hidden="true">{String(index + 2).padStart(2, "0")}</span>
+						<span class="work-figure">{project.figure}</span>
+						<div class="work-row-copy">
+							<h2>{project.title}</h2>
+							<p>{project.study.summary} <span>{project.study.period}</span></p>
+							<div class="portfolio-chips">
+								{project.tags.map((tag) => <span>{tag}</span>)}
+							</div>
+						</div>
+						<img src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" />
+						<span class="work-arrow" aria-hidden="true">→</span>
+					</a>
+				))}
 			</div>
 		</section>
 
-		<section class="container cta-band">
-			<h2>Want this kind of work on your product?</h2>
-			<p>Send the role, product or funnel. I will reply in US business hours.</p>
-			<div class="actions" style="justify-content: center">
-				<a class="button" href="/contact/">Get in touch <span aria-hidden="true">-></span></a>
-				<a class="text-link" href="/">Back to home</a>
+		<section class="container portfolio-section work-shots" aria-labelledby="work-shots-title">
+			<header class="work-section-heading">
+				<h2 class="portfolio-heading" id="work-shots-title">Shots</h2>
+				<p>A few details from larger projects.</p>
+			</header>
+			<div class="work-shot-grid">
+				{shots.map((shot) => (
+					<a class:list={["work-shot", shot.layout]} href={`/work/${shot.slug}/`}>
+						<img src={shot.file} alt="" loading="lazy" decoding="async" />
+						<span>{shot.label}</span>
+					</a>
+				))}
+				<a class="work-play" href="/play/">
+					<strong>Play <span aria-hidden="true">→</span></strong>
+					<span>Watercolor and experiments</span>
+				</a>
 			</div>
 		</section>
+
+		<section class="container portfolio-section work-services" aria-labelledby="work-services-title">
+			<h2 class="portfolio-heading" id="work-services-title">What I can make for you</h2>
+			<div class="work-service-grid">
+				{services.map((service) => (
+					<article class="portfolio-card work-service">
+						<h3 class="portfolio-label">{service.title}</h3>
+						<ul>
+							{service.items.map((item) => <li>{item}</li>)}
+						</ul>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="work-stats portfolio-light" aria-label="Design experience">
+			<dl class="container">
+				{stats.map((item) => (
+					<div>
+						<dt>{item.label}</dt>
+						<dd>{item.figure}</dd>
+					</div>
+				))}
+			</dl>
+		</section>
+
+		<ClosingBand title="Want your brand on this list?" primaryLabel="Book a call →" primaryHref="/contact/" secondaryLabel="Download CV ↓" secondaryHref={site.resumeUrl} />
 	</main>
 </Layout>
+
+<script>
+	const buttons = [...document.querySelectorAll<HTMLButtonElement>("[data-work-filter]")];
+	const projects = [...document.querySelectorAll<HTMLElement>("[data-work-project]")];
+	const status = document.querySelector(".work-status");
+
+	for (const button of buttons) {
+		button.addEventListener("click", () => {
+			const filter = button.dataset.workFilter;
+			let visible = 0;
+			for (const project of projects) {
+				const matches = filter === "All" || project.dataset.workProject?.split(" ").includes(filter ?? "");
+				project.hidden = !matches;
+				if (matches) visible++;
+			}
+			for (const option of buttons) option.setAttribute("aria-pressed", String(option === button));
+			if (status) status.textContent = `${visible} case ${visible === 1 ? "study" : "studies"} shown.`;
+		});
+	}
+</script>
+
+<style>
+	.work-page {
+		--work-section-space: clamp(64px, 7.5vw, 96px);
+		--intro-bottom: 48px;
+	}
+
+	.work-page :global(.intro-columns) {
+		grid-template-columns: minmax(0, 1fr) auto;
+	}
+
+	.work-page :global(.intro-columns h1) {
+		max-width: 620px;
+		font-size: clamp(34px, 3.44vw, 44px);
+	}
+
+	.work-page :global(.intro-art span) {
+		margin-left: -.038em;
+	}
+
+	.work-page :global(.intro-description) {
+		max-width: 520px;
+		font-size: 16px;
+	}
+
+	.work-status {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		clip-path: inset(50%);
+		overflow: hidden;
+	}
+
+	.work-filters {
+		justify-content: flex-end;
+	}
+
+	.work-filters button {
+		border: 1.5px solid var(--hairline);
+		border-radius: 99px;
+		padding: 10px 18px;
+		min-height: 44px;
+		background: transparent;
+		color: inherit;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.work-filters button:is(:hover, [aria-pressed="true"]) {
+		background: var(--pink);
+		border-color: var(--pink);
+		color: var(--ground);
+	}
+
+	.work-feature {
+		display: grid;
+		grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+		min-height: 460px;
+		border-radius: 28px;
+		background: var(--brand-wine);
+		color: #fff;
+		overflow: hidden;
+		text-decoration: none;
+	}
+
+	.work-feature-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: left center;
+	}
+
+	.work-feature-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: clamp(24px, 3.125vw, 40px);
+	}
+
+	.work-feature-copy :is(h2, p), .work-row-copy :is(h2, p), .work-section-heading p {
+		margin: 0;
+	}
+
+	.work-feature-copy h2 {
+		font-size: clamp(32px, 4vw, 44px);
+		line-height: 1;
+		letter-spacing: -.03em;
+	}
+
+	.work-feature-copy p, .work-feature-copy small {
+		color: var(--on-wine);
+	}
+
+	.work-feature-copy p:not(.portfolio-label) {
+		font-size: 17px;
+		line-height: 1.5;
+	}
+
+	.work-feature-copy .portfolio-chips span {
+		border-color: var(--on-wine);
+	}
+
+	.work-feature-footer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 16px;
+		margin-top: auto;
+	}
+
+	.work-feature-footer small {
+		display: block;
+		margin-top: 8px;
+		font-size: 14px;
+	}
+
+	.work-figure {
+		display: block;
+		color: var(--pink);
+		font-size: clamp(42px, 5vw, 64px);
+		font-weight: 700;
+		line-height: .9;
+		letter-spacing: -.04em;
+		white-space: nowrap;
+	}
+
+	.work-feature .work-figure {
+		font-size: clamp(64px, 8.75vw, 112px);
+		letter-spacing: -.05em;
+	}
+
+	.work-feature-action {
+		border-radius: 99px;
+		padding: 12px 20px;
+		background: #fff;
+		color: var(--brand-wine);
+		font-weight: 700;
+	}
+
+	.work-feature:hover .work-feature-action {
+		background: var(--pink);
+	}
+
+	.work-rows {
+		margin-top: clamp(36px, 5.625vw, 72px);
+		border-bottom: 1.5px solid var(--hairline);
+	}
+
+	.work-feature[hidden], .work-row[hidden] {
+		display: none;
+	}
+
+	.work-feature[hidden] + .work-rows {
+		margin-top: 0;
+	}
+
+	.work-row {
+		display: grid;
+		grid-template-columns: minmax(24px, .35fr) minmax(104px, 1fr) minmax(0, 1.65fr) minmax(0, 1.35fr) 30px;
+		gap: clamp(12px, 2.18vw, 28px);
+		align-items: center;
+		padding-block: 32px;
+		border-top: 1.5px solid var(--hairline);
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.work-row:hover h2, .work-row:hover .work-arrow {
+		color: var(--pink);
+	}
+
+	.work-position {
+		color: var(--secondary);
+		font: 13px ui-monospace, Menlo, monospace;
+	}
+
+	.work-row-copy h2 {
+		font-size: clamp(21px, 2.34vw, 30px);
+		line-height: 1.08;
+		letter-spacing: -.02em;
+	}
+
+	.work-row-copy p {
+		margin-block: 6px 12px;
+		color: var(--secondary);
+		font-size: 15px;
+	}
+
+	.work-row img {
+		width: 100%;
+		height: 170px;
+		border-radius: 14px;
+		object-fit: cover;
+	}
+
+	.work-arrow {
+		justify-self: end;
+		font-size: 28px;
+		line-height: 1;
+	}
+
+	.work-section-heading {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: end;
+		gap: 12px 24px;
+		margin-bottom: 28px;
+	}
+
+	.work-section-heading p {
+		color: var(--secondary);
+		font-size: 15px;
+	}
+
+	.work-shot-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-auto-rows: 220px;
+		gap: 16px;
+	}
+
+	.work-shot, .work-play {
+		display: grid;
+		overflow: hidden;
+		border-radius: 20px;
+		background: var(--raised);
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.work-shot > * {
+		grid-area: 1 / 1;
+	}
+
+	.work-shot img {
+		width: 100%;
+		height: 100%;
+		min-height: 0;
+		object-fit: cover;
+	}
+
+	.work-shot span {
+		align-self: end;
+		z-index: 1;
+		width: fit-content;
+		margin: 12px;
+		padding: 7px 10px;
+		border-radius: 8px;
+		background: var(--ground);
+		font-size: 13px;
+	}
+
+	.work-shot:hover span {
+		background: var(--brand-wine);
+	}
+
+	.work-shot.large {
+		grid-column: span 2;
+		grid-row: span 2;
+	}
+
+	.work-shot.wide {
+		grid-column: span 2;
+	}
+
+	.work-shot.wide img {
+		object-position: center top;
+	}
+
+	.work-play {
+		align-content: space-between;
+		gap: 12px;
+		padding: 20px;
+		background: var(--pink);
+		color: var(--ground);
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.work-play:hover {
+		background: #fff;
+	}
+
+	.work-play strong {
+		font-size: clamp(24px, 3.44vw, 44px);
+		line-height: 1;
+		letter-spacing: -.04em;
+	}
+
+	.work-service-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 20px;
+		margin-top: 28px;
+	}
+
+	.work-service {
+		padding: clamp(24px, 2.5vw, 32px);
+	}
+
+	.work-service:first-child {
+		background: var(--brand-wine);
+	}
+
+	.work-service:first-child h3 {
+		color: var(--on-wine);
+	}
+
+	.work-service h3 {
+		margin: 0 0 14px;
+	}
+
+	.work-service ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: clamp(16px, 1.49vw, 19px);
+		font-weight: 600;
+	}
+
+	.work-service li + li {
+		border-top: 1.5px solid var(--hairline);
+	}
+
+	.work-service:first-child li + li {
+		border-color: #a6566e;
+	}
+
+	.work-service li {
+		padding-block: 5px;
+	}
+
+	.work-stats {
+		margin-top: var(--work-section-space);
+		padding-block: clamp(42px, 5.625vw, 72px);
+		background: #fff;
+		color: var(--ground);
+	}
+
+	.work-stats dl {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 32px;
+	}
+
+	.work-stats dl > div {
+		display: flex;
+		flex-direction: column-reverse;
+		justify-content: flex-end;
+		gap: 10px;
+	}
+
+	.work-stats dt {
+		color: #5d4f53;
+	}
+
+	.work-stats dd {
+		margin: 0;
+		color: var(--brand-wine);
+		font-size: clamp(55px, 8.75vw, 112px);
+		font-weight: 700;
+		line-height: .9;
+		letter-spacing: -.05em;
+	}
+
+	@media (max-width: 860px) {
+		.work-page :global(.intro-columns) {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.work-filters {
+			justify-content: flex-start;
+		}
+
+		.work-row {
+			grid-template-columns: 24px minmax(80px, .8fr) minmax(0, 1.6fr) minmax(0, 1.15fr) 24px;
+		}
+
+		.work-row img {
+			height: 138px;
+		}
+
+		.work-shot-grid {
+			grid-auto-rows: 160px;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.work-page :global(.intro-columns h1) {
+			text-wrap: balance;
+		}
+
+		.work-filters button {
+			padding-inline: 14px;
+		}
+
+		.work-feature, .work-service-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.work-feature-image {
+			height: auto;
+			aspect-ratio: 1.4;
+		}
+
+		.work-row {
+			grid-template-columns: 1fr 24px;
+			gap: 10px 12px;
+			padding-block: 24px;
+		}
+
+		.work-row .work-figure {
+			font-size: 40px;
+		}
+
+		.work-position {
+			display: none;
+		}
+
+		.work-row-copy {
+			grid-row: 2;
+		}
+
+		.work-row img {
+			grid-column: 1 / -1;
+			height: auto;
+			aspect-ratio: 1.8;
+			margin-top: 6px;
+		}
+
+		.work-arrow {
+			grid-area: 2 / 2;
+		}
+
+		.work-shot-grid, .work-stats dl {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.work-shot-grid {
+			grid-auto-rows: 142px;
+		}
+
+		.work-shot.large {
+			grid-row: span 2;
+		}
+
+		.work-play {
+			grid-column: 1 / -1;
+		}
+	}
+</style>
