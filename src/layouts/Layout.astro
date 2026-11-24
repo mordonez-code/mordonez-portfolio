@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/portfolio.css";
 import { navItems, personId, site, socialLinks } from "../data/site";
 
 interface Props {
@@ -164,12 +165,7 @@ const personSchema = {
 		<link rel="alternate" type="application/rss+xml" href={new URL("/rss.xml", site.url).toString()} title={`${site.name} Journal`} />
 		<link rel="alternate" type="text/plain" href={new URL("/llms.txt", site.url).toString()} title="llms.txt" />
 		<link rel="author" href={new URL("/about/", site.url).toString()} />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
+		<link rel="preload" href="/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-180.png" />
@@ -199,28 +195,22 @@ const personSchema = {
 	<body>
 		<header class="site-header">
 			<nav class="container nav" aria-label="Primary navigation">
-				<a class="brand" href="/" aria-label={`${site.name} home`}>
+				<a class="brand" href="/" aria-label="Mariana Ordoñez home">
 					<span class="brand-mark" aria-hidden="true">
 						<img src="/brand/moa-mark-wine.svg" alt="" width="21" height="17" />
 					</span>
-					<span>{site.shortName}</span>
+					<span>M. Ordoñez</span>
 				</a>
 				<div class="nav-links">
-					{
-						navItems.map((item) => (
-							<a
-								href={item.href}
-								aria-current={canonicalPath === item.href ? "page" : undefined}
-							>
-								{item.label}
-							</a>
-						))
-					}
+					{navItems.filter(({ href }) => href !== "/contact/").map((item) => (
+						<a
+							href={item.href}
+							aria-current={canonicalPath === item.href ? "page" : canonicalPath.startsWith(item.href) ? "location" : undefined}
+						>{item.label}</a>
+					))}
+					<a href="https://tienda.mordonez.com/">Store <span aria-hidden="true">↗</span></a>
 				</div>
-				<a class="availability" href={`mailto:${site.email}`}>
-					<span class="dot" aria-hidden="true"></span>
-					<span>Available for work</span>
-				</a>
+				<a class="portfolio-button" href="/contact/" aria-current={canonicalPath === "/contact/" ? "page" : undefined}>Book a call</a>
 			</nav>
 		</header>
 
@@ -228,28 +218,13 @@ const personSchema = {
 
 		<footer class="site-footer">
 			<div class="container footer-inner">
-				<a class="brand" href="/" aria-label={`${site.name} home`}>
-					<span class="brand-mark" aria-hidden="true">
-						<img src="/brand/moa-mark-wine.svg" alt="" width="21" height="17" />
-					</span>
-					<span>{site.shortName}</span>
-				</a>
+				<span>© {new Date().getFullYear()} Mariana Ordoñez</span>
 				<div class="footer-socials" aria-label="Social links">
-					{
-						socialLinks.map((link) =>
-							link.url ? (
-								<a
-									href={link.url}
-									rel={link.url.startsWith("http") ? "me noopener" : undefined}
-									target={link.url.startsWith("http") ? "_blank" : undefined}
-								>
-									{link.label}
-								</a>
-							) : (
-								<span>{link.label}</span>
-							),
-						)
-					}
+					{socialLinks.map((link) => (
+						<a href={link.url} rel={link.url.startsWith("http") ? "me noopener" : undefined}>
+							{link.label}
+						</a>
+					))}
 				</div>
 			</div>
 		</footer>

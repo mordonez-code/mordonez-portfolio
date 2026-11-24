@@ -1,0 +1,69 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+	primaryLabel?: string;
+	primaryHref?: string;
+	secondaryLabel?: string;
+	secondaryHref?: string;
+	portrait?: string;
+}
+
+const { title, description, primaryLabel = "Book a call →", primaryHref = "/contact/", secondaryLabel, secondaryHref, portrait } = Astro.props;
+---
+
+<section class="closing-band">
+	<div class:list={["container", "closing-inner", { "with-portrait": portrait }]}>
+		{portrait && <img src={portrait} alt="Mariana Ordoñez" width="320" height="380" loading="lazy" />}
+		<div class="closing-copy">
+			<h2>{title}</h2>
+			{description && <p>{description}</p>}
+		</div>
+		<div class="closing-actions">
+			<a class="portfolio-button" href={primaryHref}>{primaryLabel}</a>
+			{secondaryHref && secondaryLabel && <a class="closing-secondary" href={secondaryHref}>{secondaryLabel}</a>}
+		</div>
+	</div>
+</section>
+
+<style>
+	.closing-band {
+		margin-top: var(--closing-top, var(--section-gap));
+		background: var(--pink);
+		color: var(--ground);
+	}
+	.closing-inner {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: end;
+		gap: 20px 40px;
+		padding-block: clamp(40px, 5.6vw, 72px);
+	}
+	.closing-inner.with-portrait {
+		grid-template-columns: minmax(200px, 320px) minmax(0, 1fr);
+		gap: 20px 48px;
+	}
+	.with-portrait img {
+		grid-row: span 2;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 320 / 380;
+		object-fit: cover;
+		border-radius: 24px;
+	}
+	h2 { margin: 0; color: inherit; font-size: clamp(2.65rem, 5.625vw, 4.5rem); line-height: .95; letter-spacing: -.04em; }
+	p { max-width: 560px; margin: 20px 0 0; font-size: 18px; }
+	.closing-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+	.with-portrait .closing-actions { align-self: start; }
+	.closing-actions .portfolio-button { background: var(--ground); color: #fff; padding: 16px 30px; }
+	.closing-actions .portfolio-button:hover { background: var(--brand-wine); }
+	.closing-secondary { padding: 12px; font-weight: 700; text-underline-offset: .22em; }
+	.closing-actions :is(a):focus-visible { outline-color: var(--ground); }
+	@media (max-width: 800px) {
+		.closing-inner { grid-template-columns: 1fr; }
+	}
+	@media (max-width: 620px) {
+		.closing-inner.with-portrait { grid-template-columns: 1fr; }
+		.with-portrait img { grid-row: auto; width: min(60%, 240px); }
+	}
+</style>

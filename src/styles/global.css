@@ -1508,26 +1508,6 @@ a.card:hover {
 	line-height: 1.04;
 }
 
-.ink-swoop {
-	position: relative;
-	display: inline-block;
-	font-style: italic;
-	white-space: nowrap;
-}
-
-.ink-swoop::after {
-	content: "";
-	position: absolute;
-	left: 2px;
-	right: 2px;
-	bottom: -5px;
-	height: 12px;
-	border-bottom: 4px solid var(--wine);
-	border-radius: 50%;
-	opacity: 0.75;
-	transform: rotate(-2deg);
-}
-
 .hero-visual-source {
 	width: min(100%, 392px);
 }
