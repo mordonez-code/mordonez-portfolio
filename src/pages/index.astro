@@ -53,7 +53,7 @@ const journal = [...articleOrder.flatMap((slug) => articles.filter((article) => 
 const workflowHref = articles.some(({ slug }) => slug === articleOrder[0]) ? `/journal/${articleOrder[0]}/` : "/journal/";
 const links = [
 	{ title: "Tools", description: "Free resources I built for designers.", href: "/tools/" },
-	{ title: "Play", description: "Watercolor and visual experiments.", href: "/play/" },
+	{ title: "Visual Design", description: "Watercolour, illustration, motion and packaging.", href: "/visual-design/" },
 	{ title: "My Shopify store", description: "An art store I designed and coded with AI agents.", href: "https://tienda.mordonez.com/" },
 ];
 ---
@@ -151,7 +151,7 @@ const links = [
 		<section class="container portfolio-section" aria-labelledby="craft-title">
 			<div class="portfolio-heading"><h2 id="craft-title">Beyond the screen</h2></div>
 			<div class="home-craft">
-				<a class="portfolio-card craft-feature" href="/play/">
+				<a class="portfolio-card craft-feature" href="/visual-design/">
 					<img src="/play/thumbs/orchid.webp" alt="Mariana’s watercolor study of an orchid" width="700" height="700" loading="lazy" />
 					<div><h3>Watercolor, by hand.</h3><p>Botanical studies, illustrated recipes and personal projects.</p><span>Visit the gallery →</span></div>
 				</a>

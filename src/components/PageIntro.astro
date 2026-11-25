@@ -1,6 +1,7 @@
 ---
 interface Props {
 	word: string;
+	longWord?: boolean;
 	label?: string;
 	title: string;
 	description: string;
@@ -8,11 +9,11 @@ interface Props {
 	portrait?: string;
 }
 
-const { word, label, title, description, descriptionBelowTitle, portrait } = Astro.props;
+const { word, label, title, description, descriptionBelowTitle, portrait, longWord } = Astro.props;
 ---
 
 <header class="container portfolio-intro">
-	<div class="intro-art" aria-hidden="true">
+	<div class={`intro-art${longWord ? " intro-art--long" : ""}`} aria-hidden="true">
 		<span>{word}</span>
 		{portrait && <img src={portrait} alt="" width="300" height="300" fetchpriority="high" />}
 	</div>
@@ -44,6 +45,8 @@ const { word, label, title, description, descriptionBelowTitle, portrait } = Ast
 		letter-spacing: -.07em;
 	}
 	.intro-art span { margin-left: -.06em; }
+	/* Multi-word titles shrink so they stay on one line. */
+	.intro-art--long { height: auto; padding-block: 24px .16em; font-size: min(15.5vw, 205px); white-space: nowrap; }
 	.intro-art img {
 		position: absolute;
 		top: 24px;

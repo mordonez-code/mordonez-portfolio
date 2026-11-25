@@ -1,0 +1,3 @@
+# Play was renamed to Visual Design. Exact paths only, so /play/ images keep working.
+/play    /visual-design/    301
+/play/   /visual-design/    301
