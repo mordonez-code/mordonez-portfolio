@@ -35,9 +35,9 @@ export const web3formsAccessKey = "570e5b57-c9c9-48c3-bf96-6561e21b95bc";
 export const navItems = [
 	{ label: "Work", href: "/work/" },
 	{ label: "Visual Design", href: "/visual-design/" },
+	{ label: "About", href: "/about/" },
 	{ label: "Journal", href: "/journal/" },
 	{ label: "Tools", href: "/tools/" },
-	{ label: "About", href: "/about/" },
 	{ label: "Contact", href: "/contact/" },
 ];
 
