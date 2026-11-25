@@ -133,8 +133,8 @@ export const caseStudies = [
 			"A repeatable digital-shelf system: every Ferrero brand gets a complete, on-brand, spec-compliant listing - from main image to A+ content - that a shopper reads at a glance and that scales across retailers and seasons.",
 		impact: "Scaled output across a multi-brand portfolio, on deadline and without losing brand consistency.",
 		role: "Digital Shelf Designer",
-		timeline: "Ongoing retail optimization",
-		period: "Sep 2024 - Present",
+		timeline: "Sep 2024 – Oct 2026",
+		period: "Sep 2024 - Oct 2026",
 		tools: "Figma, Adobe CC, Amazon A+, Salsify",
 		tags: ["Digital shelf", "A+ content", "Marketplace"],
 		cover: "/case-studies/estore-labs/shelf/fr-ec1.webp",
@@ -167,7 +167,7 @@ export const caseStudies = [
 				},
 				{
 					heading: "A+ content - 'From the brand'",
-					note: "Below the carousel, the 'From the manufacturer / From the brand' modules run full-width. I build them as a reusable system - these are live on the Ferrero Rocher listing right now.",
+					note: "Below the carousel, the 'From the manufacturer / From the brand' modules run full-width. I build them as a reusable system - these went live on the Ferrero Rocher listing.",
 					layout: "stack",
 					items: [
 						{ slug: "fr-ec1", title: "Raise a Rocher", caption: "The brand-story banner that opens the A+ section." },
@@ -211,7 +211,7 @@ export const caseStudies = [
 			callouts: [
 				{ title: "The main image wins the click", body: "In search, the whole listing is one thumbnail. I design the main image to read - product, flavour, count - at that size, because if it doesn't win the click, nothing else gets seen." },
 				{ title: "The carousel answers questions in order", body: "On the page there's no salesperson. The secondary images take a shopper from 'what is it?' to ingredients, size, gifting and trust - the whole story before they scroll away." },
-				{ title: "A+ content, built as a system", body: "Below the fold the 'From the brand' modules build the brand and justify the premium. I design them as a reusable system, so every Ferrero brand ships a complete, on-spec listing at marketplace speed." },
+				{ title: "A+ content, built as a system", body: "Below the fold the 'From the brand' modules build the brand and justify the premium. I designed them as a reusable system, so every Ferrero brand ships a complete, on-spec listing at marketplace speed." },
 			],
 		},
 		liveLinks: [
