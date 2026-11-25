@@ -239,7 +239,7 @@ h1 {
 
 .page-title {
 	max-width: 880px;
-	font-size: 56px;
+	font-size: clamp(2rem, 3.6vw, 3rem);
 	line-height: 1.06;
 }
 
@@ -721,7 +721,7 @@ a.card:hover {
 }
 
 .page-hero {
-	padding: 76px 0 46px;
+	padding: 32px 0 32px;
 }
 
 .filter-row,
