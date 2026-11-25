@@ -1,6 +1,5 @@
 ---
 import ClosingBand from "../components/ClosingBand.astro";
-import PageIntro from "../components/PageIntro.astro";
 import { packaging, playGallery, socialChannels, watercolors } from "../data/site";
 import Layout from "../layouts/Layout.astro";
 
@@ -24,41 +23,33 @@ const shop = "https://tienda.mordonez.com/";
 	path="/visual-design/"
 >
 	<main class="play-page">
-		<PageIntro
-			word="Visual Design"
-			longWord
-			label="Handmade, illustration, motion and packaging"
-			title="Where I keep my hands warm."
-			description="Handmade watercolour, illustration, motion and packaging. The human craft behind the product and commerce work."
-		/>
+		<header class="container vd-intro">
+			<h1>Visual Design</h1>
+			<p>Packaging, illustration, handmade watercolour and motion. The human craft behind the product and commerce work.</p>
+		</header>
 
-		<section class="portfolio-light watercolour-band" aria-labelledby="watercolour-title">
-			<div class="container">
-				<header class="play-split">
-					<div>
-						<p class="portfolio-label">01 · Handmade</p>
-						<h2 id="watercolour-title" class="portfolio-heading">Painted by hand.</h2>
-					</div>
-					<p>Botanical studies in watercolour on paper. No undo, no layers. The analog end of the same curiosity.</p>
-				</header>
-				<div class="watercolour-grid">
-					{watercolors.map((item, index) => (
-						<a class="gallery-item" href={`/play/${item.slug}.webp`} data-gallery-image>
-							<img
-								src={`/play/thumbs/${item.slug}.webp`}
-								alt={item.alt}
-								width={item.width}
-								height={item.height}
-								loading="lazy"
-								decoding="async"
-							/>
-							<span class="watercolour-caption" aria-hidden="true">
-								{item.title}
-								<span>{String(index + 1).padStart(2, "0")}</span>
-							</span>
-						</a>
-					))}
+		<section class="container portfolio-section" aria-labelledby="packaging-title">
+			<header class="play-split">
+				<div>
+					<p class="portfolio-label">01 · Packaging</p>
+					<h2 id="packaging-title" class="portfolio-heading">Boxes, tins, pouches and wrappers.</h2>
 				</div>
+				<p>Packaging for food, tea, beauty and my own prints: one brand idea carried across every face of the pack.</p>
+			</header>
+			<div class="digital-wall wall-3">
+				{packaging.map((item) => (
+					<a class="gallery-item" href={`/play/${item.slug}.webp`} data-gallery-image>
+						<img
+							src={`/play/thumbs/${item.slug}.webp`}
+							alt={item.alt}
+							width={item.width}
+							height={item.height}
+							loading="lazy"
+							decoding="async"
+						/>
+						<span class="watercolour-caption">{item.title}<span>{item.note}</span></span>
+					</a>
+				))}
 			</div>
 		</section>
 
@@ -86,10 +77,40 @@ const shop = "https://tienda.mordonez.com/";
 			</div>
 		</section>
 
+		<section class="portfolio-light watercolour-band" aria-labelledby="watercolour-title">
+			<div class="container">
+				<header class="play-split">
+					<div>
+						<p class="portfolio-label">03 · Handmade</p>
+						<h2 id="watercolour-title" class="portfolio-heading">Painted by hand.</h2>
+					</div>
+					<p>Botanical studies in watercolour on paper. No undo, no layers. The analog end of the same curiosity.</p>
+				</header>
+				<div class="watercolour-grid">
+					{watercolors.map((item, index) => (
+						<a class="gallery-item" href={`/play/${item.slug}.webp`} data-gallery-image>
+							<img
+								src={`/play/thumbs/${item.slug}.webp`}
+								alt={item.alt}
+								width={item.width}
+								height={item.height}
+								loading="lazy"
+								decoding="async"
+							/>
+							<span class="watercolour-caption" aria-hidden="true">
+								{item.title}
+								<span>{String(index + 1).padStart(2, "0")}</span>
+							</span>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
 		<section class="container portfolio-section" aria-labelledby="motion-title">
 			<header class="play-split">
 				<div>
-					<p class="portfolio-label">03 · Motion</p>
+					<p class="portfolio-label">04 · Motion</p>
 					<h2 id="motion-title" class="portfolio-heading">Things that move.</h2>
 				</div>
 				<p>Animated type and illustration loops for social and the web.</p>
@@ -105,31 +126,6 @@ const shop = "https://tienda.mordonez.com/";
 							loading="lazy"
 							decoding="async"
 						/>
-					</a>
-				))}
-			</div>
-		</section>
-
-		<section class="container portfolio-section" aria-labelledby="packaging-title">
-			<header class="play-split">
-				<div>
-					<p class="portfolio-label">04 · Packaging</p>
-					<h2 id="packaging-title" class="portfolio-heading">Boxes, tins, pouches and wrappers.</h2>
-				</div>
-				<p>Packaging for food, tea, beauty and my own prints: one brand idea carried across every face of the pack.</p>
-			</header>
-			<div class="digital-wall wall-3">
-				{packaging.map((item) => (
-					<a class="gallery-item" href={`/play/${item.slug}.webp`} data-gallery-image>
-						<img
-							src={`/play/thumbs/${item.slug}.webp`}
-							alt={item.alt}
-							width={item.width}
-							height={item.height}
-							loading="lazy"
-							decoding="async"
-						/>
-						<span class="watercolour-caption">{item.title}<span>{item.note}</span></span>
 					</a>
 				))}
 			</div>
@@ -231,14 +227,36 @@ const shop = "https://tienda.mordonez.com/";
 </script>
 
 <style>
+	/* Compact top of page so the first gallery shows straight away. */
 	.play-page {
-		--intro-bottom: 72px;
+		--section-gap: clamp(48px, 6vw, 80px);
 	}
 
-	.play-page :global(.portfolio-intro h1) {
-		font-size: clamp(2.5rem, 4.375vw, 3.5rem);
+	.vd-intro {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: end;
+		justify-content: space-between;
+		gap: 8px 32px;
+		padding-block: clamp(16px, 2.5vw, 32px) clamp(20px, 2.5vw, 32px);
+	}
+
+	.vd-intro h1 {
+		margin: 0;
+		color: var(--brand-wine);
+		font-size: clamp(2.25rem, 4.5vw, 3.5rem);
 		line-height: 1;
 		letter-spacing: -0.03em;
+	}
+
+	.vd-intro p {
+		max-width: 520px;
+		margin: 0;
+		color: var(--secondary);
+	}
+
+	.vd-intro + .portfolio-section {
+		padding-top: 0;
 	}
 
 	.play-page :global(.closing-copy h2) {
@@ -254,14 +272,14 @@ const shop = "https://tienda.mordonez.com/";
 	.play-split {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 48px;
+		gap: 12px 48px;
 		align-items: end;
-		margin-bottom: clamp(24px, 3.2vw, 40px);
+		margin-bottom: clamp(16px, 2vw, 24px);
 	}
 
 	.play-page h2 {
 		margin: 0;
-		font-size: clamp(40px, 5.625vw, 72px);
+		font-size: clamp(28px, 3.2vw, 44px);
 		line-height: 0.95;
 		letter-spacing: -0.04em;
 	}
