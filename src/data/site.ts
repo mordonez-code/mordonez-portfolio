@@ -340,8 +340,8 @@ export const caseStudies = [
 		period: "Jul 2023 - Present",
 		tools: "Figma, Shopify, email/SMS modules, AI-assisted production",
 		tags: ["eCommerce", "UI/UX", "Lifecycle", "Brand"],
-		cover: "/case-studies/planet-of-the-vapes/cover.webp",
-		coverPosition: "85% center",
+		cover: "/case-studies/planet-of-the-vapes/cover-products.webp",
+		coverPosition: "center",
 		gallery: [
 			{ src: "/case-studies/planet-of-the-vapes/pdp.webp", title: "The page that has to convert", caption: "A Shopify product detail page built around the decision: variant and add-on selectors, trust states and a frictionless Add to Cart, tuned for conversion and AOV." },
 			{ src: "/case-studies/planet-of-the-vapes/content.webp", title: "Content that earns the scroll", caption: "Benefit-led hierarchy that makes the value obvious and scannable, not a wall of specs." },
