@@ -638,6 +638,16 @@ export const playGallery = [
 	{ slug: "pepairegui", alt: "pepairegui - brand identity", width: 700, height: 700 },
 ];
 
+export const packaging = [
+	{ slug: "pack-la-mirada-lenta", title: "La mirada lenta", note: "Watercolour print box", alt: "La mirada lenta - minimal print box for Mariana Ordoñez watercolours", width: 700, height: 467 },
+	{ slug: "pack-teafacto", title: "Teafacto", note: "Tea gift box", alt: "Teafacto - green illustrated tea gift box", width: 700, height: 467 },
+	{ slug: "pack-monte-oscuro", title: "Monte Oscuro", note: "72% cacao bar", alt: "Monte Oscuro - 72% cacao chocolate bar wrapper", width: 700, height: 700 },
+	{ slug: "pack-paramo", title: "Páramo", note: "Herbal tea tins", alt: "Páramo - two herbal tea tins", width: 700, height: 700 },
+	{ slug: "pack-nacar", title: "NÁCAR", note: "Serum box", alt: "NÁCAR - brightening serum box with iridescent label", width: 700, height: 980 },
+	{ slug: "pack-mor-disco", title: "Mor disco!", note: "Dog treat pouches", alt: "Mor disco! - yellow and blue dog treat pouches", width: 700, height: 700 },
+	{ slug: "pack-orbit-kit", title: "Planet of the Vapes", note: "Orbit Kit box", alt: "Planet of the Vapes - neon Orbit Kit starter box", width: 700, height: 918 },
+];
+
 export const watercolors = [
 	{ slug: "orchid", title: "Orchid", alt: "Orchid - watercolour study on paper", width: 700, height: 700 },
 	{ slug: "four-leaf-clover", title: "Four-leaf clover", alt: "Four-leaf clover - watercolour study on paper", width: 700, height: 969 },

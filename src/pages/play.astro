@@ -1,37 +1,26 @@
 ---
 import ClosingBand from "../components/ClosingBand.astro";
 import PageIntro from "../components/PageIntro.astro";
-import { playGallery, socialChannels, watercolors } from "../data/site";
+import { packaging, playGallery, socialChannels, watercolors } from "../data/site";
 import Layout from "../layouts/Layout.astro";
 
 const featured = [
-	"shiitake-mushroom", "bogota", "chemex", "nairo", "blossomed-heart", "oyster-tacos",
-	"popsicle", "la-raqueta", "calm-palm", "dog-portrait", "shiitake-pizza", "two-riders",
-	"bbq-sauce", "line-figure", "casabianca-coral", "pepairegui",
+	"shiitake-mushroom", "bogota", "chemex", "nairo", "blossomed-heart", "la-raqueta",
+	"calm-palm", "dog-portrait", "shiitake-pizza", "two-riders", "bbq-sauce", "line-figure",
+	"casabianca-coral", "pepairegui",
 ];
-const artwork = [
+const motionSlugs = ["oyster-tacos", "popsicle", "washing-dishes"];
+const illustration = [
 	...featured.flatMap((slug) => playGallery.filter((item) => item.slug === slug)),
-	...playGallery.filter(({ slug }) => !featured.includes(slug)),
+	...playGallery.filter(({ slug }) => !featured.includes(slug) && !motionSlugs.includes(slug)),
 ];
-const filters = {
-	Illustration: [
-		"shiitake-mushroom", "portobello-mushroom", "oyster-mushroom", "melena-de-leon",
-		"bbq-sauce", "fried-chicken", "chili", "popsicle", "potted-plant", "washing-dishes",
-		"dog-portrait", "line-figure", "two-riders", "potv",
-	],
-	Type: ["shiitake-mushroom", "portobello-mushroom", "oyster-tacos", "shiitake-pizza", "bogota", "pepairegui"],
-	Motion: ["oyster-tacos", "popsicle", "washing-dishes"],
-	Print: [
-		"shiitake-pizza", "chemex", "brewing-methods", "calm-palm", "sequoia", "bogota",
-		"blossomed-heart", "la-raqueta", "nairo",
-	],
-};
+const motion = motionSlugs.flatMap((slug) => playGallery.filter((item) => item.slug === slug));
 const shop = "https://tienda.mordonez.com/";
 ---
 
 <Layout
 	title="Play · Illustration & Visual Experiments"
-	description="Illustration, type, motion and hand-painted watercolour studies by Mariana Ordoñez."
+	description="Handmade watercolour, illustration, motion and packaging design by Mariana Ordoñez."
 	path="/play/"
 >
 	<main class="play-page">
@@ -39,14 +28,14 @@ const shop = "https://tienda.mordonez.com/";
 			word="Play"
 			label="Illustration and visual experiments"
 			title="Where I keep my hands warm."
-			description="Watercolour, illustration, type, motion and side projects. The human craft behind the product and commerce work."
+			description="Handmade watercolour, illustration, motion and packaging. The human craft behind the product and commerce work."
 		/>
 
 		<section class="portfolio-light watercolour-band" aria-labelledby="watercolour-title">
 			<div class="container">
 				<header class="play-split">
 					<div>
-						<p class="portfolio-label">01 · Watercolour studies</p>
+						<p class="portfolio-label">01 · Handmade</p>
 						<h2 id="watercolour-title" class="portfolio-heading">Painted by hand.</h2>
 					</div>
 					<p>Botanical studies in watercolour on paper. No undo, no layers. The analog end of the same curiosity.</p>
@@ -72,28 +61,17 @@ const shop = "https://tienda.mordonez.com/";
 			</div>
 		</section>
 
-		<section class="container portfolio-section" aria-labelledby="digital-title">
-			<header class="play-filter-header">
+		<section class="container portfolio-section" aria-labelledby="illustration-title">
+			<header class="play-split">
 				<div>
-					<p class="portfolio-label">02 · Digital work</p>
-					<h2 id="digital-title" class="portfolio-heading">Illustration, type and motion.</h2>
+					<p class="portfolio-label">02 · Illustration</p>
+					<h2 id="illustration-title" class="portfolio-heading">Illustration, type and print.</h2>
 				</div>
-				<div class="portfolio-chips play-filters" role="group" aria-label="Filter digital work" hidden>
-					<button type="button" data-play-filter="All" aria-controls="digital-wall" aria-pressed="true">All · {artwork.length}</button>
-					{Object.keys(filters).map((filter) => (
-						<button type="button" data-play-filter={filter} aria-controls="digital-wall" aria-pressed="false">{filter}</button>
-					))}
-				</div>
+				<p>Posters, labels, recipes and portraits, drawn digitally for brands and for myself.</p>
 			</header>
-			<div class="digital-wall" id="digital-wall">
-				{artwork.map((item, index) => (
-					<a
-						class="gallery-item"
-						href={`/play/${item.slug}.webp`}
-						data-gallery-image
-						data-genres={Object.entries(filters).filter(([, slugs]) => slugs.includes(item.slug)).map(([genre]) => genre).join(" ")}
-						data-extra={index >= featured.length ? "" : undefined}
-					>
+			<div class="digital-wall">
+				{illustration.map((item) => (
+					<a class="gallery-item" href={`/play/${item.slug}.webp`} data-gallery-image>
 						<img
 							src={`/play/thumbs/${item.slug}.webp`}
 							alt={item.alt}
@@ -105,16 +83,61 @@ const shop = "https://tienda.mordonez.com/";
 					</a>
 				))}
 			</div>
-			<button class="show-artwork" type="button" aria-controls="digital-wall" aria-expanded="false" data-show-artwork hidden>
-				Show all {artwork.length} pieces <span aria-hidden="true">↓</span>
-			</button>
-			<p class="play-status" role="status"></p>
+		</section>
+
+		<section class="container portfolio-section" aria-labelledby="motion-title">
+			<header class="play-split">
+				<div>
+					<p class="portfolio-label">03 · Motion</p>
+					<h2 id="motion-title" class="portfolio-heading">Things that move.</h2>
+				</div>
+				<p>Animated type and illustration loops for social and the web.</p>
+			</header>
+			<div class="digital-wall wall-3">
+				{motion.map((item) => (
+					<a class="gallery-item" href={`/play/${item.slug}.webp`} data-gallery-image>
+						<img
+							src={`/play/thumbs/${item.slug}.webp`}
+							alt={item.alt}
+							width={item.width}
+							height={item.height}
+							loading="lazy"
+							decoding="async"
+						/>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<section class="container portfolio-section" aria-labelledby="packaging-title">
+			<header class="play-split">
+				<div>
+					<p class="portfolio-label">04 · Packaging</p>
+					<h2 id="packaging-title" class="portfolio-heading">Boxes, tins, pouches and wrappers.</h2>
+				</div>
+				<p>Packaging for food, tea, beauty and my own prints: one brand idea carried across every face of the pack.</p>
+			</header>
+			<div class="digital-wall wall-3">
+				{packaging.map((item) => (
+					<a class="gallery-item" href={`/play/${item.slug}.webp`} data-gallery-image>
+						<img
+							src={`/play/thumbs/${item.slug}.webp`}
+							alt={item.alt}
+							width={item.width}
+							height={item.height}
+							loading="lazy"
+							decoding="async"
+						/>
+						<span class="watercolour-caption">{item.title}<span>{item.note}</span></span>
+					</a>
+				))}
+			</div>
 		</section>
 
 		<section class="container portfolio-section" aria-labelledby="social-title">
 			<header class="play-split">
 				<div>
-					<p class="portfolio-label">03 · Social and content</p>
+					<p class="portfolio-label">05 · Social and content</p>
 					<h2 id="social-title" class="portfolio-heading">Painting in public.</h2>
 				</div>
 				<p>I plan, shoot, edit and post my own content. It is the same work I do for brands, with my own paintings as the product.</p>
@@ -164,51 +187,6 @@ const shop = "https://tienda.mordonez.com/";
 </Layout>
 
 <script>
-	const filters = document.querySelector<HTMLElement>(".play-filters");
-	const filterButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-play-filter]")];
-	const wall = document.querySelector("#digital-wall");
-	const tiles = [...document.querySelectorAll<HTMLAnchorElement>("#digital-wall .gallery-item")];
-	const showArtwork = document.querySelector<HTMLButtonElement>("[data-show-artwork]");
-	const status = document.querySelector<HTMLElement>(".play-status");
-	let activeFilter = "All";
-	let expanded = false;
-
-	function filterArtwork(announce = true) {
-		let shown = 0;
-		for (const tile of tiles) {
-			tile.hidden = activeFilter === "All"
-				? !expanded && tile.hasAttribute("data-extra")
-				: !tile.dataset.genres?.split(" ").includes(activeFilter);
-			if (!tile.hidden) shown += 1;
-		}
-
-		for (const button of filterButtons) {
-			button.setAttribute("aria-pressed", String(button.dataset.playFilter === activeFilter));
-		}
-
-		if (showArtwork) {
-			showArtwork.hidden = activeFilter !== "All" || expanded;
-			showArtwork.setAttribute("aria-expanded", String(expanded));
-		}
-		if (announce && status) status.textContent = `${shown} pieces shown`;
-	}
-
-	if (filters) filters.hidden = false;
-	filterArtwork(false);
-
-	for (const button of filterButtons) {
-		button.addEventListener("click", () => {
-			activeFilter = button.dataset.playFilter ?? "All";
-			filterArtwork();
-		});
-	}
-
-	showArtwork?.addEventListener("click", () => {
-		expanded = true;
-		filterArtwork();
-		wall?.querySelector<HTMLElement>("[data-extra]")?.focus();
-	});
-
 	const viewer = document.querySelector<HTMLDialogElement>(".play-viewer");
 	const stage = viewer?.querySelector("figure");
 	const image = new Image();
@@ -216,7 +194,7 @@ const shop = "https://tienda.mordonez.com/";
 	let openLinks: HTMLAnchorElement[] = [];
 	let selected = 0;
 
-	// The viewer follows the current gallery order and skips filtered pieces.
+	// The viewer pages through the section the clicked piece belongs to.
 	function show(index: number) {
 		if (!openLinks.length) return;
 
@@ -232,7 +210,8 @@ const shop = "https://tienda.mordonez.com/";
 			if (!viewer || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
 			event.preventDefault();
-			openLinks = artworkLinks.filter((item) => !item.hidden);
+			const section = link.closest("section");
+			openLinks = artworkLinks.filter((item) => item.closest("section") === section);
 			show(openLinks.indexOf(link));
 			viewer.showModal();
 		});
@@ -321,9 +300,7 @@ const shop = "https://tienda.mordonez.com/";
 		text-decoration: none;
 	}
 
-	.gallery-item[hidden],
-	.play-filters[hidden],
-	.show-artwork[hidden] {
+	.gallery-item[hidden] {
 		display: none;
 	}
 
@@ -362,45 +339,18 @@ const shop = "https://tienda.mordonez.com/";
 		letter-spacing: normal;
 	}
 
-	.play-filter-header {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		align-items: end;
-		gap: 20px 32px;
-		margin-bottom: 36px;
-	}
 
-	.play-filter-header > div:first-child {
-		flex: 1 1 470px;
-		max-width: 640px;
-	}
 
-	.play-filters button {
-		min-height: 44px;
-		padding: 10px 18px;
-		border: 1.5px solid var(--hairline);
-		border-radius: 99px;
-		cursor: pointer;
-		color: inherit;
-		background: transparent;
-		font-size: 15px;
-		font-weight: 600;
-	}
 
-	.play-filters button:hover {
-		background: var(--hover);
-	}
 
-	.play-filters button[aria-pressed="true"] {
-		color: var(--ground);
-		background: var(--pink);
-		border-color: var(--pink);
-	}
 
 	.digital-wall {
 		columns: 4;
 		column-gap: 16px;
+	}
+
+	.digital-wall.wall-3 {
+		columns: 3;
 	}
 
 	.digital-wall .gallery-item {
@@ -412,37 +362,8 @@ const shop = "https://tienda.mordonez.com/";
 		background: var(--raised);
 	}
 
-	.show-artwork {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		width: 100%;
-		min-height: 64px;
-		margin-top: 8px;
-		border: 1.5px solid currentColor;
-		border-radius: 99px;
-		color: var(--ink);
-		background: transparent;
-		font-size: 17px;
-		font-weight: 700;
-		cursor: pointer;
-	}
 
-	.show-artwork:hover {
-		color: var(--deep);
-		background: #fff;
-	}
 
-	.play-status {
-		position: absolute;
-		clip-path: inset(50%);
-		width: 1px;
-		height: 1px;
-		margin: 0;
-		overflow: hidden;
-		white-space: nowrap;
-	}
 
 	.play-social {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -579,7 +500,8 @@ const shop = "https://tienda.mordonez.com/";
 
 		.watercolour-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.watercolour-caption { font-size: 16px; }
-		.digital-wall { columns: 2; }
+		.digital-wall,
+		.digital-wall.wall-3 { columns: 2; }
 
 		.play-viewer[open] {
 			grid-template-columns: 1fr 1fr;
