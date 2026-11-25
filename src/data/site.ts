@@ -34,10 +34,10 @@ export const web3formsAccessKey = "570e5b57-c9c9-48c3-bf96-6561e21b95bc";
 
 export const navItems = [
 	{ label: "Work", href: "/work/" },
+	{ label: "Visual Design", href: "/visual-design/" },
+	{ label: "About", href: "/about/" },
 	{ label: "Journal", href: "/journal/" },
 	{ label: "Tools", href: "/tools/" },
-	{ label: "Play", href: "/play/" },
-	{ label: "About", href: "/about/" },
 	{ label: "Contact", href: "/contact/" },
 ];
 
@@ -636,6 +636,16 @@ export const playGallery = [
 	{ slug: "casabianca-coral", alt: "Casabianca cycling apparel - coral jersey", width: 700, height: 700 },
 	{ slug: "casabianca-olive", alt: "Casabianca cycling apparel - olive jersey", width: 700, height: 700 },
 	{ slug: "pepairegui", alt: "pepairegui - brand identity", width: 700, height: 700 },
+];
+
+export const packaging = [
+	{ slug: "pack-la-mirada-lenta", title: "La mirada lenta", note: "Watercolour print box", alt: "La mirada lenta - minimal print box for Mariana Ordoñez watercolours", width: 700, height: 467 },
+	{ slug: "pack-teafacto", title: "Teafacto", note: "Tea gift box", alt: "Teafacto - green illustrated tea gift box", width: 700, height: 467 },
+	{ slug: "pack-monte-oscuro", title: "Monte Oscuro", note: "72% cacao bar", alt: "Monte Oscuro - 72% cacao chocolate bar wrapper", width: 700, height: 700 },
+	{ slug: "pack-paramo", title: "Páramo", note: "Herbal tea tins", alt: "Páramo - two herbal tea tins", width: 700, height: 700 },
+	{ slug: "pack-nacar", title: "NÁCAR", note: "Serum box", alt: "NÁCAR - brightening serum box with iridescent label", width: 700, height: 980 },
+	{ slug: "pack-mor-disco", title: "Mor disco!", note: "Dog treat pouches", alt: "Mor disco! - yellow and blue dog treat pouches", width: 700, height: 700 },
+	{ slug: "pack-orbit-kit", title: "Planet of the Vapes", note: "Orbit Kit box", alt: "Planet of the Vapes - neon Orbit Kit starter box", width: 700, height: 918 },
 ];
 
 export const watercolors = [

@@ -18,7 +18,7 @@ const selected = [
 		meta: "Estore Labs · Marketplace, A+ content · 2024–now",
 		metric: "3",
 		unit: "US marketplaces",
-		image: "/case-studies/estore-labs/shelf/fr-ec1.webp",
+		image: "/case-studies/estore-labs/shelf/fr-ec1-thumb.webp",
 	},
 	{
 		slug: "trades-design-system-cms",
@@ -53,7 +53,7 @@ const journal = [...articleOrder.flatMap((slug) => articles.filter((article) => 
 const workflowHref = articles.some(({ slug }) => slug === articleOrder[0]) ? `/journal/${articleOrder[0]}/` : "/journal/";
 const links = [
 	{ title: "Tools", description: "Free resources I built for designers.", href: "/tools/" },
-	{ title: "Play", description: "Watercolor and visual experiments.", href: "/play/" },
+	{ title: "Visual Design", description: "Watercolour, illustration, motion and packaging.", href: "/visual-design/" },
 	{ title: "My Shopify store", description: "An art store I designed and coded with AI agents.", href: "https://tienda.mordonez.com/" },
 ];
 ---
@@ -151,7 +151,7 @@ const links = [
 		<section class="container portfolio-section" aria-labelledby="craft-title">
 			<div class="portfolio-heading"><h2 id="craft-title">Beyond the screen</h2></div>
 			<div class="home-craft">
-				<a class="portfolio-card craft-feature" href="/play/">
+				<a class="portfolio-card craft-feature" href="/visual-design/">
 					<img src="/play/thumbs/orchid.webp" alt="Mariana’s watercolor study of an orchid" width="700" height="700" loading="lazy" />
 					<div><h3>Watercolor, by hand.</h3><p>Botanical studies, illustrated recipes and personal projects.</p><span>Visit the gallery →</span></div>
 				</a>
@@ -210,42 +210,42 @@ const links = [
 </Layout>
 
 <style>
+	/* Two columns: the big number reads as the start of the headline on the left,
+	   the portrait sits on the right. */
 	.home-intro {
-		position: relative;
-		isolation: isolate;
-		min-height: clamp(550px, 56.25vw, 720px);
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr) minmax(0, 1fr);
-		column-gap: 24px;
-		align-items: end;
-		overflow: hidden;
+		grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+		grid-template-areas: "number portrait" "message portrait" "actions portrait";
+		grid-template-rows: auto auto 1fr;
+		column-gap: clamp(32px, 5vw, 72px);
+		padding-block: clamp(32px, 5vw, 72px) clamp(40px, 5vw, 64px);
 	}
 	.hero-number {
-		position: absolute;
-		z-index: -1;
-		inset: 40px 0 auto;
-		text-align: center;
-		color: var(--brand-wine);
-		font-size: clamp(250px, 43.75vw, 560px);
+		grid-area: number;
+		color: var(--pink);
+		font-size: clamp(150px, 17vw, 250px);
 		font-weight: 700;
 		line-height: .8;
 		letter-spacing: -.07em;
+		margin-inline-start: -.04em;
 	}
 	.hero-portrait {
+		grid-area: portrait;
+		align-self: center;
+		justify-self: end;
 		width: min(100%, 400px);
 		height: auto;
 		aspect-ratio: 400 / 540;
 		object-fit: cover;
 		object-position: center top;
 		border-radius: 100vw;
-		justify-self: center;
 	}
-	.hero-message, .hero-actions { margin-bottom: 48px; }
+	.hero-message { grid-area: message; margin-top: 20px; }
 	.hero-message h1 {
-		font-size: clamp(1.9rem, 3.4375vw, 2.75rem);
+		font-size: clamp(2rem, 3.75vw, 3.25rem);
 		line-height: 1;
 		letter-spacing: -.03em;
-		max-width: 360px;
+		max-width: 560px;
 	}
 	.accessible-number {
 		position: absolute;
@@ -255,9 +255,9 @@ const links = [
 		clip-path: inset(50%);
 		white-space: nowrap;
 	}
-	.hero-message p { margin: 16px 0 0; color: var(--secondary); }
-	.hero-actions { display: grid; justify-items: end; gap: 14px; text-align: right; }
-	.hero-actions p { margin: 0; color: var(--pink); font-size: 13px; font-weight: 600; }
+	.hero-message p { margin: 16px 0 0; max-width: 460px; color: var(--secondary); font-size: 18px; }
+	.hero-actions { grid-area: actions; display: flex; flex-wrap: wrap; align-items: center; align-content: start; gap: 12px 22px; margin-top: 28px; }
+	.hero-actions p { width: 100%; margin: 0; color: var(--pink); font-size: 13px; font-weight: 600; }
 	.hero-actions p span { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-inline-end: 6px; vertical-align: 1px; }
 	.hero-actions .portfolio-button { padding: 15px 28px; }
 	.work-link, .home-link, .workflow-card a { font-weight: 700; text-underline-offset: .25em; text-decoration: none; }
@@ -335,27 +335,28 @@ const links = [
 	.home-crosslinks a:last-child { background: var(--brand-wine); }
 	.home-crosslinks a:last-child p { color: var(--on-wine); }
 	@media (max-width: 920px) {
-		.home-intro { min-height: clamp(440px, 62vw, 560px); }
-		.hero-number { top: 16px; }
 		.home-project { grid-template-columns: minmax(90px, 1fr) minmax(0, 3fr) minmax(100px, 1.5fr) 24px; }
 		.home-journal { gap: 28px; }
 	}
 	@media (max-width: 720px) {
-		.home-intro { grid-template-columns: 1fr 1fr; gap: 24px 12px; min-height: 0; padding: 76px 0 24px; }
-		.hero-number { font-size: clamp(155px, 63vw, 325px); top: 12px; }
-		.hero-portrait { grid-area: 1 / 1 / 2 / -1; width: min(55%, 275px); }
-		.hero-message, .hero-actions { margin: 0; }
-		.hero-message h1 { font-size: clamp(1.75rem, 5.7vw, 2.75rem); }
+		.home-intro {
+			grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
+			grid-template-areas: "number portrait" "message message" "actions actions";
+			grid-template-rows: auto;
+			column-gap: 16px;
+			padding-block: 24px 32px;
+		}
+		.hero-number { align-self: center; margin-inline-start: 0; font-size: clamp(96px, 27vw, 190px); }
+		.hero-portrait { width: min(100%, 240px); }
+		.hero-message { margin-top: 24px; }
+		.hero-message h1 { font-size: clamp(1.75rem, 7vw, 2.75rem); }
+		.hero-actions { margin-top: 20px; }
 		.workflow-card, .home-journal { grid-template-columns: 1fr; gap: 22px; }
 		.process-grid, .home-numbers dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.career-grid, .home-craft { grid-template-columns: 1fr; }
 		.craft-feature { grid-row: auto; }
 	}
 	@media (max-width: 460px) {
-		.home-intro { grid-template-columns: 1fr; }
-		.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; text-align: left; }
-		.hero-actions p { width: 100%; }
-		.hero-portrait { width: min(57%, 240px); }
 		.brand-strip ul { justify-content: flex-start; font-size: 15px; padding: 16px 0; }
 		.strength-pair { grid-template-columns: 1fr; }
 		.home-project { grid-template-columns: 70px minmax(0, 1fr) 22px; padding: 18px 0; }

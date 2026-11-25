@@ -7,19 +7,24 @@
 }
 
 :root {
-	--ground: #170f12;
-	--raised: #24181c;
-	--hover: #2e2025;
-	--hairline: #4a3a3f;
+	/* Light theme is the default; [data-theme="dark"] below restores the original dark palette. */
+	--ground: #fbf6f3;
+	--raised: #f3eaec;
+	--hover: #eadde1;
+	--hairline: #d9c7cc;
 	--brand-wine: #7a1f3a;
-	--pink: #f0b8c4;
-	--secondary: #cbbcc1;
+	--pink: #7a1f3a;
+	--secondary: #5d4f53;
 	--on-wine: #f3dfe3;
+	/* Fixed colours that do not change with the theme. */
+	--deep: #170f12;
+	--deep-raised: #24181c;
+	--blush: #f0b8c4;
 	--bg: var(--ground);
 	--paper: var(--raised);
 	--panel: var(--hover);
-	--ink: #fff;
-	--soft-ink: #e3d7da;
+	--ink: #170f12;
+	--soft-ink: #3b2c31;
 	--muted: var(--secondary);
 	--line: var(--hairline);
 	--wine: var(--pink);
@@ -30,8 +35,81 @@
 	--section-gap: clamp(56px, 7.5vw, 96px);
 	--instrument: "Instrument Sans", system-ui, sans-serif;
 	background: var(--ground);
-	color-scheme: dark;
+	color-scheme: light;
 	font-family: var(--instrument);
+}
+
+:root[data-theme="dark"] {
+	--ground: #170f12;
+	--raised: #24181c;
+	--hover: #2e2025;
+	--hairline: #4a3a3f;
+	--pink: #f0b8c4;
+	--secondary: #cbbcc1;
+	--ink: #fff;
+	--soft-ink: #e3d7da;
+	color-scheme: dark;
+}
+
+/* Wine panels always use the dark palette, so text on them stays light in both themes.
+   Blush panels (accent backgrounds) keep their original blush look with dark text. */
+:where(
+.workflow-card,
+.process-grid li:nth-child(2),
+.craft-feature,
+.home-crosslinks a:last-child,
+.work-feature,
+.work-service:first-child,
+.about-feature,
+.about-facts > div:last-child,
+.contact-intro,
+.play-social-card:first-child,
+.tools-totals li:last-child,
+.ai-stack,
+.resource-cover,
+.study-metrics > div:first-child,
+.study-workflow li:nth-child(2),
+.study-next .study-next-contact,
+.closing-band,
+.career-card:first-child,
+.featured-checklist,
+.work-play
+) {
+	--ground: #170f12;
+	--raised: #24181c;
+	--hover: #2e2025;
+	--hairline: #4a3a3f;
+	--pink: #f0b8c4;
+	--secondary: #cbbcc1;
+	--ink: #fff;
+	--soft-ink: #e3d7da;
+	color-scheme: dark;
+	color: var(--ink);
+}
+/* Panels that are links: beat the base "a { color: inherit }" rule. */
+a:where(
+.workflow-card,
+.process-grid li:nth-child(2),
+.craft-feature,
+.home-crosslinks a:last-child,
+.work-feature,
+.work-service:first-child,
+.about-feature,
+.about-facts > div:last-child,
+.contact-intro,
+.play-social-card:first-child,
+.tools-totals li:last-child,
+.ai-stack,
+.resource-cover,
+.study-metrics > div:first-child,
+.study-workflow li:nth-child(2),
+.study-next .study-next-contact,
+.closing-band,
+.career-card:first-child,
+.featured-checklist,
+.work-play
+) {
+	color: var(--ink);
 }
 
 body {
@@ -58,7 +136,7 @@ h1, h2, h3, .brand, .section-title, .page-title { font-family: var(--instrument)
 	width: 28px;
 	height: 28px;
 	border-radius: 50%;
-	background: var(--pink);
+	background: var(--blush);
 }
 .site-header .brand-mark img { filter: none; }
 .site-header .nav-links { gap: clamp(16px, 2.1875vw, 28px); margin-inline-start: auto; }
@@ -87,9 +165,27 @@ h1, h2, h3, .brand, .section-title, .page-title { font-family: var(--instrument)
 	line-height: 1.4;
 	box-shadow: none;
 }
-.portfolio-button:hover, .button:hover { background: #fff; color: var(--ground); transform: none; }
+.portfolio-button:hover, .button:hover { background: var(--ink); color: var(--ground); transform: none; }
 .button.secondary { background: var(--ground); color: var(--pink); border: 1.5px solid var(--hairline); }
 .text-link { color: var(--pink); }
+
+.theme-toggle {
+	display: inline-grid;
+	flex: none;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1.5px solid var(--hairline);
+	border-radius: 50%;
+	background: transparent;
+	color: var(--ink);
+	cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--pink); color: var(--pink); }
+.theme-toggle .theme-icon-sun,
+:root[data-theme="dark"] .theme-toggle .theme-icon-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .theme-icon-sun { display: block; }
 
 .portfolio-heading {
 	display: flex;
@@ -112,8 +208,8 @@ h1, h2, h3, .brand, .section-title, .page-title { font-family: var(--instrument)
 .portfolio-card { background: var(--raised); border-radius: 28px; }
 .portfolio-light {
 	background: #fff;
-	color: var(--ground);
-	--ink: var(--ground);
+	color: var(--deep);
+	--ink: var(--deep);
 	--secondary: #5d4f53;
 	--pink: #7a1f3a;
 	color-scheme: light;
